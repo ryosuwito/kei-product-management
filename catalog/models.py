@@ -2,10 +2,12 @@ from django.db import models
 from django_extensions.db.fields import AutoSlugField
 
 class Category(models.Model):
-    name = models.CharField(max_length = 100,
+    name = models.CharField(db_index=True,
+            max_length = 100,
             help_text="Nama Kategori")
     slug = AutoSlugField(max_length=100, 
             unique=True, 
+            db_index=True,
             populate_from=('name',))
     description = models.TextField(blank=True,
             help_text="Deskripsi Kategori")
@@ -15,13 +17,18 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = "Categories"
 
+
     def __str__(self):
        return self.name
 
 class Product(models.Model):
     name = models.CharField(max_length = 200,
+            db_index=True,
             help_text="Nama Produk")
-    slug = AutoSlugField(max_length=100, unique=True, populate_from=('name',))
+    slug = AutoSlugField(max_length=100, 
+            db_index=True,
+            unique=True, 
+            populate_from=('name',))
     description = models.TextField(help_text="Deskripsi Produk")
     photo = models.ImageField(upload_to = 'product_photo',
             help_text="Foto Produk")
