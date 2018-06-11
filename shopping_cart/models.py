@@ -6,10 +6,10 @@ import datetime
 class Cart(models.Model):
     user = models.ForeignKey(User, related_name="users_cart", on_delete=models.SET_NULL)
     created_date = models.DateTimeField(default=datetime.datetime.now)
-    last_update = models.DateTimeField(default=datetime.datetime.now)
-    is_expired = models.BooleanField(default=False)
-    is_checked_out = models.BooleanField(default=False)
-    is_paid = models.BooleanField(default=False)
+    last_update = models.DateTimeField(db_index=True,default=datetime.datetime.now)
+    is_expired = models.BooleanField(db_index=True,default=False)
+    is_checked_out = models.BooleanField(db_index=True,default=False)
+    is_paid = models.BooleanField(db_index=True,default=False)
     
     class Meta:
         verbose_name_plural = "Carts"
