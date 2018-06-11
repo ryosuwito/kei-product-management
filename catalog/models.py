@@ -34,13 +34,19 @@ class Product(models.Model):
             help_text="Foto Produk")
     price = models.IntegerField(help_text="Harga Produk")
     unit_weight = models.IntegerField(help_text="Berat Satuan Produk dalam gram")
-    product_available = models.BooleanField(default = True,
+    is_available = models.BooleanField(default = True,
             help_text="Centang Jika Produk Tersedia")
     is_archived = models.BooleanField(default = False,
             help_text="Centang untuk Menyembunyikan Produk")
     categories = models.ManyToManyField(Category, 
             related_name="category",
             help_text="Kategori Produk")
+
+    def get_details(self):
+        details = (self.name,
+                   self.unit_weight,
+                   self.price)
+        return details
 
     class Meta:
         verbose_name_plural = "Products"
