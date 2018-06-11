@@ -10,7 +10,7 @@ class Cart(models.Model):
     is_expired = models.BooleanField(default=False)
     is_checked_out = models.BooleanField(default=False)
     is_paid = models.BooleanField(default=False)
-
+    
     class Meta:
         verbose_name_plural = "Carts"
 
@@ -31,4 +31,4 @@ class CartItem(models.Model) :
         return details
 
     def __str__(self):
-       return 'Cart%s'%self.pk
+       return 'CartItem%s'%self.pk
