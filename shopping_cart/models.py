@@ -19,7 +19,7 @@ class Cart(models.Model):
 
 
 class CartItem(models.Model) :
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(null=True, blank=True)
     product = models.ForeignKey(Product, related_name="product_in_cart", on_delete=models.SET_NULL, null=True)
     cart = models.ForeignKey(Cart, related_name="item_in_cart", on_delete=models.SET_NULL, null=True)
 

@@ -32,8 +32,8 @@ class Product(models.Model):
     description = models.TextField(help_text="Deskripsi Produk")
     photo = models.ImageField(upload_to = 'product_photo',
             help_text="Foto Produk")
-    price = models.IntegerField(help_text="Harga Produk")
-    unit_weight = models.IntegerField(help_text="Berat Satuan Produk dalam gram")
+    price = models.IntegerField(null=True, help_text="Harga Produk")
+    unit_weight = models.IntegerField(null=True, help_text="Berat Satuan Produk dalam gram")
     is_available = models.BooleanField(default = True,
             help_text="Centang Jika Produk Tersedia")
     is_archived = models.BooleanField(default = False,
