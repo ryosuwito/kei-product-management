@@ -36,8 +36,14 @@ button.link {
   font-size: 14px;
 }
 body{
-  background-image:url(../pictures/orn4.png);
-  background-color:#009c9c;
+  background-color:#77ff9a;
+}
+legend{
+  padding:0 10px !important;
+  text-align: left;
+}
+fieldset{
+  margin-top: 10px;
 }
 #map{
   width:100%;
@@ -577,7 +583,7 @@ a:hover{
   color:#F7335D
 }
 .cool{
-  color:#0d6969
+  color:#0b3c17
 }
 .dropdown-menu >li >a{
   color:#005eae
@@ -1225,7 +1231,7 @@ a:hover{
 }
 .daftar-cool{
   font-family: 'Trebuchet MS', Helvetica, sans-serif;
-  background-color:#195aef;
+  background-color:#0b3c17;
   color:#fff
 }
 .daftar-cool:hover{

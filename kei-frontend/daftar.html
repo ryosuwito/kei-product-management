@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Daftar - Kosanku</title>
+    <title>Daftar | kei-partner.com</title>
     <meta name="viewport" content="width=device-width,
                                   initial-scale=1.0,
                                   user-scalable=no">
@@ -17,23 +17,79 @@
     <div class="col-xs-12 col-sm-10 col-lg-8" style="display:block">
       <div class="col-xs-12 card-bottom effect5" style="margin:90px 0;padding:20px 10px 0 10px; text-align:center">
 
-        <h4 class="title" style="margin:15px">Selamat Datang di Kosanku, silakan isi form berikut ini untuk mendaftar sebagai member Kosanku.</h4>
+        <h4 class="title" style="margin:15px">Selamat Datang di Kei-Partner.<br>
+           Silahkan isi form berikut ini untuk membuat akun.</h4>
         <form action="action_page.php">
-          <div class="col-xs-12 col-sm-6">
-            <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Nama Akun (maks 20 karakter tanpa spasi)<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>  
-              <input class="effect6" style="width:100%" type="text" placeholder="Masukan Nama" name="uname" required></div>
-             <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Email valid (untuk konfimasi akun)<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>  
-               <input class="effect6" style="width:100%" type="text" placeholder="Masukan Email" name="mail" required></div></div>
-           <div class="col-xs-12 col-sm-6">
-            <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Kata Sandi (min 6 karakter)<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
-               <input class="effect6" style="width:100%" type="password" placeholder="Masukan Kata Sandi" name="psw" required></div>
-             <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Masukan ulang kata sandi<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
-               <input class="effect6" style="width:100%" type="password" placeholder="Ulangi Kata Sandi" name="psw2" required></div></div>
+              
+          <fieldset style="width: 100%;">
+              <legend>Data Membership :</legend>
+              <div class="col-xs-12" style="padding:0 15px 3px 15px;display:block;text-align:left">
+                <p style="font-size:8pt;margin-bottom:3px">Daftar akun sebagai :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
+                <input type="radio" name="member_type" id="member" value="member" checked> Member
+                <input type="radio" name="member_type" id="guest" value="guest"> Guest</div>
 
-           <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left">
-             <p style="font-size:8pt;margin-bottom:3px;text-align:left">Gender :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
-             <input type="radio" name="gender" value="male" checked> Pria<br>
-             <input type="radio" name="gender" value="female"> Wanita<br></div>
+              <div class="col-xs-12" style="padding:3px 15px 20px 15px;display:block;text-align:left">
+                <p style="font-size:8pt;margin-bottom:3px">Pilih Jenis Member :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
+                <input type="radio" name="member_level" id="dropshiper" value="dropshiper" checked> Dropshiper
+                <input type="radio" name="member_level" id="reseller" value="reseller"> Reseller
+                <input type="radio" name="member_level" id="dropshiper" value="dropshiper"> Agen
+                <input type="radio" name="member_level" id="dropshiper" value="dropshiper"> Distributor</div>
+
+              <div class="col-xs-12">
+                <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Kode Sponsor *(kosongkan jika tidak ada)</p>  
+                  <input class="effect6" style="width:100%" type="text" placeholder="Contoh kode sponsor : K-1023-1330-AD" name="uname"></div></div>
+          </fieldset>
+
+          <fieldset style="width: 100%;">
+              <legend>Data Akun :</legend>
+
+              <div class="row" style="margin: 0">
+                <div class="col-xs-12 col-sm-6">
+                  <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Username *(untuk login, maks 20 karakter tanpa spasi)<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>  
+                    <input class="effect6" style="width:100%" type="text" placeholder="Masukan Username" name="uname" required></div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                  <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Email valid *(untuk konfimasi akun)<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>  
+                    <input class="effect6" style="width:100%" type="text" placeholder="Contoh : user@example.com" name="mail" required></div>
+                </div>
+              </div>
+
+              <div class="row" style="margin: 0">
+                <div class="col-xs-12 col-sm-6">
+                  <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Kata Sandi (min 6 karakter)<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
+                    <input class="effect6" style="width:100%" type="password" placeholder="Masukan Kata Sandi" name="psw" required></div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                  <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Masukan ulang kata sandi<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
+                    <input class="effect6" style="width:100%" type="password" placeholder="Ulangi Kata Sandi" name="psw2" required></div>
+                </div>
+              </div>
+          </fieldset>
+          <fieldset style="width: 100%;">
+              <legend>Data Pribadi :</legend>
+              <div class="row" style="margin: 0">
+                <div class="col-xs-12 col-sm-6">
+                  <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Nama Lengkap *(sesuai dengan ktp)<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>  
+                    <input class="effect6" style="width:100%" type="text" placeholder="Masukan Nama Lengkap" name="real-name" required></div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Nomor HP/ Whatsapp <i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>  
+                      <input class="effect6" style="width:100%" type="text" placeholder="Contoh : +628129999999 / 0812999999" name="phone" required></div>
+                </div>
+              </div>
+
+              <div class="row" style="margin: 0">
+                <div class="col-xs-12 col-sm-6">
+                  <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Nomor KTP *(angka tanpa spasi)<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>  
+                    <input class="effect6" style="width:100%" type="text" placeholder="Contoh : 3671081xxxxxxxxxx" name="nomor-ktp" required></div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Nomor Rekening *(angka tanpa spasi)<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>  
+                      <input class="effect6" style="width:100%" type="text" placeholder="Contoh : 7211XXCCCCCCDDF" name="nomor-bank" required></div>
+                </div>
+              </div>
+          </fieldset>
+
            <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left;z-index:3000">
              <p style="font-size:8pt;margin-bottom:3px;text-align:left">Provinsi :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
              
@@ -74,12 +130,8 @@
                <option value="papua">DK Papua</option>
                <option value="papbar">DK Papua Barat</option>
                <option value="telcen">Teluk Cendrawasih</option></select></div>
-           <div class="col-xs-3"></div>
-           <div class="col-xs-12 col-sm-6" style="margin-top:20px">
-             <button class="daftar-cool effect4" style="width:100%" type="submit">Kirim</button>
-             <p style="padding:1px">
-               <a href="http://www.freepik.com/free-photos-vectors/people" style="color:#888">People vector designed by Freepik</a></p></div>
-           <div class="col-xs-3"></div>
+           <div class="col-xs-12" style="margin:20px ; text-align: center">
+             <button class="daftar-cool effect4" style="width:auto; min-width: 120px;" type="submit">Kirim</button></div>
          </form></div></div>
     <div class="hidden-xs col-sm-1 col-lg-2"></div></div>
 
