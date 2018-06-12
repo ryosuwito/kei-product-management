@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 import datetime
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, related_name="users_cart", on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, related_name="users_cart", on_delete=models.SET_NULL, null=True)
     created_date = models.DateTimeField(default=datetime.datetime.now)
     last_update = models.DateTimeField(db_index=True,default=datetime.datetime.now)
     is_expired = models.BooleanField(db_index=True,default=False)
@@ -20,8 +20,8 @@ class Cart(models.Model):
 
 class CartItem(models.Model) :
     quantity = models.IntegerField()
-    product = models.ForeignKey(Product, related_name="product_in_cart", on_delete=models.SET_NULL)
-    cart = models.ForeignKey(Cart, related_name="item_in_cart", on_delete=models.SET_NULL)
+    product = models.ForeignKey(Product, related_name="product_in_cart", on_delete=models.SET_NULL, null=True)
+    cart = models.ForeignKey(Cart, related_name="item_in_cart", on_delete=models.SET_NULL, null=True)
 
     class Meta:
         verbose_name_plural = "Carts"

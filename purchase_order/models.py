@@ -4,8 +4,8 @@ from shopping_cart.models import Cart
 import datetime
 
 class PurchaseOrder(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL)
-    cart = models.OneToOneField(Cart, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    cart = models.OneToOneField(Cart, on_delete=models.SET_NULL, null=True)
     created_date = models.DateTimeField(db_index=True,default=datetime.datetime.now)
     payment_date = models.DateTimeField(db_index=True,blank=True)
     token_expiry_date = models.DateTimeField(blank=True)
@@ -14,7 +14,7 @@ class PurchaseOrder(models.Model):
     is_verified = models.BooleanField(db_index=True,default=False)
     is_void = models.BooleanField(db_index=True,default=False)
     payment_status = models.TextField(blank=True)
-    payment_token = models.CharField(blank=True)
+    payment_token = models.CharField(max_length=50,blank=True)
 
     class Meta:
         verbose_name = "PurchaseOrder"
