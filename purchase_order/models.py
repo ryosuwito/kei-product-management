@@ -14,7 +14,7 @@ class PurchaseOrder(models.Model):
     is_verified = models.BooleanField(db_index=True,default=False)
     is_void = models.BooleanField(db_index=True,default=False)
     payment_status = models.TextField(blank=True)
-    payment_token = models.CharField(max_length=50,blank=True)
+    payment_token = models.CharField(max_length=50, blank=True)
 
     class Meta:
         verbose_name = "PurchaseOrder"
