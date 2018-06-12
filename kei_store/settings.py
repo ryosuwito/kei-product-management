@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'catalog',
     'membership',
     'purchase_order',
-    'shopping_cart'
+    'shopping_cart',
+    'database_wilayah'
 ]
 
 MIDDLEWARE = [
