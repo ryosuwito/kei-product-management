@@ -1,3 +1,6 @@
 *.pyc 
 secret.py
 db.sqlite3
+product_photo/
+bank_book_photo/
+profile_photo/
