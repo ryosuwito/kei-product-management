@@ -37,8 +37,8 @@ button.link {
 }
 .container-bg{
   width: 100%;
-  padding: 0;
-  background-image: url(../pictures/bg-bottom2.svg);
+  padding: 40px 0 0 0;
+  background-image: url(../pictures/bg-bottom4.svg);
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position-y: 100%;
@@ -503,8 +503,6 @@ a:hover{
   min-height:320px;
 }
 .detail-title{
-  margin-top:4.3%;
-  background-color:#ffbd5a;
   min-height:0;
   display:block;
   text-align:center;
@@ -709,7 +707,7 @@ a:hover{
 
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
-  background-color: #446748;
+  background-color: transparent;
 }
 
 .navbar-default .navbar-nav > .open > a,
@@ -763,11 +761,6 @@ a:hover{
     margin:1.75% 0;
   }
   .card-deck{
-    position:fixed;
-    bottom:0;
-    right:32px;
-    z-index:2;
-    width:20%;
     background-color:#fff
   }
 
@@ -845,6 +838,12 @@ a:hover{
 
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
+  .navbar-fixed-bottom .navbar-collapse, .navbar-fixed-top .navbar-collapse{
+    max-height: none;
+  }
+  .navbar-nav .open .dropdown-menu{
+    background-color: #e4f4f9;
+  }
   .main-photo-box{
     padding: 0;
     margin:0 -10px;
@@ -1000,7 +999,8 @@ a:hover{
   }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
     color:#fff;
-    background-color: rgb(50, 65, 52);
+    background-color: rgb(52, 128, 62);
+    padding: 10px 0;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
@@ -1026,7 +1026,7 @@ a:hover{
     margin-top: 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    background-color:#3acdff;
+    background-color:transparent;
     box-shadow:0px 3px 4px rgba(0,0,0,0.345),0px 6px 10px 1px rgba(0,0,0,0.255);
   }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
@@ -1230,6 +1230,7 @@ a:hover{
   .navbar-default .navbar-nav .open .dropdown-menu .text-center{
     color: #fff;
     background-color: #324e35;
+    padding: 10px 0;
     }
     .socio-box{
     width:100%;
@@ -1298,8 +1299,8 @@ a:hover{
   color:#fff
 }
 .daftar:hover{
-  -webkit-animation: shadow 0.71s ease;
-  animation: shadow 0.71s ease;
+  -webkit-animation: shadow 0.21s ease;
+  animation: shadow 0.21s ease;
   -webkit-filter: brightness(110%) contrast(110%) saturate(1.2155);
   filter: brightness(110%) contrast(110%) saturate(1.2155);
   box-shadow:0px 1px 2px rgba(0,0,0,0.445),0px 2px 6px 1px rgba(0,0,0,0.355),0px -12px 12px rgba(0,0,0,0.145) inset,0px 12px 12px rgba(255,255,255,0.145) inset;
@@ -1308,12 +1309,12 @@ a:hover{
 }
 .daftar-cool{
   font-family: 'Trebuchet MS', Helvetica, sans-serif;
-  background-color:#0b3c17;
+  background-color:#053c7f;
   color:#fff
 }
 .daftar-cool:hover{
-  -webkit-animation: shadow 0.71s ease;
-  animation: shadow 0.71s ease;
+  -webkit-animation: shadow 0.21s ease;
+  animation: shadow 0.21s ease;
   -webkit-filter: brightness(110%) contrast(110%) saturate(1.2155);
   filter: brightness(110%) contrast(110%) saturate(1.2155);
   box-shadow:0px 1px 2px rgba(0,0,0,0.445),0px 2px 6px 1px rgba(0,0,0,0.355),0px -12px 12px rgba(0,0,0,0.145) inset,0px 12px 12px rgba(255,255,255,0.145) inset;
