@@ -11,3 +11,4 @@ profile_photo/
 *.svg
 Picures/
 *.log
+static/admin/

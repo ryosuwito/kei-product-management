@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from storefront.views import login_page, register_page
+from django.conf.urls.static import static
+
 
 urlpatterns = [
+    path('store/login/', login_page, name='storefront_login'),
+    path('store/register/', register_page, name='storefront_register'),
     path('admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

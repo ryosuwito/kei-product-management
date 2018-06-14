@@ -25,7 +25,7 @@ SECRET_KEY = KEY.SECRET
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'membership',
     'purchase_order',
     'shopping_cart',
-    'database_wilayah'
+    'database_wilayah',
+    'storefront',
 ]
 
 MIDDLEWARE = [
@@ -121,5 +122,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    '/home/kemong/Webproject/kei-django/kei_store/static/',    
+]
+
+MEDIA_ROOT = '/home/kemong/Webproject/kei-django/kei_store/media/'
+MEDIA_URL = '/media/'
