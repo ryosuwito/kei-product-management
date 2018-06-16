@@ -251,7 +251,7 @@
                         Nama Sponsor :
                       </h6>
                       <h5 style="text-align:left; margin:0;">
-                        Ibrahimovic
+                        {{ user.member.sponsor.username }}
                       </h5>
                       <h6 class="titlesm cool" style="text-align:left;">
                         Nomor Rekening :
@@ -356,8 +356,8 @@
                 <img id="ava" src="/media/pictures/indah.jpg" alt="Avatar" class="photo-user avatar avatars" style="
                -webkit-filter: none;width:120px;height:120px;border-radius:85px; padding:5px"/></div>
               <div name="prf-title" class="col-xs-12">
-                <div class="card-bottom" style="margin:0;display:block;height:2.4em;padding:0">
-                  <h3 class="title" style="margin:0">{{ user.username | title }}</h3>
+                <div style="margin:0;display:block;padding:0">
+                  <h4 class="title" style="margin:0">{{ user.member.get_full_name | title }}</h4>
                   <h5 class="title" style="margin:5px 0">{{ user.member.get_member_type_display | title }}</h5></div>
               </div>
             </div>

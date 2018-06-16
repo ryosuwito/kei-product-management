@@ -1342,7 +1342,11 @@ a:hover{
 }
 html  input[disabled]{
   color:#777;
-  background-color: #f2f2f2;
+  background-color: #fff;
+}
+.sponsor-disabled{
+  color:#888 !important;
+  background-color: #b2b2b2 !important;
 }
 input[type=text], input[type=password], input[type=number], input[type=email], select {
   width: 100%;

@@ -17,20 +17,43 @@ class Member(models.Model):
     DISTRIBUTOR = 5
     MASTER_SELLER = 6
 
+    LEVEL = {
+        'DROPSHIPPER' : {
+            'THRESHOLD': 190000,
+            'BENEFIT': 5,
+        },
+        'RESELLER': {
+            'THRESHOLD': 1500000,
+            'BENEFIT': 10,
+        },
+        'AGEN': {
+            'THRESHOLD': 6800000,
+            'BENEFIT': 20,
+        },
+        'DISTRIBUTOR': {
+            'THRESHOLD': 11900000,
+            'BENEFIT': 30,
+        },
+        'MASTER_SELLER': {
+            'THRESHOLD': 11900000,
+            'BENEFIT': 30,
+        }
+    }
+
     USER_TYPE_CHOICES = (
-        (GUEST, 'guest'),
-        (NEW_MEMBER, 'new member'),
-        (DROPSHIPPER, 'dropshiper'),
-        (RESELLER, 'reseller'),
-        (AGEN, 'agen'),
-        (DISTRIBUTOR, 'distributor'),
-        (MASTER_SELLER, 'master seller'),
+        (GUEST, 'Guest'),
+        (NEW_MEMBER, 'New Member'),
+        (DROPSHIPPER, 'Dropshipper'),
+        (RESELLER, 'Reseller'),
+        (AGEN, 'Agen'),
+        (DISTRIBUTOR, 'Distributor'),
+        (MASTER_SELLER, 'Master Seller'),
     )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     sponsor_code = models.CharField(max_length=12, blank=True)
     referal_code = models.CharField(max_length=12, blank=True)
-    sponsor = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="member_sponsor", null=True)
+    sponsor = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="sponsor", null=True)
     member_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=NEW_MEMBER)
     phone_regex = RegexValidator(regex=r'^\+?62?\d{9,15}$', message="Nomor Telepon Harus memiliki format +62819999999 atau 0819999999'. Maksimal 15 Digit.")
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True) # validator haruslah berupa list
@@ -48,6 +71,8 @@ class Member(models.Model):
     def get_absolute_url(self):
         return ("membership:profile", [self.user.pk,])
 
+    def get_full_name(self):
+        return '{} {}'.format(self.user.first_name, self.user.last_name)
 
     def get_referal():
         referal_code_alpha = get_random_string(5, 

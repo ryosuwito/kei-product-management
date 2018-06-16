@@ -4,12 +4,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.models import User 
 from django.urls import reverse
-from .forms import MemberLoginForm, MemberRegisterForm
+from .models import Member
+from .forms import MemberLoginForm, MemberRegisterForm, GuestRegisterForm
 # Create your views here.
 
 def login_page(request):
     form_messages=''
     if request.method == 'POST':
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('membership:profile'))
         form = MemberLoginForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
@@ -27,13 +30,28 @@ def login_page(request):
                 form_messages='username atau password salah'
     elif request.method == 'GET':
         if request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('membership:register'))
+            return HttpResponseRedirect(reverse('membership:profile'))
         form = MemberLoginForm()
     return render(request, 'membership/login.html',{'form': form, 'form_messages': form_messages})
 
+def pre_register_page(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('membership:profile'))
+    link = {
+        'member': reverse('membership:register', current_app='member_backend'),
+        'guest': reverse('membership:register', current_app='guest_backend'),
+    }
+    return render(request, 'membership/pre_register.html', {'link':link})
+
 def register_page(request):  
-    referal_code = ''
-    namespace = reverse('membership:register', current_app=request.resolver_match.namespace).split('/')[1]
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('membership:profile'))
+    referal_code = False
+    threshold = ''
+    namespace = reverse('membership:register', 
+        current_app=request.resolver_match.namespace).split('/')[1]
+    if namespace != 'guest':
+        threshold = {k: v for k,v in Member.LEVEL.items() if k != 'MASTER_SELLER'}
     if request.get_host() != 'localhost':
         userref = request.get_host().split('.')
         try :
@@ -44,45 +62,64 @@ def register_page(request):
             referal_code = user.member.referal_code
 
     if request.method == 'POST':
-        form = MemberRegisterForm(request.POST)
+        if namespace == 'guest':
+            form = GuestRegisterForm(request.POST)
+        else:
+            form = MemberRegisterForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             username = data.get('username').lower()
             password = data.get('password')
             email = data.get('email')
             user = User.objects.create_user(username=username, email=email, password=password)
+            full_name = data.get('first_name').split(' ')
+            user.last_name = full_name[-1] 
+            user.first_name = ' '.join([x for x in full_name[:-1]])
             user.member.sponsor_code = referal_code
+            user.member.sponsor = Member.objects.get(referal_code=referal_code).user
             if namespace == 'guest':
                 user.member.member_type = 0
+            else:
+                user.member.member_type = data.get('member_type')
             user.save()
             if user is not None:
                 logout(request)
                 login(request, user)
-                return HttpResponse("Create User Success as : {}".format(user.username))
+                return HttpResponseRedirect(reverse('membership:profile', 
+                    current_app=request.resolver_match.namespace))
             else:
                 return HttpResponse("Create User Fail")
+    elif request.method == 'GET': 
+        if namespace == 'guest':
+            form = GuestRegisterForm()
         else:
-            return render(request, 'membership/daftar.html',{'form': form})
-    elif request.method == 'GET':
-        form = MemberRegisterForm()
-        form.fields['sponsor_code'].default = referal_code
-        form.fields['sponsor_code'].initial = referal_code
-        form.fields['sponsor_code'].disabled = True
-        return render(request, 'membership/daftar.html',{'form': form})
+            form = MemberRegisterForm()
+        if referal_code:
+            form.fields['sponsor_code'].default = referal_code
+            form.fields['sponsor_code'].initial = referal_code
+            form.fields['sponsor_code'].disabled = True
+            form.fields['sponsor_code'].widget.attrs.update({
+            'class': 'sponsor-disabled'
+            })
+    return render(request, 'membership/register_%s.html'%(namespace),
+        {'form': form, 'threshold': threshold})
 
 @login_required(login_url='/member/login')
 def profile_page(request, pk=0):
-    namespace = reverse('membership:register', current_app=request.resolver_match.namespace).split('/')[1]
+    namespace = reverse('membership:register', 
+        current_app=request.resolver_match.namespace).split('/')[1]
     if pk == 0 or pk == request.user.pk :
         if request.user.member.get_member_type_display() == 'guest' and \
                 request.resolver_match.namespace != 'guest_backend':
-            return HttpResponseRedirect(reverse('membership:profile', current_app='guest_backend'))
+            return HttpResponseRedirect(reverse('membership:profile', 
+                current_app='guest_backend'))
         user = request.user
     else :
         user = get_object_or_404(User, pk=pk)
         if user.member.get_member_type_display() != 'guest' and \
                 request.resolver_match.namespace != 'member_backend':
-            return HttpResponseRedirect("%s%s"%(reverse('membership:profile', current_app='member_backend'),pk))
+            return HttpResponseRedirect("%s%s"%(reverse('membership:profile', 
+                current_app='member_backend'),pk))
     return render(request, 'membership/profile_%s.html'%(namespace),{'user': user})
 
 def log_check(user):
@@ -91,4 +128,5 @@ def log_check(user):
 @user_passes_test(log_check)
 def logout_page(request):
     logout(request)
-    return HttpResponse("Logout Success")
+    return HttpResponseRedirect(reverse('membership:login', 
+        current_app=request.resolver_match.namespace))

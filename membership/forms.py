@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from database_wilayah.models import Provinsi
+from .models import Member
 
 class MemberLoginForm(forms.Form):
     username = forms.CharField(label='Username :', max_length=150)
@@ -17,6 +18,7 @@ class MemberRegisterForm(forms.ModelForm):
     }
     
     provinsi = forms.ModelChoiceField(Provinsi.objects.all(), initial='')
+    member_type = forms.ChoiceField(choices = Member.USER_TYPE_CHOICES[2:-1], initial=0, required=True)
     username = forms.CharField(required=True, min_length=USERNAME_MIN, max_length=USERNAME_MAX)
     sponsor_code = forms.CharField(min_length=12, max_length=12)
     def __init__(self, *args, **kwargs):
@@ -48,7 +50,7 @@ class MemberRegisterForm(forms.ModelForm):
         USERNAME_MAX = 20
         USERNAME_MIN = 6
         model = User
-        fields = ('username', 'password','email')
+        fields = ('username', 'password','email', 'first_name')
         error_messages = {
             'username': {
                 'required': 'Harap masukan username dengan benar',
@@ -57,3 +59,6 @@ class MemberRegisterForm(forms.ModelForm):
                 'invalid': 'Username tidak boleh ada spasi. Hanya alfabet, angka dan karaker @/./+/-/'
             },
         }
+
+class GuestRegisterForm(MemberRegisterForm):
+    member_type = forms.ChoiceField(choices = Member.USER_TYPE_CHOICES[2:-1], initial=0, required=False)
