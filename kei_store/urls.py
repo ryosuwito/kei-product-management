@@ -14,14 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from django.conf import settings
-from storefront.views import login_page, register_page
 from django.conf.urls.static import static
-
+import membership.urls as membership
 
 urlpatterns = [
-    path('store/login/', login_page, name='storefront_login'),
-    path('store/register/', register_page, name='storefront_register'),
+    path('member/', include(membership, namespace='member_backend')),
+    path('guest/', include(membership, namespace='guest_backend')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

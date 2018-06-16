@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.validators import RegexValidator
+from django.db import models
+from django.utils.crypto import get_random_string
+import pyqrcode
+import os 
 
 class Member(models.Model):
     GUEST = 0
@@ -38,11 +42,37 @@ class Member(models.Model):
     bank_book_photo = models.ImageField(upload_to = 'bank_book_photo', blank=True)
     ktp_photo = models.ImageField(upload_to = 'ktp_photo', blank=True)
     profile_photo = models.ImageField(upload_to = 'profile_photo', blank=True)
+    qrcode = models.CharField(max_length=20, blank=True)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ("membership:profile", [self.user.pk,])
+
+
+    def get_referal():
+        referal_code_alpha = get_random_string(5, 
+            allowed_chars='0123456789')
+        referal_code_beta = get_random_string(4, 
+            allowed_chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+        referal_code = '%s%s'%(referal_code_alpha, referal_code_beta)
+        if Member.objects.filter(referal_code= referal_code).exists():
+            get_referal()
+        else:
+            return 'KSK{}'.format(referal_code)
+
+    def get_qrcode(content='0123456789AB', name='default'):
+        qr = pyqrcode.create('https://%s.localhost:8000/store/'%content)
+        filename = "media/%s_%s.png"%(content,name)
+        qr.png(filename, scale=12)
+        return filename
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         member = Member(user=instance)
+        member.referal_code = Member.get_referal();
+        member.qrcode = Member.get_qrcode(name=member.referal_code,
+            content=instance.username);
         member.save()
         
 @receiver(post_save, sender=User)

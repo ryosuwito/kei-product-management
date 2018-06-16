@@ -4,6 +4,8 @@
         "/home/kemong/Webproject/kei-django/kei_store/",
         "/home/kemong/Webproject/kei-django/venv/lib/python3.5/",
         "/home/kemong/Webproject/kei-django/venv/lib/python3.5/site-packages/"
-     ]
-
+     ],
+     "python.linting.pylintArgs": [
+        "--load-plugins=pylint_django"
+   ],
 }

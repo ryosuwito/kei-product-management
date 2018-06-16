@@ -25,7 +25,7 @@ SECRET_KEY = KEY.SECRET
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['.localhost','localhost']
 
 
 # Application definition
@@ -129,3 +129,7 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = '/home/kemong/Webproject/kei-django/kei_store/media/'
 MEDIA_URL = '/media/'
+
+LOGIN_REDIRECT_URL = '/member/'
+LOGIN_URL = '/member/login/'
+LOGOUT_URL = '/member/logout/'
