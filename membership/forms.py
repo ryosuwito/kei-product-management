@@ -4,7 +4,7 @@ from database_wilayah.models import Provinsi
 from .models import Member
 
 class MemberLoginForm(forms.Form):
-    username = forms.CharField(label='Username :', max_length=150)
+    username = forms.CharField(label='Username/ Phone/ Email :', max_length=150)
     attrs = {
         "type": "password"
     }

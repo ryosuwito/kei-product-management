@@ -18,6 +18,8 @@
           <img src="/media/pictures/logo.png" width="150" height="auto">
         </div>
         <div class="col-xs-12 col-lg-10" style="padding:0 5px; display: flex; align-items: center; justify-content: flex-end">
+
+          {% if request.user.is_authenticated %}
           <div style="padding: 0 5px; text-align: right">
             <p style="margin: 0;"><strong>Ryo Suwito</strong><br>
             Distributor</p>
@@ -45,6 +47,7 @@
               <span style="font-size: 21px;"
               class="glyphicon glyphicon-bell"></span>
           </div>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -70,6 +73,7 @@
             <li><a href="#">Member Area</a></li>
             <li><a href="#">Business Oportunity</a></li>
           </ul>
+          {% if request.user.is_authenticated %}
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown dr-one">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-list"></span> Wishlist<span class="caret"></span></a>
@@ -212,6 +216,7 @@
               </ul>
             </li>
           </ul>
+          {% endif %}
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
@@ -246,9 +251,9 @@
             <img id="ava" src="/media/pictures/user.gif" alt="Avatar" class="photo-user avatar avatars" style="
     -webkit-filter: none;filter: none;width:120px;height:120px;border-radius:85px"/></div>
             <div style="text-align: left">
-              {{ form.username.label }}
+              <p>{{ form.username.label }}</p>
               {{ form.username }}
-              {{ form.password.label }}
+              <p>{{ form.password.label }}</p>
               {{ form.password }}
             </div>
            <div class="row" style="padding:0 5.3%">

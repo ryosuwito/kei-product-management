@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.models import User 
 from django.urls import reverse
+from django.db.models import Q
 from .models import Member
 from .forms import MemberLoginForm, MemberRegisterForm, GuestRegisterForm
 # Create your views here.
@@ -18,7 +19,9 @@ def login_page(request):
             data = form.cleaned_data
             username = data.get('username')
             password = data.get('password')
-            user = authenticate(request, username=username, password=password)
+            user = authenticate(request, 
+                Q(username=username) | Q(email=username),
+                password=password)
             if user is not None:
                 login(request, user)
                 try :
@@ -75,8 +78,9 @@ def register_page(request):
             full_name = data.get('first_name').split(' ')
             user.last_name = full_name[-1] 
             user.first_name = ' '.join([x for x in full_name[:-1]])
-            user.member.sponsor_code = referal_code
-            user.member.sponsor = Member.objects.get(referal_code=referal_code).user
+            if referal_code:
+                user.member.sponsor_code = referal_code
+                user.member.sponsor = Member.objects.get(referal_code=referal_code).user
             if namespace == 'guest':
                 user.member.member_type = 0
             else:
