@@ -1,4 +1,5 @@
 {% extends "membership/base.html" %}
+{% load int_to_rupiah %}
   {% block title %}
     <title>Daftar | kei-partner.com</title>
   {% endblock %}
@@ -525,8 +526,5 @@
          </form></div></div>
     <div class="hidden-xs col-sm-1 col-lg-2"></div></div>
     {% include "membership/footer.html" %}
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="/static/javascript/custom.js"></script>
-  {% endblock %}
+    {% include "membership/script.html" %}
+    {% endblock %}

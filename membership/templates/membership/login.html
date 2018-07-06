@@ -3,213 +3,33 @@
     <title>Login | kei-partner.com</title>
   {% endblock %}
   {% block content %}
-    <div class="container container-header">
-      <div class="row" style="display: flex; justify-content: center; min-height: 110px;">
-        <div class="col-xs-12 col-lg-2" style="padding:0 5px; display: flex; align-items: center; justify-content: flex-start">
-          <img src="/media/pictures/logo.png" width="150" height="auto">
-        </div>
-        <div class="col-xs-12 col-lg-10" style="padding:0 5px; display: flex; align-items: center; justify-content: flex-end">
-
-          {% if request.user.is_authenticated %}
-          <div style="padding: 0 5px; text-align: right">
-            <p style="margin: 0;"><strong>Ryo Suwito</strong><br>
-            Distributor</p>
-          </div>
-          <div  class="profile-header" style="
-            background-image: url('/media/pictures/indah.jpg')">
-          </div>
-          <div style="margin:0 5px; 
-          position: relative;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border-radius: 22px; 
-          width: 30px; 
-          height: 30px;
-          color: #363836; ">
-              <span style="min-width: 10px;
-              position: absolute;
-              top: 1px;
-              right: 1px;
-              min-height: 10px;  
-              padding: 2px;
-              border-radius: 15px; 
-              background-color: #ff4545;"></span>
-              <span style="font-size: 21px;"
-              class="glyphicon glyphicon-bell"></span>
-          </div>
-          {% endif %}
-        </div>
-      </div>
-    </div>
+  {% include "membership/header.html" %}
     <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-          <a class="navbar-brand" href="#">KEI-Partner</a>
-        </div>
-    
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="#"><span class="glyphicon glyphicon-home"></span> <span class="sr-only">(current)</span></a></li>
-            <li class="active"><a href="#">Store</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Member Area</a></li>
-            <li><a href="#">Business Oportunity</a></li>
-          </ul>
-          {% if request.user.is_authenticated %}
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown dr-one">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-list"></span> Wishlist<span class="caret"></span></a>
-              <ul class="dropdown-menu dr-menu-one dropdown-cart" role="menu" style="padding-bottom: 0">
-                  <li>
-                      <span class="item">
-                        <span class="item-left">
-                            <img src="/media/pictures/indah.jpg" width="50" height="auto" alt="" />
-                            <span class="item-info">
-                                <span>Item name</span>
-                                <span>Rp. 245.500</span>
-                                <span>4 pcs</span>
-                            </span>
-                        </span>
-                        <span class="item-right">
-                            <button class="btn btn-xs btn-danger pull-right">x</button>
-                        </span>
-                    </span>
-                  </li>
-                  <li class="divider"></li>
-                  <li>
-                      <span class="item">
-                        <span class="item-left">
-                            <img src="/media/pictures/indah.jpg" width="50" height="auto" alt="" />
-                            <span class="item-info">
-                                <span>Item name</span>
-                                <span>Rp. 245.500</span>
-                                <span>4 pcs</span>
-                            </span>
-                        </span>
-                        <span class="item-right">
-                            <button class="btn btn-xs btn-danger pull-right">x</button>
-                        </span>
-                    </span>
-                  </li>
-                  <li class="divider"></li>
-                  <li>
-                      <span class="item">
-                        <span class="item-left">
-                            <img src="/media/pictures/indah.jpg" width="50" height="auto" alt="" />
-                            <span class="item-info">
-                                <span>Item name</span>
-                                <span>Rp. 245.500</span>
-                                <span>4 pcs</span>
-                            </span>
-                        </span>
-                        <span class="item-right">
-                            <button class="btn btn-xs btn-danger pull-right">x</button>
-                        </span>
-                    </span>
-                  </li>
-                  <li class="divider"></li>
-                  <li>
-                      <span class="item">
-                        <span class="item-left">
-                            <img src="/media/pictures/indah.jpg" width="50" height="auto" alt="" />
-                            <span class="item-info">
-                                <span>Item name</span>
-                                <span>Rp. 245.500</span>
-                                <span>4 pcs</span>
-                            </span>
-                        </span>
-                        <span class="item-right">
-                            <button class="btn btn-xs btn-danger pull-right">x</button>
-                        </span>
-                    </span>
-                  </li>
-                  <li><a class="text-center" href="">View Wishlist</a></li>
-              </ul>
-            </li>
-          </ul> 
-          <ul class="nav navbar-nav navbar-right" style="margin-bottom: 0">
-            <li class="dropdown dr-two">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> 7 - Items<span class="caret"></span></a>
-              <ul class="dropdown-menu dr-menu-two dropdown-cart" role="menu" style="padding-bottom: 0">
-                  <li>
-                      <span class="item">
-                        <span class="item-left">
-                            <img src="/media/pictures/indah.jpg" width="50" height="auto" alt="" />
-                            <span class="item-info">
-                                <span>Item name</span>
-                                <span>Rp. 245.500</span>
-                                <span>4 pcs</span>
-                            </span>
-                        </span>
-                        <span class="item-right">
-                            <button class="btn btn-xs btn-danger pull-right">x</button>
-                        </span>
-                    </span>
-                  </li>
-                  <li class="divider"></li>
-                  <li>
-                      <span class="item">
-                        <span class="item-left">
-                            <img src="/media/pictures/indah.jpg" width="50" height="auto" alt="" />
-                            <span class="item-info">
-                                <span>Item name</span>
-                                <span>Rp. 245.500</span>
-                                <span>4 pcs</span>
-                            </span>
-                        </span>
-                        <span class="item-right">
-                            <button class="btn btn-xs btn-danger pull-right">x</button>
-                        </span>
-                    </span>
-                  </li>
-                  <li class="divider"></li>
-                  <li>
-                      <span class="item">
-                        <span class="item-left">
-                            <img src="/media/pictures/indah.jpg" width="50" height="auto" alt="" />
-                            <span class="item-info">
-                                <span>Item name</span>
-                                <span>Rp. 245.500</span>
-                                <span>4 pcs</span>
-                            </span>
-                        </span>
-                        <span class="item-right">
-                            <button class="btn btn-xs btn-danger pull-right">x</button>
-                        </span>
-                    </span>
-                  </li>
-                  <li class="divider"></li>
-                  <li>
-                      <span class="item">
-                        <span class="item-left">
-                            <img src="/media/pictures/indah.jpg" width="50" height="auto" alt="" />
-                            <span class="item-info">
-                                <span>Item name</span>
-                                <span>Rp. 245.500</span>
-                                <span>4 pcs</span>
-                            </span>
-                        </span>
-                        <span class="item-right">
-                            <button class="btn btn-xs btn-danger pull-right">x</button>
-                        </span>
-                    </span>
-                  </li>
-                  <li><a class="text-center" href="">View Cart</a></li>
-              </ul>
-            </li>
-          </ul>
-          {% endif %}
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+  
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+            <a class="navbar-brand" href="#">KEI-Partner</a>
+          </div>
+      
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="#"><span class="glyphicon glyphicon-home"></span> <span class="sr-only">(current)</span></a></li>
+              <li><a href="#">Store</a></li>
+              <li><a href="#">Blog</a></li>
+              <li class="active"><a href="#">Member Area</a></li>
+              <li><a href="#">Business Oportunity</a></li>
+            </ul>
+            {% include "storefront/wishlist_header.html" %}
+            {% include "storefront/cart_header.html" %}  
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
     </nav>
 
     <div class="container container-form container-bg" >
@@ -274,9 +94,6 @@
             <h3 class="headline" style="text-align:center;">Buruan Daftar !</h3>
         </div></div>
         <div class="hidden-xs col-md-1 col-lg-2"></div></div>
-    {% include "membership/footer.html" %}
-          <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>   
-          <script src="/static/javascript/custom.js"></script>
-    {% endblock %}
+{% include "membership/footer.html" %}
+{% include "membership/script.html" %}
+{% endblock %}
