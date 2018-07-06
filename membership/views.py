@@ -19,8 +19,7 @@ def login_page(request):
             data = form.cleaned_data
             username = data.get('username')
             password = data.get('password')
-            user = authenticate(request, 
-                Q(username=username) | Q(email=username),
+            user = authenticate(Q(username=username) or Q(email=username),
                 password=password)
             if user is not None:
                 login(request, user)
