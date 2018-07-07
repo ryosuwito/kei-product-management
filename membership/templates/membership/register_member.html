@@ -112,7 +112,7 @@
                   </div>
                   <div class="col-xs-12 col-sm-6">
                       <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Nomor HP/ Whatsapp <i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>  
-                        <input   style="width:100%" type="text" placeholder="Contoh : +628129999999 / 0812999999" name="phone"></div>
+                      {{ form.phone_number }}
                   </div>
                </div>
 
@@ -136,11 +136,13 @@
               <div class="row" style="margin: 0">
                 <div class="col-xs-12 col-sm-6">
                   <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Nomor KTP *(angka tanpa spasi)<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>  
-                    <input   style="width:100%" type="text" placeholder="Contoh : 3671081xxxxxxxxxx" name="nomor-ktp"></div>
+                    {{ form.ktp_number}}  
+                  </div>
                 </div>
                 <div class="col-xs-12 col-sm-6">
                     <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Nomor Rekening *(angka tanpa spasi)<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>  
-                      <input   style="width:100%" type="text" placeholder="Contoh : 7211XXCCCCCCDDF" name="nomor-bank"></div>
+                      {{ form.bank_account_number}}  
+                    </div>
                 </div>
               </div>
           </fieldset>
@@ -186,6 +188,7 @@
                   <div class="col-xs-12" style="text-align: left">
                     <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Alamat Lengkap *(sesuai dengan KTP)<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                     </div>
+                    {{ form.ktp_address }}
                     <textarea placeholder="Contoh: Jl. Angkasa 1 Blok AF6 NO 18" id="alamat-lengkap" class="text" rows ="6" name="alamat-lengkap" form="register-form"></textarea>  
                     <input type="checkbox" name="different-address" value="different-address" id="different-address" onchange="show_home_address()"><p style="display: inline-block; padding-left:10px; font-size:10pt">Alamat Rumah Berbeda dengan Alamat KTP</p>
                   </div>
@@ -261,7 +264,7 @@
   function getKecamatan(){
     var selected_kota='';
     var myselect = document.getElementById("id_kota")
-    selected_kota=myselect.options[myselect.selectedIndex].text;
+    selected_kota=myselect.options[myselect.selectedIndex].value;
     $.ajaxSetup({
       headers : {
         'CSRFToken' : "{% csrf_token %}",
@@ -281,7 +284,7 @@
   function getKelurahan(){
     var selected_kecamatan='';
     var myselect = document.getElementById("id_kecamatan")
-    selected_kecamatan=myselect.options[myselect.selectedIndex].text;
+    selected_kecamatan=myselect.options[myselect.selectedIndex].value;
     $.ajaxSetup({
       headers : {
         'CSRFToken' : "{% csrf_token %}",

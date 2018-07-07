@@ -20,7 +20,11 @@ class MemberRegisterForm(forms.ModelForm):
     provinsi = forms.ModelChoiceField(Provinsi.objects.all(), initial='')
     member_type = forms.ChoiceField(choices = Member.USER_TYPE_CHOICES[2:-1], initial=0, required=True)
     username = forms.CharField(required=True, min_length=USERNAME_MIN, max_length=USERNAME_MAX)
+    phone_number = forms.CharField(required=True, max_length=17)
     sponsor_code = forms.CharField(min_length=12, max_length=12)
+    ktp_address = forms.CharField(max_length=250, required=True)
+    ktp_number = forms.IntegerField(required=True)
+    bank_account_number = forms.IntegerField(required=True)
     def __init__(self, *args, **kwargs):
         super(MemberRegisterForm, self).__init__(*args, **kwargs)
 
@@ -33,6 +37,15 @@ class MemberRegisterForm(forms.ModelForm):
         self.fields['email'].widget.attrs['placeholder'] = 'Masukan Email Aktif'
         self.fields['sponsor_code'].required = False
         self.fields['provinsi'].widget.attrs['onClick'] = 'getKota()'
+        self.fields['phone_number'].widget = forms.NumberInput()
+        self.fields['phone_number'].widget.attrs['placeholder'] = 'Contoh : +628129999999 / 0812999999'
+        self.fields['ktp_number'].widget.attrs['placeholder'] = 'Contoh : 3671081xxxxxxxxxx'
+        self.fields['ktp_number'].widget = forms.NumberInput()
+        self.fields['bank_account_number'].widget.attrs['placeholder'] = 'Contoh : 7211XXCCCCCCDDF'
+        self.fields['bank_account_number'].widget = forms.NumberInput()
+        self.fields['ktp_address'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
+        self.fields['ktp_address'].widget = forms.Textarea() 
+        self.fields['ktp_address'].widget.attrs['rows'] = '6'
 
     def clean_username(self):
         username = self.cleaned_data["username"].lower()
@@ -63,3 +76,10 @@ class MemberRegisterForm(forms.ModelForm):
 
 class GuestRegisterForm(MemberRegisterForm):
     member_type = forms.ChoiceField(choices = Member.USER_TYPE_CHOICES[2:-1], initial=0, required=False)
+    def __init__(self, *args, **kwargs):
+        super(GuestRegisterForm, self).__init__(*args, **kwargs)
+
+        # sets the placeholder key/value in the attrs for a widget
+        # when the form is instantiated (so the widget already exists)
+        self.fields['ktp_number'].required = False
+        self.fields['bank_account_number'].required = False
