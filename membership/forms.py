@@ -32,6 +32,7 @@ class MemberRegisterForm(forms.ModelForm):
         self.fields['email'].widget = forms.EmailInput()
         self.fields['email'].widget.attrs['placeholder'] = 'Masukan Email Aktif'
         self.fields['sponsor_code'].required = False
+        self.fields['provinsi'].widget.attrs['onClick'] = 'getKota()'
 
     def clean_username(self):
         username = self.cleaned_data["username"].lower()
