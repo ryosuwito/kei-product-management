@@ -67,12 +67,13 @@ def register_page(request):
         if namespace == 'guest':
             form = GuestRegisterForm(request.POST)
         else:
-            form = MemberRegisterForm(request.POST)
+            form = MemberRegisterForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
             username = data.get('username').lower()
             password = data.get('password')
             email = data.get('email')
+            
             user = User.objects.create_user(username=username, email=email, password=password)
             full_name = data.get('first_name').split(' ')
             user.last_name = full_name[-1] 
@@ -84,6 +85,16 @@ def register_page(request):
                 user.member.member_type = 0
             else:
                 user.member.member_type = data.get('member_type')
+            
+            user.member.phone_number = data.get('phone_number')            
+            user.member.ktp_number = data.get('ktp_number')           
+            user.member.bank_account_number = data.get('bank_account_number')  
+            user.member.bank_book_photo = data.get('bank_book_photo')
+            user.member.ktp_photo = data.get('ktp_photo')              
+            user.member.ktp_address = data.get('ktp_address')
+            if data.get('home_address'):                 
+                user.member.home_address = data.get('home_address')
+            
             user.save()
             if user is not None:
                 logout(request)

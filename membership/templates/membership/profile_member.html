@@ -54,6 +54,14 @@
                           {% if request.user == user %} MY ACCOUNT
                           {% else %} DETAIL {% endif %}
                       </h3>
+                      {% if user.member.ktp_photo%}
+                      <img height="100px" width="200px" src="{{ user.member.get_ktp_url }}">
+                      {% endif %}
+                      {% if user.member.bank_book_photo %}
+                      <img height="100px" width="200px" src="{{ user.member.get_bank_url }}">
+                      {% endif %}
+                      <p>{{user.member.phone_number}}</p>
+                      <p>{{user.member.ktp_number}}</p>
                       <h6 class="titlesm cool" style="text-align:left;">
                         Kode Referal :
                       </h6>

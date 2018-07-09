@@ -26,7 +26,7 @@ class MemberRegisterForm(forms.ModelForm):
     home_address = forms.CharField(max_length=250, required=False)
     ktp_number = forms.IntegerField(required=True)
     bank_account_number = forms.IntegerField(required=True)
-    bank_book_photo = forms.ImageField(required=False)
+    bank_book_photo = forms.ImageField(required=False) 
     ktp_photo = forms.ImageField(required=False)
     def __init__(self, *args, **kwargs):
         super(MemberRegisterForm, self).__init__(*args, **kwargs)
@@ -52,7 +52,7 @@ class MemberRegisterForm(forms.ModelForm):
         self.fields['ktp_address'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
 
         self.fields['home_address'].widget = forms.Textarea() 
-        self.fields['home_address'].widget.attrs['rows'] = '6'
+        self.fields['home_address'].widget.attrs['rows'] = '6' 
         self.fields['home_address'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
 
         self.fields['bank_book_photo'].widget.attrs['onChange'] = 'Handlechange(event, this.id)'

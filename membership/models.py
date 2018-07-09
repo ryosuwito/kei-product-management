@@ -50,11 +50,11 @@ class Member(models.Model):
         (MASTER_SELLER, 'Master Seller'),
     )
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    sponsor_code = models.CharField(max_length=12, blank=True)
-    referal_code = models.CharField(max_length=12, blank=True)
-    sponsor = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="sponsor", null=True)
-    member_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=NEW_MEMBER)
+    user = models.OneToOneField(User, on_delete=models.CASCADE) #done
+    sponsor_code = models.CharField(max_length=12, blank=True) #done
+    referal_code = models.CharField(max_length=12, blank=True) #done
+    sponsor = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="sponsor", null=True) #done
+    member_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=NEW_MEMBER) #done
     phone_regex = RegexValidator(regex=r'^\+?62?\d{9,15}$', message="Nomor Telepon Harus memiliki format +62819999999 atau 0819999999'. Maksimal 15 Digit.")
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True) # validator haruslah berupa list
     ktp_address = models.CharField(max_length=250, blank=True)
@@ -65,11 +65,17 @@ class Member(models.Model):
     bank_book_photo = models.ImageField(upload_to = 'bank_book_photo', blank=True)
     ktp_photo = models.ImageField(upload_to = 'ktp_photo', blank=True)
     profile_photo = models.ImageField(upload_to = 'profile_photo', blank=True)
-    qrcode = models.CharField(max_length=20, blank=True)
+    qrcode = models.CharField(max_length=20, blank=True)  
 
     @models.permalink
     def get_absolute_url(self):
         return ("membership:profile", [self.user.pk,])
+
+    def get_ktp_url(self):
+        return ("/media/%s"%self.ktp_photo)
+
+    def get_bank_url(self):
+        return ("/media/%s"%self.bank_book_photo)
 
     def get_full_name(self):
         return '{} {}'.format(self.user.first_name, self.user.last_name)
