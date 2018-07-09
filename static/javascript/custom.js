@@ -47,18 +47,30 @@ $(document).ready(function () {
       document.getElementById('home-address').classList.add("hidden");
    }
  }
- function HandleBrowseClick(){
-   var fileinput = document.getElementById("browse");
+ function HandleBrowseClick(id){
+   if(id == "btn_ktp"){
+      var fileinput = document.getElementById("id_ktp_photo");
+   }
+   else if(id == "btn_bank"){
+      var fileinput = document.getElementById("id_bank_book_photo");
+   }
    fileinput.click(); 
  }
- function Handlechange(event){
-   var fileinput = document.getElementById("browse");
-   var textinput = document.getElementById("filename");
-   textinput.value = fileinput.value;
+ function Handlechange(event, id){
+    if(id == "id_ktp_photo"){
+        var fileinput = document.getElementById("id_ktp_photo");
+        var textinput = document.getElementById("ktp_filename");
+        var imgtag = document.getElementById("dummy_ktp_photo");
+    }
+    else if(id == "id_bank_book_photo"){
+        var fileinput = document.getElementById("id_bank_book_photo");
+        var textinput = document.getElementById("bank_book_filename");
+        var imgtag = document.getElementById("dummy_bank_book_photo");
+    }
+   textinput.value = fileinput.value.replace("C:\\fakepath\\","");
    var selectedFile = event.target.files[0];
    var reader = new FileReader();
 
-   var imgtag = document.getElementById("ava");
    imgtag.title = selectedFile.name;
 
    reader.onload = function(event) {
