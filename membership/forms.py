@@ -39,6 +39,7 @@ class MemberRegisterForm(forms.ModelForm):
         self.fields['email'].widget = forms.EmailInput()
         self.fields['email'].widget.attrs['placeholder'] = 'Masukan Email Aktif'
         self.fields['sponsor_code'].required = False
+        
         self.fields['provinsi'].widget.attrs['onClick'] = 'getKota()'
 
         self.fields['phone_number'].widget = forms.NumberInput()
@@ -51,11 +52,11 @@ class MemberRegisterForm(forms.ModelForm):
         self.fields['bank_account_number'].widget = forms.NumberInput()
 
         self.fields['ktp_address'].widget = forms.Textarea() 
-        self.fields['ktp_address'].widget.attrs['rows'] = '6'
+        self.fields['ktp_address'].widget.attrs['rows'] = '3'
         self.fields['ktp_address'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
 
         self.fields['home_address'].widget = forms.Textarea() 
-        self.fields['home_address'].widget.attrs['rows'] = '6' 
+        self.fields['home_address'].widget.attrs['rows'] = '3' 
         self.fields['home_address'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
 
         self.fields['bank_book_photo'].widget.attrs['onChange'] = 'Handlechange(event, this.id)'
@@ -101,7 +102,7 @@ class GuestRegisterForm(MemberRegisterForm):
         self.fields['ktp_number'].required = False
         self.fields['bank_account_number'].required = False
 
-class MemberEditProfileForm(forms.Form):   
+class MemberEditProfileForm(forms.ModelForm):   
     instagram_address = forms.CharField(max_length=250, required=False)  
     facebook_address = forms.CharField(max_length=250, required=False)   
     twitter_address = forms.CharField(max_length=250, required=False)     
@@ -109,16 +110,47 @@ class MemberEditProfileForm(forms.Form):
     website_address = forms.CharField(max_length=250, required=False)
     whatsapp_number = forms.CharField(required=False)
 
+    home_address = forms.CharField(max_length=250, required=True)
+    bank_book_photo = forms.ImageField(required=False) 
+    ktp_photo = forms.ImageField(required=False)
+    
+    provinsi = forms.ModelChoiceField(Provinsi.objects.all(), initial='')  
     def __init__(self, *args, **kwargs):
         super(MemberEditProfileForm, self).__init__(*args, **kwargs)
-
+        
         self.fields['instagram_address'].widget.attrs['placeholder'] = 'contoh : @instagram123'
         self.fields['facebook_address'].widget.attrs['placeholder'] = 'contoh : https://www.facebook.com/fb123'
         self.fields['twitter_address'].widget.attrs['placeholder'] = 'contoh : @twitter123'
         self.fields['line_address'].widget.attrs['placeholder'] = 'contoh : @line123'
         self.fields['website_address'].widget.attrs['placeholder'] = 'contoh : https://www.blog.com/'
         self.fields['whatsapp_number'].widget = forms.NumberInput()
+
+        self.fields['bank_book_photo'].widget.attrs['onChange'] = 'Handlechange(event, this.id)'
+        self.fields['bank_book_photo'].widget.attrs['class'] = 'hidden'
+
+        self.fields['ktp_photo'].widget.attrs['onChange'] = 'Handlechange(event, this.id)'
+        self.fields['ktp_photo'].widget.attrs['class'] = 'hidden'
+      
+        self.fields['provinsi'].widget.attrs['onClick'] = 'getKota()'
         
+        self.fields['home_address'].widget = forms.Textarea() 
+        self.fields['home_address'].widget.attrs['rows'] = '3' 
+        self.fields['home_address'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
+
+    class Meta:
+        USERNAME_MAX = 30
+        USERNAME_MIN = 4
+        model = Member
+        fields = ('instagram_address', 'facebook_address','twitter_address', 'line_address',\
+                  'website_address', 'whatsapp_number', 'bank_book_photo', 'ktp_photo')
+        error_messages = {
+            'twitter_address': {
+                'required': 'Harap masukan username dengan benar',
+                'max_length': 'Username telalu panjang, maksimal {}'.format(USERNAME_MAX),
+                'min_length': 'Username telalu pendek, minimal {}'.format(USERNAME_MIN),
+                'invalid': 'Username tidak boleh ada spasi. Hanya alfabet, angka dan karaker @/./+/-/'
+            },
+        }
         
         
         

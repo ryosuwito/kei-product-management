@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.models import User 
 from django.urls import reverse
 from django.db.models import Q
+from database_wilayah.models import Provinsi, Kota, Kecamatan, Kelurahan
 from .models import Member
 from .forms import MemberLoginForm, MemberRegisterForm, GuestRegisterForm, MemberEditProfileForm
 # Create your views here.
@@ -70,6 +71,22 @@ def register_page(request):
             form = MemberRegisterForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
+            try :
+                if request.POST['provinsi'] and request.POST['kota'] and \
+                request.POST['kecamatan'] and request.POST['kelurahan']:
+
+                    provinsi = data.get('provinsi')
+                    kota = Kota.objects.get(pk=request.POST['kota'])
+                    kecamatan = Kecamatan.objects.get(pk=request.POST['kecamatan'])
+                    kelurahan = Kelurahan.objects.get(pk=request.POST['kelurahan'])
+
+                else :
+                    return render(request, 'membership/register_%s.html'%(namespace),
+                        {'form': form, 'threshold': threshold})
+            except :
+                return render(request, 'membership/register_%s.html'%(namespace),
+                    {'form': form, 'threshold': threshold})
+
             username = data.get('username').lower()
             password = data.get('password')
             email = data.get('email')
@@ -91,9 +108,11 @@ def register_page(request):
             user.member.bank_account_number = data.get('bank_account_number')  
             user.member.bank_book_photo = data.get('bank_book_photo')
             user.member.ktp_photo = data.get('ktp_photo')              
-            user.member.ktp_address = data.get('ktp_address')
+            user.member.ktp_address = data.get('ktp_address') + ", %s, %s, %s, %s" % (kelurahan, kecamatan, kota, provinsi)
             if data.get('home_address'):                 
                 user.member.home_address = data.get('home_address')
+            else :
+                user.member.home_address = user.member.ktp_address
             
             user.save()
             if user is not None:
@@ -142,17 +161,41 @@ def profile_page(request, pk=0):
 
 @login_required(login_url='/member/login')
 def edit_profile_page(request):
+    provinsi = ''
+    kota = ''
+    kecamatan = ''
+    kelurahan = ''
+    home_address = ''
+    is_complete = False
     namespace = reverse('membership:edit_profile', 
         current_app=request.resolver_match.namespace).split('/')[1]
     if request.method == 'POST':   
         if namespace == 'guest':          
             return HttpResponse("Edit Profile Fail")
         else:
-            form = MemberEditProfileForm(request.POST)
+            form = MemberEditProfileForm(request.POST, request.FILES)
 
         if form.is_valid():
             data = form.cleaned_data
+            try :
+                if request.POST['provinsi'] and request.POST['kota'] and \
+                request.POST['kecamatan'] and request.POST['kelurahan']:
+
+                    provinsi = data.get('provinsi')
+                    kota = Kota.objects.get(pk=request.POST['kota'])
+                    kecamatan = Kecamatan.objects.get(pk=request.POST['kecamatan'])
+                    kelurahan = Kelurahan.objects.get(pk=request.POST['kelurahan'])
+                    is_complete = True
+            except :
+                pass
+
+
             user = request.user
+            
+            if data.get('home_address') and is_complete:
+                home_address = data.get('home_address')
+                user.member.home_address = home_address + ", %s, %s, %s, %s" % (kelurahan, kecamatan, kota, provinsi)
+
             if data.get('instagram_address') :
                 user.member.instagram_address = data.get('instagram_address')
             if data.get('facebook_address') :
@@ -165,6 +208,11 @@ def edit_profile_page(request):
                 user.member.website_address = data.get('website_address')
             if data.get('whatsapp_number') :
                 user.member.whatsapp_number = data.get('whatsapp_number')
+
+            if data.get('bank_book_photo') :
+                user.member.bank_book_photo = data.get('bank_book_photo')
+            if data.get('ktp_photo') :
+                user.member.ktp_photo = data.get('ktp_photo')              
 
             user.save()
             return HttpResponseRedirect(reverse('membership:profile', 
@@ -198,6 +246,10 @@ def edit_profile_page(request):
             if request.user.member.whatsapp_number:
                 form.fields['whatsapp_number'].widget.attrs.update({
                 'placeholder': request.user.member.whatsapp_number
+                })
+            if request.user.member.home_address != request.user.member.ktp_address:
+                form.fields['home_address'].widget.attrs.update({
+                'placeholder': request.user.member.home_address
                 })
 
     return render(request, 'membership/edit_profile_%s.html'%(namespace),

@@ -54,13 +54,6 @@
                           {% if request.user == user %} MY ACCOUNT
                           {% else %} DETAIL {% endif %}
                       </h3>
-                      {% if user.member.ktp_photo%}
-                      <img height="100px" width="200px" src="{{ user.member.get_ktp_url }}">
-                      {% endif %}
-                      {% if user.member.bank_book_photo %}
-                      <img height="100px" width="200px" src="{{ user.member.get_bank_url }}">
-                      {% endif %}
-                      <p>{{user.member.ktp_number}}</p>
                       <h6 class="titlesm cool" style="text-align:left;">
                         Kode Referal :
                       </h6>
@@ -84,12 +77,6 @@
                       </h6>
                       <h5 style="text-align:left; margin:0;">
                         {{ user.email }}
-                      </h5>
-                      <h6 class="titlesm cool" style="text-align:left;">
-                        Alamat Rumah :
-                      </h6>
-                      <h5 style="text-align:left; margin:0;">
-                        Jl. Bandengan, Blok A1 No. 18 Kec. Jatibening Kel. Jatijajar Kota Tangerang - Banten
                       </h5>
                 </div>
             </div>          
@@ -255,7 +242,52 @@
                   <div class="col-xs-7 col-lg-8 col-sm-4 col-md-7" style="padding:0 28px 0 0;min-height:0;margin:5px 0">
                     <h5 class="desc cool" style="margin:0; padding-left: 10px">:                 
                         {{user.member.phone_number}}</h5></div>
-                </div>
+                </div></div></div>
+
+         <div name="socio-box" class="col-xs-12 col-md-3" style="padding: 0 20px 0 0">
+            <div class="col-xs-12 card-bottom card-md effect5" style="min-height:auto;padding:0 0 20px 0">
+             
+                {% if user == request.user %}
+                  <div style="text-align: center;">
+                      <h4 class="title" style="margin:10px 0">Data Pribadi</h4>
+                      <div class="row">
+                        <div class="col-xs-5 col-lg-4 col-sm-2 col-md-5" style="padding:0 0 0 28px;min-height:0;margin:5px 0">
+                          <h5 class="desc" style="margin:0">Alamat KTP</h5></div>
+                        <div class="col-xs-7 col-lg-8 col-sm-4 col-md-7" style="padding:0 28px 0 0;min-height:0;margin:5px 0">
+                          <h5 class="desc" style="margin:0; padding-left: 10px">: {{ user.member.ktp_address }}</h5></div>
+                      </div>
+
+
+                      <div class="row">
+                        <div class="col-xs-5 col-lg-4 col-sm-2 col-md-5" style="padding:0 0 0 28px;min-height:0;margin:5px 0">
+                          <h5 class="desc" style="margin:0">Alamat Rumah</h5></div>
+                        <div class="col-xs-7 col-lg-8 col-sm-4 col-md-7" style="padding:0 28px 0 0;min-height:0;margin:5px 0">
+                          {% if user.member.home_address != user.member.ktp_address %}
+                          <h5 class="desc" style="margin:0; padding-left: 10px">: {{ user.member.home_address }}</h5>
+                          {% else %}
+                          <h5 class="desc" style="margin:0; padding-left: 10px">: Sama dengan alamat KTP</h5>
+                          {% endif %}
+                        </div>
+                      </div>
+
+                      <div class="row" style="padding-right: 25px">
+                          {% if user.member.ktp_photo%}
+                            <div class="col-xs-5 col-lg-5 col-sm-2 col-md-5" style="padding:0 0 0 28px;min-height:0;margin:5px 0">
+                              <h5 class="desc" style="margin:0">Foto KTP<P</h5></div>
+                              <div class="col-xs-7 col-lg-7 col-sm-4 col-md-7" style="margin:5px 0; background-repeat:no-repeat; background-size:100%; height:100px;overflow:hidden; background-position: top center; background-image: url('{{ user.member.get_ktp_url }}')">
+                                </div>
+                          {% endif %}
+                          
+                          {% if user.member.bank_book_photo %}
+                            <div class="col-xs-5 col-lg-5 col-sm-2 col-md-5" style="padding:0 0 0 28px;min-height:0;margin:5px 0">
+                              <h5 class="desc" style="margin:0">Foto Buku Tabungan<P</h5></div>
+                            <div class="col-xs-7 col-lg-7 col-sm-4 col-md-7" style="margin:5px 0; background-repeat:no-repeat; background-size:100%; height:100px;overflow:hidden; background-position: top center; background-image: url('{{ user.member.get_bank_url }}')">
+                            </div>
+                          {% endif %}
+                      </div>
+                  </div>
+                {% endif %}
+
                 <div style="width: 100%; text-align: center">
                     <a href="{{ link_edit }}"><h3 class="btn btn-primary">Ubah Profil</h3></a>
                 </div>
