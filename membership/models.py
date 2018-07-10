@@ -59,12 +59,19 @@ class Member(models.Model):
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True) # validator haruslah berupa list
     ktp_address = models.CharField(max_length=250, blank=True)
     home_address = models.CharField(max_length=250, blank=True)
-    ktp_number = models.IntegerField(null=True, blank=True)
-    bank_account_number = models.IntegerField(null=True, blank=True)
+    ktp_number = models.CharField(max_length=30, null=True, blank=True)
+    bank_account_number = models.CharField(max_length=30, null=True, blank=True)
     bank_name = models.CharField(max_length=10, blank=True)
     bank_book_photo = models.ImageField(upload_to = 'bank_book_photo', blank=True)
     ktp_photo = models.ImageField(upload_to = 'ktp_photo', blank=True)
     profile_photo = models.ImageField(upload_to = 'profile_photo', blank=True)
+
+    instagram_address = models.CharField(max_length=250, blank=True)
+    facebook_address = models.CharField(max_length=250, blank=True)
+    twitter_address = models.CharField(max_length=250, blank=True)
+    line_address = models.CharField(max_length=250, blank=True)
+    website_address = models.CharField(max_length=250, blank=True)
+    whatsapp_number = models.CharField(validators=[phone_regex], max_length=17, blank=True, null=True)
     qrcode = models.CharField(max_length=20, blank=True)  
 
     @models.permalink

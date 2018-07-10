@@ -612,6 +612,8 @@ a:hover{
   align-items:center;
   text-align:center;
 }
+
+
 .social-icon{
   padding:3px;
 }
@@ -1502,6 +1504,13 @@ input[type="file"]{
   min-height:0px;
   height:50px;
 }
+
+.social-disabled{
+  overflow:hidden;
+  min-height:0px;
+  height:50px;
+}
+
 .sponsor-row{
   display:inline-block;
 }

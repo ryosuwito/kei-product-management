@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.db.models import Q
 from .models import Member
-from .forms import MemberLoginForm, MemberRegisterForm, GuestRegisterForm
+from .forms import MemberLoginForm, MemberRegisterForm, GuestRegisterForm, MemberEditProfileForm
 # Create your views here.
 
 def login_page(request):
@@ -120,21 +120,88 @@ def register_page(request):
 
 @login_required(login_url='/member/login')
 def profile_page(request, pk=0):
-    namespace = reverse('membership:register', 
-        current_app=request.resolver_match.namespace).split('/')[1]
+    namespace = request.resolver_match.namespace
+    member_type = namespace.split('_')[0]
+    link_edit = ''
+
     if pk == 0 or pk == request.user.pk :
-        if request.user.member.get_member_type_display() == 'guest' and \
-                request.resolver_match.namespace != 'guest_backend':
-            return HttpResponseRedirect(reverse('membership:profile', 
-                current_app='guest_backend'))
+        if request.user.member.get_member_type_display() != 'Guest' and \
+            request.resolver_match.namespace != 'member_backend':     
+                return HttpResponseRedirect(reverse('membership:profile', 
+                    current_app='member_backend'))
+
+        link_edit = reverse('membership:edit_profile', current_app=namespace)
         user = request.user
     else :
         user = get_object_or_404(User, pk=pk)
-        if user.member.get_member_type_display() != 'guest' and \
+        if user.member.get_member_type_display() != 'Guest' and \
                 request.resolver_match.namespace != 'member_backend':
             return HttpResponseRedirect("%s%s"%(reverse('membership:profile', 
                 current_app='member_backend'),pk))
-    return render(request, 'membership/profile_%s.html'%(namespace),{'user': user})
+    return render(request, 'membership/profile_%s.html'%(member_type),{'user': user, 'link_edit': link_edit})
+
+@login_required(login_url='/member/login')
+def edit_profile_page(request):
+    namespace = reverse('membership:edit_profile', 
+        current_app=request.resolver_match.namespace).split('/')[1]
+    if request.method == 'POST':   
+        if namespace == 'guest':          
+            return HttpResponse("Edit Profile Fail")
+        else:
+            form = MemberEditProfileForm(request.POST)
+
+        if form.is_valid():
+            data = form.cleaned_data
+            user = request.user
+            if data.get('instagram_address') :
+                user.member.instagram_address = data.get('instagram_address')
+            if data.get('facebook_address') :
+                user.member.facebook_address = data.get('facebook_address')
+            if data.get('twitter_address') :
+                user.member.twitter_address = data.get('twitter_address')
+            if data.get('line_address') :
+                user.member.line_address = data.get('line_address')
+            if data.get('website_address') :
+                user.member.website_address = data.get('website_address')
+            if data.get('whatsapp_number') :
+                user.member.whatsapp_number = data.get('whatsapp_number')
+
+            user.save()
+            return HttpResponseRedirect(reverse('membership:profile', 
+                current_app=request.resolver_match.namespace))
+
+    elif request.method == 'GET': 
+        if namespace == 'guest':
+            form = MemberEditProfileForm()
+        else:
+            form = MemberEditProfileForm()
+            if request.user.member.instagram_address:
+                form.fields['instagram_address'].widget.attrs.update({
+                'placeholder': request.user.member.instagram_address
+                })
+            if request.user.member.facebook_address:
+                form.fields['facebook_address'].widget.attrs.update({
+                'placeholder': request.user.member.facebook_address
+                })
+            if request.user.member.line_address:
+                form.fields['line_address'].widget.attrs.update({
+                'placeholder': request.user.member.line_address
+                })
+            if request.user.member.twitter_address:
+                form.fields['twitter_address'].widget.attrs.update({
+                'placeholder': request.user.member.twitter_address
+                })
+            if request.user.member.website_address:
+                form.fields['website_address'].widget.attrs.update({
+                'placeholder': request.user.member.website_address
+                })
+            if request.user.member.whatsapp_number:
+                form.fields['whatsapp_number'].widget.attrs.update({
+                'placeholder': request.user.member.whatsapp_number
+                })
+
+    return render(request, 'membership/edit_profile_%s.html'%(namespace),
+        {'form': form})
 
 def log_check(user):
     return user.is_authenticated

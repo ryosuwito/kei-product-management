@@ -40,10 +40,13 @@ class MemberRegisterForm(forms.ModelForm):
         self.fields['email'].widget.attrs['placeholder'] = 'Masukan Email Aktif'
         self.fields['sponsor_code'].required = False
         self.fields['provinsi'].widget.attrs['onClick'] = 'getKota()'
+
         self.fields['phone_number'].widget = forms.NumberInput()
         self.fields['phone_number'].widget.attrs['placeholder'] = 'Contoh : +628129999999 / 0812999999'
+
         self.fields['ktp_number'].widget.attrs['placeholder'] = 'Contoh : 3671081xxxxxxxxxx'
         self.fields['ktp_number'].widget = forms.NumberInput()
+        
         self.fields['bank_account_number'].widget.attrs['placeholder'] = 'Contoh : 7211XXCCCCCCDDF'
         self.fields['bank_account_number'].widget = forms.NumberInput()
 
@@ -97,3 +100,25 @@ class GuestRegisterForm(MemberRegisterForm):
         # when the form is instantiated (so the widget already exists)
         self.fields['ktp_number'].required = False
         self.fields['bank_account_number'].required = False
+
+class MemberEditProfileForm(forms.Form):   
+    instagram_address = forms.CharField(max_length=250, required=False)  
+    facebook_address = forms.CharField(max_length=250, required=False)   
+    twitter_address = forms.CharField(max_length=250, required=False)     
+    line_address = forms.CharField(max_length=250, required=False)  
+    website_address = forms.CharField(max_length=250, required=False)
+    whatsapp_number = forms.CharField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(MemberEditProfileForm, self).__init__(*args, **kwargs)
+
+        self.fields['instagram_address'].widget.attrs['placeholder'] = 'contoh : @instagram123'
+        self.fields['facebook_address'].widget.attrs['placeholder'] = 'contoh : https://www.facebook.com/fb123'
+        self.fields['twitter_address'].widget.attrs['placeholder'] = 'contoh : @twitter123'
+        self.fields['line_address'].widget.attrs['placeholder'] = 'contoh : @line123'
+        self.fields['website_address'].widget.attrs['placeholder'] = 'contoh : https://www.blog.com/'
+        self.fields['whatsapp_number'].widget = forms.NumberInput()
+        
+        
+        
+        
