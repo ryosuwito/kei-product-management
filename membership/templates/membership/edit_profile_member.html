@@ -60,6 +60,14 @@
               <legend>Data Akun :</legend>
 
               <div class="row" style="margin: 0">
+                  <div class="col-xs-12 ">
+                    <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Smart Motto  </p>  
+                      {{ form.smart_motto }}  
+                    </div>
+                  </div>
+                </div>
+
+              <div class="row" style="margin: 0">
                 <div class="col-xs-12 col-sm-6">
                   <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Nama akun Instagram  </p>  
                     {{ form.instagram_address }}  
@@ -188,64 +196,5 @@
 
 {% include "membership/footer.html" %}
 {% include "membership/script.html" %}
-<script>
-  function getKota(){
-    var selected_provinsi='';
-    var myselect = document.getElementById("id_provinsi")
-    selected_provinsi=myselect.options[myselect.selectedIndex].text;
-    $.ajaxSetup({
-      headers : {
-        'CSRFToken' : "{% csrf_token %}",
-      }
-    });
-    $.ajax({url: '/wilayah/kota/'+ selected_provinsi +'/', success: function(result){
-      var options = '';
-      for(i=0; i<result['results'].length; i++){
-        options += "<option value='"+result['results'][i]['value']+"'>"+result['results'][i]['nama']+"</option>";
-        console.log(result['results'][i]['nama']);
-      }
-      document.getElementById('id_kota').innerHTML=options;
-    }});
-  }
-</script>
-<script>
-  function getKecamatan(){
-    var selected_kota='';
-    var myselect = document.getElementById("id_kota")
-    selected_kota=myselect.options[myselect.selectedIndex].value;
-    $.ajaxSetup({
-      headers : {
-        'CSRFToken' : "{% csrf_token %}",
-      }
-    });
-    $.ajax({url: '/wilayah/kecamatan/'+ selected_kota +'/', success: function(result){
-      var options = '';
-      for(i=0; i<result['results'].length; i++){
-        options += "<option value='"+result['results'][i]['value']+"'>"+result['results'][i]['nama']+"</option>";
-        console.log(result['results'][i]['nama']);
-      }
-      document.getElementById('id_kecamatan').innerHTML=options;
-    }});
-  }
-</script>
-<script>
-  function getKelurahan(){
-    var selected_kecamatan='';
-    var myselect = document.getElementById("id_kecamatan")
-    selected_kecamatan=myselect.options[myselect.selectedIndex].value;
-    $.ajaxSetup({
-      headers : {
-        'CSRFToken' : "{% csrf_token %}",
-      }
-    });
-    $.ajax({url: '/wilayah/kelurahan/'+ selected_kecamatan +'/', success: function(result){
-      var options = '';
-      for(i=0; i<result['results'].length; i++){
-        options += "<option value='"+result['results'][i]['value']+"'>"+result['results'][i]['nama']+"</option>";
-        console.log(result['results'][i]['nama']);
-      }
-      document.getElementById('id_kelurahan').innerHTML=options;
-    }});
-  }
-</script>
+{% include "membership/get_area_script.html" %}
 {% endblock %}

@@ -26,7 +26,8 @@ SECRET_KEY = KEY.SECRET
 DEBUG = True
 
 ALLOWED_HOSTS = ['.localhost','localhost']
-
+PORT = ':8000'
+DEFAULT_HOST = ALLOWED_HOSTS[1]+ PORT
 
 # Application definition
 

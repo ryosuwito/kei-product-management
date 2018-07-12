@@ -74,9 +74,11 @@ class Member(models.Model):
     whatsapp_number = models.CharField(validators=[phone_regex], max_length=17, blank=True, null=True)
     qrcode = models.CharField(max_length=20, blank=True)  
 
+    smart_motto = models.CharField(max_length=250, blank=True)
+
     @models.permalink
     def get_absolute_url(self):
-        return ("membership:profile", [self.user.pk,])
+        return ("membership:profile", [self.user.username,])
 
     def get_ktp_url(self):
         return ("/media/%s"%self.ktp_photo)

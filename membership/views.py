@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.models import User 
@@ -8,9 +9,17 @@ from django.db.models import Q
 from database_wilayah.models import Provinsi, Kota, Kecamatan, Kelurahan
 from .models import Member
 from .forms import MemberLoginForm, MemberRegisterForm, GuestRegisterForm, MemberEditProfileForm
+import random
 # Create your views here.
 
-def login_page(request):
+def login_page(request):   
+    referal_code = False
+    if request.get_host() != settings.DEFAULT_HOST:
+        referal_code = check_host(request, pass_variable=True)
+        if not referal_code:
+            return  HttpResponseRedirect(request.scheme+"://"+settings.DEFAULT_HOST + 
+                        reverse('membership:login', 
+                            current_app=request.resolver_match.namespace)) 
     form_messages=''
     if request.method == 'POST':
         if request.user.is_authenticated:
@@ -38,6 +47,13 @@ def login_page(request):
     return render(request, 'membership/login.html',{'form': form, 'form_messages': form_messages})
 
 def pre_register_page(request):
+    referal_code = False
+    if request.get_host() != settings.DEFAULT_HOST:
+        referal_code = check_host(request, pass_variable=True)
+        if not referal_code:
+            return  HttpResponseRedirect(request.scheme+"://"+settings.DEFAULT_HOST + 
+                        reverse('membership:pre_register', 
+                            current_app=request.resolver_match.namespace))
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('membership:profile'))
     link = {
@@ -46,23 +62,21 @@ def pre_register_page(request):
     }
     return render(request, 'membership/pre_register.html', {'link':link})
 
-def register_page(request):  
+def register_page(request): 
+    referal_code = False
+    if request.get_host() != settings.DEFAULT_HOST:
+        referal_code = check_host(request, pass_variable=True)
+        if not referal_code:
+            return  HttpResponseRedirect(request.scheme+"://"+settings.DEFAULT_HOST + 
+                        reverse('membership:register', 
+                            current_app=request.resolver_match.namespace))
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('membership:profile'))
-    referal_code = False
     threshold = ''
     namespace = reverse('membership:register', 
         current_app=request.resolver_match.namespace).split('/')[1]
     if namespace != 'guest':
         threshold = {k: v for k,v in Member.LEVEL.items() if k != 'MASTER_SELLER'}
-    if request.get_host() != 'localhost':
-        userref = request.get_host().split('.')
-        try :
-            user = User.objects.get(username=userref[0])
-        except :
-            user = False
-        if user :
-            referal_code = user.member.referal_code
 
     if request.method == 'POST':
         if namespace == 'guest':
@@ -98,6 +112,11 @@ def register_page(request):
             if referal_code:
                 user.member.sponsor_code = referal_code
                 user.member.sponsor = Member.objects.get(referal_code=referal_code).user
+            else :
+                sponsor_user = random.choice(User.objects.all())
+                user.member.sponsor_code = sponsor_user.member.referal_code
+                user.member.sponsor = sponsor_user
+
             if namespace == 'guest':
                 user.member.member_type = 0
             else:
@@ -107,8 +126,12 @@ def register_page(request):
             user.member.ktp_number = data.get('ktp_number')           
             user.member.bank_account_number = data.get('bank_account_number')  
             user.member.bank_book_photo = data.get('bank_book_photo')
-            user.member.ktp_photo = data.get('ktp_photo')              
-            user.member.ktp_address = data.get('ktp_address') + ", %s, %s, %s, %s" % (kelurahan, kecamatan, kota, provinsi)
+            user.member.ktp_photo = data.get('ktp_photo')                   
+            if namespace == 'guest':    
+                user.member.ktp_address = data.get('home_address') + ", %s, %s, %s, %s" % (kelurahan, kecamatan, kota, provinsi)
+            else:
+                user.member.ktp_address = data.get('ktp_address') + ", %s, %s, %s, %s" % (kelurahan, kecamatan, kota, provinsi)
+
             if data.get('home_address'):                 
                 user.member.home_address = data.get('home_address')
             else :
@@ -139,6 +162,13 @@ def register_page(request):
 
 @login_required(login_url='/member/login')
 def profile_page(request, uname='none'):
+    referal_code = False
+    if request.get_host() != settings.DEFAULT_HOST:
+        referal_code = check_host(request, pass_variable=True)
+        if not referal_code:
+            return  HttpResponseRedirect(request.scheme+"://"+settings.DEFAULT_HOST + 
+                        reverse('membership:profile', 
+                            current_app=request.resolver_match.namespace)) 
     namespace = request.resolver_match.namespace
     member_type = namespace.split('_')[0]
     link_edit = ''
@@ -166,10 +196,23 @@ def profile_page(request, uname='none'):
             return HttpResponseRedirect("%s%s"%(reverse('membership:profile', 
                 current_app='guest_backend'),uname))
 
-    return render(request, 'membership/profile_%s.html'%(member_type),{'user': user, 'link_edit': link_edit})
+    link_sponsor = ''
+    if user.member.sponsor:
+        sponsor = Member.objects.get(referal_code = user.member.sponsor_code)
+        link_sponsor = sponsor.get_absolute_url()
+
+    return render(request, 'membership/profile_%s.html'%(member_type),
+        {'user': user, 'link_edit': link_edit, 'link_sponsor': link_sponsor})
 
 @login_required(login_url='/member/login')
 def edit_profile_page(request):
+    referal_code = False
+    if request.get_host() != settings.DEFAULT_HOST:
+        referal_code = check_host(request, pass_variable=True)
+        if not referal_code:
+            return  HttpResponseRedirect(request.scheme+"://"+settings.DEFAULT_HOST + 
+                        reverse('membership:edit_profile', 
+                            current_app=request.resolver_match.namespace)) 
     provinsi = ''
     kota = ''
     kecamatan = ''
@@ -221,7 +264,9 @@ def edit_profile_page(request):
             if data.get('bank_book_photo') :
                 user.member.bank_book_photo = data.get('bank_book_photo')
             if data.get('ktp_photo') :
-                user.member.ktp_photo = data.get('ktp_photo')              
+                user.member.ktp_photo = data.get('ktp_photo')            
+            if data.get('smart_motto') :
+                user.member.smart_motto = data.get('smart_motto')               
 
             user.save()
             return HttpResponseRedirect(reverse('membership:profile', 
@@ -272,3 +317,17 @@ def logout_page(request):
     logout(request)
     return HttpResponseRedirect(reverse('membership:login', 
         current_app=request.resolver_match.namespace))
+
+def check_host(request, pass_variable = False):
+    referal_code = False
+    userref = request.get_host().split('.')
+    try :
+        user = User.objects.get(username=userref[0])
+    except :
+        user = False
+    if user :
+        referal_code = user.member.referal_code
+    elif pass_variable == True :            
+        referal_code = False      
+        #return
+    return referal_code

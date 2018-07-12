@@ -101,7 +101,7 @@ class GuestRegisterForm(MemberRegisterForm):
         # when the form is instantiated (so the widget already exists)
         self.fields['ktp_number'].required = False
         self.fields['bank_account_number'].required = False
-        self.fields['phone_number'].required = False
+        self.fields['phone_number'].required = True
         self.fields['ktp_address'].required = False
         self.fields['ktp_address'].required = False
 
@@ -111,9 +111,10 @@ class MemberEditProfileForm(forms.ModelForm):
     twitter_address = forms.CharField(max_length=250, required=False)     
     line_address = forms.CharField(max_length=250, required=False)  
     website_address = forms.CharField(max_length=250, required=False)
+    smart_motto = forms.CharField(max_length=250, required=False)
     whatsapp_number = forms.CharField(required=False)
 
-    home_address = forms.CharField(max_length=250, required=True)
+    home_address = forms.CharField(max_length=250, required=False)
     bank_book_photo = forms.ImageField(required=False) 
     ktp_photo = forms.ImageField(required=False)
     
@@ -140,12 +141,16 @@ class MemberEditProfileForm(forms.ModelForm):
         self.fields['home_address'].widget.attrs['rows'] = '3' 
         self.fields['home_address'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
 
+        self.fields['smart_motto'].widget = forms.Textarea() 
+        self.fields['smart_motto'].widget.attrs['rows'] = '3' 
+        self.fields['smart_motto'].widget.attrs['placeholder'] = 'Contoh: Waktu adalah uang'
+
     class Meta:
         USERNAME_MAX = 30
         USERNAME_MIN = 4
         model = Member
         fields = ('instagram_address', 'facebook_address','twitter_address', 'line_address',\
-                  'website_address', 'whatsapp_number', 'bank_book_photo', 'ktp_photo')
+                  'website_address', 'whatsapp_number', 'bank_book_photo', 'ktp_photo','smart_motto')
         error_messages = {
             'twitter_address': {
                 'required': 'Harap masukan username dengan benar',
