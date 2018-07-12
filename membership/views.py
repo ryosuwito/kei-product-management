@@ -138,25 +138,34 @@ def register_page(request):
         {'form': form, 'threshold': threshold})
 
 @login_required(login_url='/member/login')
-def profile_page(request, pk=0):
+def profile_page(request, uname='none'):
     namespace = request.resolver_match.namespace
     member_type = namespace.split('_')[0]
     link_edit = ''
 
-    if pk == 0 or pk == request.user.pk :
+    if uname == 'none' or uname == request.user.username :
         if request.user.member.get_member_type_display() != 'Guest' and \
             request.resolver_match.namespace != 'member_backend':     
                 return HttpResponseRedirect(reverse('membership:profile', 
                     current_app='member_backend'))
+        if request.user.member.get_member_type_display() == 'Guest' and \
+            request.resolver_match.namespace != 'guest_backend':     
+                return HttpResponseRedirect(reverse('membership:profile', 
+                    current_app='guest_backend'))
 
         link_edit = reverse('membership:edit_profile', current_app=namespace)
         user = request.user
     else :
-        user = get_object_or_404(User, pk=pk)
+        user = get_object_or_404(User, username=uname)
         if user.member.get_member_type_display() != 'Guest' and \
                 request.resolver_match.namespace != 'member_backend':
             return HttpResponseRedirect("%s%s"%(reverse('membership:profile', 
-                current_app='member_backend'),pk))
+                current_app='member_backend'),uname))
+        if user.member.get_member_type_display() == 'Guest' and \
+                request.resolver_match.namespace != 'guest_backend':
+            return HttpResponseRedirect("%s%s"%(reverse('membership:profile', 
+                current_app='guest_backend'),uname))
+
     return render(request, 'membership/profile_%s.html'%(member_type),{'user': user, 'link_edit': link_edit})
 
 @login_required(login_url='/member/login')

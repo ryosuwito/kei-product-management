@@ -48,7 +48,7 @@ with open('database_wilayah/database_indonesia.csv') as file:
             
         if not kel > kllimit:
             kel += 1
-            kelurahan= Kelurahan.objects.create(name=data[4], kecamatan=kecamatan, postal_code = data[5].strip())
+            kelurahan= Kelurahan.objects.get_or_create(name=data[4], kecamatan=kecamatan, postal_code = data[5].strip())
         '''
         print('%s %s'%(cp, provinsi.name))
         print('%s %s'%(ck, kota.name))

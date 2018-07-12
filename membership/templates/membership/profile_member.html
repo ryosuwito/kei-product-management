@@ -44,7 +44,7 @@
                       {% if request.user == user %} 
                       <h5 class="titlesm cool" style="text-align:center; margin:0;"><sub>*(barcode berisi link store anda)</sub>
                       </h5>
-                      {% else %}{{ request.scheme }}://{{ request.get_host }}{{ user.member.get_absolute_url }}{% endif %}
+                      {% endif %}
                       <img  id="saran-4" style="margin:5px 0"  width="100%" height="auto" src="/media/pictures/ex-member-card.png">
                 </div>
             </div>
@@ -78,6 +78,18 @@
                       <h5 style="text-align:left; margin:0;">
                         {{ user.email }}
                       </h5>
+                      {% if request.user != user %}
+                      <h6 class="titlesm cool" style="text-align:left;">
+                        Alamat Rumah :
+                      </h6>
+                      <h5 style="text-align:left; margin:0;">
+                        {% if user.member.home_address %}
+                        {{ user.member.home_address | title }}
+                        {% else %}
+                        {{ user.member.ktp_address | title }}
+                        {% endif %}
+                      </h5>
+                      {% endif %}
                 </div>
             </div>          
           </div>
@@ -106,7 +118,7 @@
                 {% if request.user == user %}
                 <p>Link Toko Replika Anda adalah :
                 {% else %}
-                <p>Link Toko Replika {{ user.username }} adalah :{% endif %}
+                <p>Link Toko Replika <b>{{ user.member.get_full_name | title}}</b> adalah :{% endif %}
                     <br>https://{{user.username}}.kei-partner.com/store</p> 
               </div>
             </div>
@@ -243,11 +255,11 @@
                     <h5 class="desc cool" style="margin:0; padding-left: 10px">:                 
                         {{user.member.phone_number}}</h5></div>
                 </div></div></div>
-
+             
+        {% if user == request.user %}
          <div name="socio-box" class="col-xs-12 col-md-3" style="padding: 0 20px 0 0">
             <div class="col-xs-12 card-bottom card-md effect5" style="min-height:auto;padding:0 0 20px 0">
-             
-                {% if user == request.user %}
+
                   <div style="text-align: center;">
                       <h4 class="title" style="margin:10px 0">Data Pribadi</h4>
                       <div class="row">
@@ -286,12 +298,15 @@
                           {% endif %}
                       </div>
                   </div>
-                {% endif %}
-
+                {% if user == request.user %}
                 <div style="width: 100%; text-align: center">
                     <a href="{{ link_edit }}"><h3 class="btn btn-primary">Ubah Profil</h3></a>
                 </div>
-              </div></div></div></div></div></div>
+                {% endif %}
+              </div>
+         </div>        
+         {% endif %}
+        </div></div></div></div>
 {% include "membership/footer.html" %}
 {% include "membership/script.html" %}
 {% endblock %}

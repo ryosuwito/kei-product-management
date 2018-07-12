@@ -36,17 +36,17 @@
          <div class="col-md-9 col-xs-12" style="padding: 0 20px">
            <div class="row"  style="padding: 0; margin: 0">
             <div class="col-xs-6" style="padding:0 5px;text-align:center">
-                <div class="col-xs-12 card-bottom effect5 card-pointer card-md" style="padding:0 0 10px 0">
-                      <h3 id="cards7-title" class="title" style="color:#333">
-                          {% if request.user == user %} MY CARD
-                          {% else %} CARD {% endif %}
-                      </h3>
-                      {% if request.user == user %} 
-                      <h5 class="titlesm cool" style="text-align:center; margin:0;"><sub>*(barcode berisi link store anda)</sub>
-                      </h5>
-                      {% else %}{{ request.scheme }}://{{ request.get_host }}{{ user.member.get_absolute_url }}{% endif %}
-                      <img  id="saran-4" style="margin:5px 0"  width="100%" height="auto" src="/media/pictures/ex-member-card.png">
-                </div>
+              <div class="col-xs-12 card-bottom effect5 card-pointer card-md" style="padding:0 0 10px 0">
+                    <h3 id="cards7-title" class="title" style="color:#333">
+                        {% if request.user == user %} MY CARD
+                        {% else %} CARD {% endif %}
+                    </h3>
+                    {% if request.user == user %} 
+                    <h5 class="titlesm cool" style="text-align:center; margin:0;"><sub>*(barcode berisi link store anda)</sub>
+                    </h5>
+                    {% endif %}
+                    <img  id="saran-4" style="margin:5px 0"  width="100%" height="auto" src="/media/pictures/ex-member-card.png">
+              </div>
             </div>
             <div class="col-xs-6" style="padding:0 5px;text-align:center">
                 <div class="col-xs-12 card-bottom effect5 card-pointer card-md" style="padding:0 20px 20px 20px">
@@ -67,96 +67,41 @@
                         Ibrahimovic
                       </h5>
                       <h6 class="titlesm cool" style="text-align:left;">
-                        Nomor Rekening :
-                      </h6>
-                      <h5 style="text-align:left; margin:0;">
-                        BRI - 0090909990990
-                      </h5>
-                      <h6 class="titlesm cool" style="text-align:left;">
                         Alamat E-mail :
                       </h6>
                       <h5 style="text-align:left; margin:0;">
-                        {{ user.email }}
+                        http://www.{{ user.email }}
                       </h5>
                       <h6 class="titlesm cool" style="text-align:left;">
                         Alamat Rumah :
                       </h6>
                       <h5 style="text-align:left; margin:0;">
-                        Jl. Bandengan, Blok A1 No. 18 Kec. Jatibening Kel. Jatijajar Kota Tangerang - Banten
+                        {{ user.member.home_address | title }}
                       </h5>
                 </div>
-            </div>          
-          </div>
-          <div class="row"  style="padding: 0; margin: 0">
-            {% if request.user == user %}
-                <div class="col-xs-6" style="padding:0 5px;text-align:center">
-                  <div class="col-xs-12 card-bottom effect5 card-pointer card-md" style="padding:0 15px">
-                    <h4 id="cards7-title" class="title" style="color:#333"> MY BANNER</h4>
-                      <img  id="saran-4" style="margin:0" class="photo-user saran" onLoad="setHeight(this)" src="/media/pictures/kost6.jpg">
-
-                        <h5 id="cards7-title" class="title" style="color:#333"> Kumpulan Banner Untuk Promosi Siap Pakai</h5>
-                  </div>
-                </div>
-            {% endif %}
-            <div class="col-xs-6" style="padding:0 5px;text-align:center">
-              {% if user.member.qrcode %}
-              <div class="col-xs-12 card-bottom effect5 card-pointer card-md" style="padding:0 15px">
-                    <img  id="saran-4" style="margin:0" width="160px" height="auto" src="/{{ user.member.qrcode }}">
-              {% else %}
-              <div class="col-xs-12 card-bottom effect5 card-pointer card-md" style="min-height:0; padding:0 15px">
-              {% endif %}
-                <h4 id="cards7-title" class="title" style="color:#333">         
-                    {% if request.user == user %} MY STORE
-                    {% else %} STORE {% endif %}
-                </h4>
-                {% if request.user == user %}
-                <p>Link Toko Replika Anda adalah :
-                {% else %}
-                <p>Link Toko Replika {{ user.username }} adalah :{% endif %}
-                    <br>https://{{user.username}}.kei-partner.com/store</p> 
-              </div>
-            </div>
+            </div>     
           </div>
           {% if request.user == user %}
               <div class="row"  style="padding: 0; margin: 0">
                 <div class="col-xs-6" style="padding:0 5px;text-align:center">
                   <div class="col-xs-12 card-bottom effect5 card-pointer card-sm" style="padding:0 0 10px 0">
-                    <h4 id="cards7-title" class="title" style="color:#333"> MY SELLING</h4>
-
-                        <h5 id="cards7-title" class="title" style="color:#333">Grafik Hasil Penjualan dari Toko Replika Anda</h5>
+                    <h4 id="cards7-title" class="title" style="color:#333"> TRACKING</h4>
+                        <h5 id="cards7-title" style="color:#333">Lacak Pengiriman Barang yang Anda Pesan</h5>
                   </div>
-                </div>
+                </div>     
                 <div class="col-xs-6" style="padding:0 5px;text-align:center">
-                  <div class="col-xs-12 card-bottom effect5 card-pointer card-sn" style="padding:0 0 10px 0">
-                    <h4 id="cards7-title" class="title" style="color:#333"> MY REWARD</h4>
+                  <div class="col-xs-12 card-bottom effect5 card-pointer card-sm" style="padding:0 0 10px 0">
+                    <h4 id="cards7-title" class="title" style="color:#333"> RIWAYAT TRANSAKSI</h4>
 
-                        <h5 id="cards7-title" class="title" style="color:#333">Cek Reward Perekrutan, Penjualan, dan Bonus.</h5>
+                        <h5 id="cards7-title" style="color:#333">Daftar Riwayat Transaksi Anda</h5>
                   </div>
                 </div>
               </div>
               <div class="row"  style="padding: 0; margin: 0">
-                <div class="col-xs-3" style="padding:0 5px;text-align:center">
+                <div class="col-xs-12" style="padding:0 5px;text-align:center">
                   <div class="col-xs-12 card-bottom effect5 card-pointer card-sm" style="padding:0 0 10px 0">
                     <h4 id="cards7-title" class="title" style="color:#333"> MY POIN</h4>
-                        <h5 id="cards7-title" class="title" style="color:#333">Cek POIN Reward yang Anda Dapatkan</h5>
-                  </div>
-                </div>
-                <div class="col-xs-3" style="padding:0 5px;text-align:center">
-                  <div class="col-xs-12 card-bottom effect5 card-pointer card-sm" style="padding:0 0 10px 0">
-                    <h4 id="cards7-title" class="title" style="color:#333"> MY CUSTOMER</h4>
-                        <h5 id="cards7-title" class="title" style="color:#333">Data Kostumer Toko Replika Anda</h5>
-                  </div>
-                </div>
-                <div class="col-xs-3" style="padding:0 5px;text-align:center">
-                  <div class="col-xs-12 card-bottom effect5 card-pointer card-sm" style="padding:0 0 10px 0">
-                    <h4 id="cards7-title" class="title" style="color:#333"> MY EBOOK</h4>
-                        <h5 id="cards7-title" class="title" style="color:#333">Download Ebook Untuk Meningkatkan Penjualan</h5>
-                  </div>
-                </div>
-                <div class="col-xs-3" style="padding:0 5px;text-align:center">
-                  <div class="col-xs-12 card-bottom effect5 card-pointer card-sm" style="padding:0 0 10px 0">
-                    <h4 id="cards7-title" class="title" style="color:#333"> TRACKING</h4>
-                        <h5 id="cards7-title" class="title" style="color:#333">Lacak Pengiriman Barang ke Kostumer Anda</h5>
+                        <h5 id="cards7-title" style="color:#333">Cek POIN Reward yang Anda Dapatkan</h5>
                   </div>
                 </div>
               </div>
@@ -176,21 +121,7 @@
             </div>
 
             <div class="col-xs-12 card-bottom " style="background-color:transparent;margin-bottom:10px;display:block;height:auto;padding:0">
-              <div class="col-xs-12 card-bottom" style="margin-bottom:10px;display:block;height:auto;padding:0">
-                <h4 class="title" style="margin:10px 0">Smart Motto</h4>
-                <p style="text-align: center; padding: 0 5px">
-                "Quia dolores omnis minus nemo nostrum. Est veritatis deleniti ad in ullam nesciunt velit voluptatum. Quisquam incidunt ipsa amet voluptate. Minus iste cumque reiciendis vel nihi"
-                </p>
-              </div>
-              <div class="col-xs-12 card-bottom" style="margin-bottom:10px;display:block;height:auto;padding:0">
-                <h4 class="title" style="margin:10px 0">Media Sosial</h4></div>
-                <div class="col-xs-4 detail-box social" style="background-color:#034c4c">
-                  <h2 class="white" style="text-align:center;padding:0;margin:0"><span class="fa fa-instagram"></span></h2></div>
-                <div class="col-xs-4 detail-box social" style="background-color:#034c4c">
-                  <h2 class="white" style="text-align:center;padding:0;margin:0"><span class="fa fa-facebook"></span></h2></div>
-                <div class="col-xs-4 detail-box social" style="background-color:#034c4c">
-                  <h2 class="white" style="text-align:center;padding:0;margin:0"><span class="fa fa-twitter"></span></h2></div>
-              </div>
+              
               <div class="col-xs-12 card-bottom" style="background-color:transparent;margin-bottom:10px;display:block;height:auto;padding:0">
                 <h4 class="title" style="margin:10px">Kontak</h4></div>
                 <div class="col-xs-5 col-lg-4 col-sm-2 col-md-5" style="padding:0 0 0 18px;min-height:0;margin:5px 0">

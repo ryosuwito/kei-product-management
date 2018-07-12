@@ -101,6 +101,9 @@ class GuestRegisterForm(MemberRegisterForm):
         # when the form is instantiated (so the widget already exists)
         self.fields['ktp_number'].required = False
         self.fields['bank_account_number'].required = False
+        self.fields['phone_number'].required = False
+        self.fields['ktp_address'].required = False
+        self.fields['ktp_address'].required = False
 
 class MemberEditProfileForm(forms.ModelForm):   
     instagram_address = forms.CharField(max_length=250, required=False)  

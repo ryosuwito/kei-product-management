@@ -13,3 +13,4 @@ Picures/
 *.log
 static/admin/
 media/
+db.sqlite3-journal
