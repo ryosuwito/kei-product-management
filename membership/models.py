@@ -51,9 +51,9 @@ class Member(models.Model):
     )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE) #done
-    sponsor_code = models.CharField(max_length=12, blank=True) #done
-    referal_code = models.CharField(max_length=12, blank=True) #done
-    sponsor = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="sponsor", null=True) #done
+    sponsor_code = models.CharField(db_index=True, max_length=12, blank=True) #done
+    referal_code = models.CharField(db_index=True, max_length=12, blank=True) #done
+    sponsor = models.ForeignKey(User, on_delete=models.SET_NULL, db_index=True,  related_name="sponsor", null=True) #done
     member_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=NEW_MEMBER) #done
     phone_regex = RegexValidator(regex=r'^\+?62?\d{9,15}$', message="Nomor Telepon Harus memiliki format +62819999999 atau 0819999999'. Maksimal 15 Digit.")
     phone_number = models.CharField(unique=True, validators=[phone_regex], max_length=17, blank=True) # validator haruslah berupa list
@@ -61,7 +61,7 @@ class Member(models.Model):
     home_address = models.CharField(max_length=250, blank=True)
     ktp_number = models.CharField(max_length=30, null=True, blank=True)
     bank_account_number = models.CharField(max_length=30, null=True, blank=True)
-    bank_name = models.CharField(max_length=10, blank=True)
+    bank_name = models.CharField(max_length=50, blank=True)
     bank_book_photo = models.ImageField(upload_to = 'bank_book_photo', blank=True)
     ktp_photo = models.ImageField(upload_to = 'ktp_photo', blank=True)
     profile_photo = models.ImageField(upload_to = 'profile_photo', blank=True)
@@ -112,6 +112,19 @@ class Member(models.Model):
         filename = "media/%s_%s.png"%(content,name)
         qr.png(filename, scale=12)
         return filename
+
+    def get_level(self):
+        if self.member_type == self.DROPSHIPPER :
+            level = self.LEVEL['DROPSHIPPER'] 
+        if self.member_type == self.RESELLER :
+            level = self.LEVEL['RESELLER']
+        if self.member_type == self.AGEN :
+            level = self.LEVEL['AGEN']
+        if self.member_type == self.DISTRIBUTOR :
+            level = self.LEVEL['DISTRIBUTOR']
+        if self.member_type == self.MASTER_SELLER :
+            level = self.LEVEL['MASTER_SELLER']
+        return level
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

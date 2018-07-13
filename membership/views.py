@@ -104,6 +104,21 @@ def register_page(request):
             except :
                 return render(request, 'membership/register_%s.html'%(namespace),
                     {'form': form, 'threshold': threshold, 'link_cancel':link_camcel})
+            
+            provinsi_home = ''
+            kota_home = ''
+            kecamatan_home = ''
+            kelurahan_home = ''
+
+            try :
+                if request.POST['provinsi_home'] and request.POST['kota_home'] and \
+                request.POST['kecamatan_home'] and request.POST['kelurahan_home']:
+                    provinsi_home = data.get('provinsi_home')
+                    kota_home = Kota.objects.get(pk=request.POST['kota_home'])
+                    kecamatan_home = Kecamatan.objects.get(pk=request.POST['kecamatan_home'])
+                    kelurahan_home = Kelurahan.objects.get(pk=request.POST['kelurahan_home'])
+            except :
+                pass
 
             username = data.get('username').lower()
             password = data.get('password')
@@ -130,17 +145,21 @@ def register_page(request):
                 user.member.member_type = data.get('member_type')
             
             user.member.phone_number = data.get('phone_number')            
-            user.member.ktp_number = data.get('ktp_number')           
+            user.member.ktp_number = data.get('ktp_number')   
+            user.member.bank_name = data.get('bank_name')          
             user.member.bank_account_number = data.get('bank_account_number')  
             user.member.bank_book_photo = data.get('bank_book_photo')
             user.member.ktp_photo = data.get('ktp_photo')                   
             if namespace == 'guest':    
-                user.member.ktp_address = data.get('home_address') + ", %s, %s, %s, %s" % (kelurahan, kecamatan, kota, provinsi)
+                user.member.ktp_address = data.get('home_address') + \
+                    ", %s, %s, %s, %s" % (kelurahan, kecamatan, kota, provinsi)
             else:
-                user.member.ktp_address = data.get('ktp_address') + ", %s, %s, %s, %s" % (kelurahan, kecamatan, kota, provinsi)
+                user.member.ktp_address = data.get('ktp_address') + \
+                    ", %s, %s, %s, %s" % (kelurahan, kecamatan, kota, provinsi)
 
             if data.get('home_address'):                 
-                user.member.home_address = data.get('home_address')
+                user.member.home_address = data.get('home_address') + \
+                    ", %s, %s, %s, %s" % (kelurahan_home, kecamatan_home, kota_home, provinsi_home)
             else :
                 user.member.home_address = user.member.ktp_address
             

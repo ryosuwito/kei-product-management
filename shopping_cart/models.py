@@ -15,7 +15,27 @@ class Cart(models.Model):
         verbose_name_plural = "Carts"
 
     def __str__(self):
-       return 'Cart%s'%self.pk
+       return 'Cart%s'%self.pk 
+       from .models import CartItem
+
+    def get_total_items_in_cart(self): #cart object
+        try :
+            if CartItem.objects.filter(cart=self):
+                return sum([ i.quantity for i in CartItem.objects.filter(cart=self) ])
+        except:
+            pass
+        return 0                
+        
+
+    def get_total_price(self): #cart object
+        try :
+            if CartItem.objects.filter(cart=self):
+                return sum([ i.quantity * i.product.price for i in CartItem.objects.filter(cart=self) ])
+        except:
+            pass
+        return 0
+
+
 
 
 class CartItem(models.Model) :
@@ -24,10 +44,13 @@ class CartItem(models.Model) :
     cart = models.ForeignKey(Cart, related_name="item_in_cart", on_delete=models.SET_NULL, null=True)
 
     class Meta:
-        verbose_name_plural = "Carts"
+        verbose_name_plural = "Cart items"
 
     def get_item_details(self):
-        details = Product.get_details(self.product)
+        details = {}
+        details['details'] = Product.get_details(self.product)
+        details['total_weight'] = self.quantity * self.product.unit_weight
+        details['subtotal'] = self.quantity * self.product.price
         return details
 
     def __str__(self):

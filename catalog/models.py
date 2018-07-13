@@ -43,10 +43,13 @@ class Product(models.Model):
             help_text="Kategori Produk")
 
     def get_details(self):
-        details = (self.name,
-                   self.unit_weight,
-                   self.price)
+        details = {'name': self.name,
+                   'weight' : self.unit_weight,
+                   'price' : self.price}
         return details
+
+    def get_photo_url(self):
+        return "/media/%s" % (self.photo)
 
     class Meta:
         verbose_name_plural = "Products"

@@ -11,9 +11,16 @@ memberSelect.onchange = function(){
 };
 </script>
 <script>
-function getKota(){
+function getKota(id){
     var selected_provinsi='';
-    var myselect = document.getElementById("id_provinsi")
+    if(id == 'id_provinsi'){
+        var myselect = document.getElementById("id_provinsi");
+        var kota = document.getElementById('id_kota');
+    } 
+    else{
+        var myselect = document.getElementById("id_provinsi_home");
+        var kota = document.getElementById('id_kota_home');
+    }
     selected_provinsi=myselect.options[myselect.selectedIndex].text;
     $.ajaxSetup({
     headers : {
@@ -26,14 +33,21 @@ function getKota(){
         options += "<option value='"+result['results'][i]['value']+"'>"+result['results'][i]['nama']+"</option>";
         console.log(result['results'][i]['nama']);
     }
-    document.getElementById('id_kota').innerHTML=options;
+    kota.innerHTML=options;
     }});
 }
 </script>
 <script>
-function getKecamatan(){
+function getKecamatan(id){
     var selected_kota='';
-    var myselect = document.getElementById("id_kota")
+    if(id == 'id_kota'){
+        var myselect = document.getElementById("id_kota");
+        var kecamatan = document.getElementById('id_kecamatan');
+    }
+    else{
+        var myselect = document.getElementById("id_kota_home");
+        var kecamatan = document.getElementById('id_kecamatan_home');
+    }
     selected_kota=myselect.options[myselect.selectedIndex].value;
     $.ajaxSetup({
     headers : {
@@ -46,14 +60,21 @@ function getKecamatan(){
         options += "<option value='"+result['results'][i]['value']+"'>"+result['results'][i]['nama']+"</option>";
         console.log(result['results'][i]['nama']);
     }
-    document.getElementById('id_kecamatan').innerHTML=options;
+    kecamatan.innerHTML=options;
     }});
 }
 </script>
 <script>
-function getKelurahan(){
+function getKelurahan(id){
     var selected_kecamatan='';
-    var myselect = document.getElementById("id_kecamatan")
+    if(id == 'id_kecamatan'){
+        var myselect = document.getElementById("id_kecamatan");
+        var kelurahan = document.getElementById('id_kelurahan');
+    }
+    else{
+        var myselect = document.getElementById("id_kecamatan_home");
+        var kelurahan = document.getElementById('id_kelurahan_home');
+    }
     selected_kecamatan=myselect.options[myselect.selectedIndex].value;
     $.ajaxSetup({
     headers : {
@@ -66,7 +87,7 @@ function getKelurahan(){
         options += "<option value='"+result['results'][i]['value']+"'>"+result['results'][i]['nama']+"</option>";
         console.log(result['results'][i]['nama']);
     }
-    document.getElementById('id_kelurahan').innerHTML=options;
+    kelurahan.innerHTML=options;
     }});
 }
 </script>

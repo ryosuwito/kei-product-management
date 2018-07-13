@@ -1,19 +1,19 @@
+from django.http import HttpResponse
 from django.shortcuts import render
+from .models import Cart, CartItem
 
-def get_total_items_in_cart(cart): #cart object
-    total_amount = 0
-    if cart.item_in_cart_set.all():
-        for i in cart.item_in_cart_set.all():
-            total_amount += i.quantity
-        return total_amount
-    else:
-        return total_amount
+def index(request):
+    cart = request.session.get('shopping_cart', -1)
+    if int(cart) < 0:
+        cart_object = Cart.objects.create(user=request.user)
+        cart = cart_object.id
+    else :
+        cart_object = Cart.objects.get(id=cart)
+    
+    total_products = cart_object.get_total_items_in_cart()
+    total_prices = cart_object.get_total_price()
+    items_in_carts = CartItem.objects.filter(cart=cart_object)
+    product_details = [x.get_item_details()  for x in items_in_carts]
 
-def get_total_price(cart): #cart object
-    total_amount = 0
-    if cart.item_in_cart_set.all():
-        for i in cart.item_in_cart_set.all():
-            total_amount += i.quantity * i.product.price
-        return total_amount
-    else:
-        return total_amount
+    request.session['shopping_cart'] = cart
+    return HttpResponse('done : %s : %s : %s' % (total_products, total_prices, product_details[0]['details']['name']))

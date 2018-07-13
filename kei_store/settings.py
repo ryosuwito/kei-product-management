@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'purchase_order',
     'shopping_cart',
     'database_wilayah',
+    'reward_system',
     'storefront',
 ]
 

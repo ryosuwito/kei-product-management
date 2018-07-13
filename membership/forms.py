@@ -18,6 +18,7 @@ class MemberRegisterForm(forms.ModelForm):
     }
     
     provinsi = forms.ModelChoiceField(Provinsi.objects.all(), initial='')
+    provinsi_home = forms.ModelChoiceField(Provinsi.objects.all(), initial='')
     member_type = forms.ChoiceField(choices = Member.USER_TYPE_CHOICES[2:-1], initial=0, required=True)
     username = forms.CharField(required=True, min_length=USERNAME_MIN, max_length=USERNAME_MAX)
     phone_number = forms.CharField(required=True, max_length=17)
@@ -27,6 +28,7 @@ class MemberRegisterForm(forms.ModelForm):
     ktp_number = forms.IntegerField(required=True)
     bank_account_number = forms.IntegerField(required=True)
     bank_book_photo = forms.ImageField(required=False) 
+    bank_name = forms.CharField(max_length=50, required=True)
     ktp_photo = forms.ImageField(required=False)
     def __init__(self, *args, **kwargs):
         super(MemberRegisterForm, self).__init__(*args, **kwargs)
@@ -40,14 +42,16 @@ class MemberRegisterForm(forms.ModelForm):
         self.fields['email'].widget.attrs['placeholder'] = 'Masukan Email Aktif'
         self.fields['sponsor_code'].required = False
         
-        self.fields['provinsi'].widget.attrs['onClick'] = 'getKota()'
+        self.fields['provinsi'].widget.attrs['onClick'] = 'getKota(this.id)'
+        self.fields['provinsi_home'].widget.attrs['onClick'] = 'getKota(this.id)'
 
         self.fields['phone_number'].widget = forms.NumberInput()
         self.fields['phone_number'].widget.attrs['placeholder'] = 'Contoh : +628129999999 / 0812999999'
 
         self.fields['ktp_number'].widget.attrs['placeholder'] = 'Contoh : 3671081xxxxxxxxxx'
         self.fields['ktp_number'].widget = forms.NumberInput()
-        
+                
+        self.fields['bank_name'].widget.attrs['placeholder'] = 'Contoh : BRI/ BCA/ BNI'
         self.fields['bank_account_number'].widget.attrs['placeholder'] = 'Contoh : 7211XXCCCCCCDDF'
         self.fields['bank_account_number'].widget = forms.NumberInput()
 

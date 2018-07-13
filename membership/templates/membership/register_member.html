@@ -27,8 +27,8 @@
             <li class="active"><a href="#">Member Area</a></li>
             <li><a href="#">Business Oportunity</a></li>
           </ul>
-          {% include "storefront/wishlist_header.html" %}
-          {% include "storefront/cart_header.html" %}  
+          {% include "shopping_cart/wishlist_header.html" %}
+          {% include "shopping_cart/cart_header.html" %}  
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
@@ -134,10 +134,15 @@
           <fieldset id="personal-set" style="width: 100%;">
               <legend>Data Pribadi :</legend>
               <div class="row" style="margin: 0">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-12">
                   <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Nomor KTP *(angka tanpa spasi)<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>  
                     {{ form.ktp_number}}  
                   </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Nama Bank<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>  
+                      {{ form.bank_name}}  
+                    </div>
                 </div>
                 <div class="col-xs-12 col-sm-6">
                     <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Nomor Rekening *(angka tanpa spasi)<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>  
@@ -160,7 +165,7 @@
                   <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left;z-index:3000">
                     <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kota/ Kabupaten :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                     
-                    <select name="kota" style="background-color:#f1f1f1;" onClick=getKecamatan() id="id_kota">
+                    <select name="kota" style="background-color:#f1f1f1;" onClick=getKecamatan(this.id) id="id_kota">
                       <option value="..."> </option>
                     </select>
                   </div>
@@ -170,7 +175,7 @@
                   <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left;z-index:3000">
                     <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kecamatan/ Subdistrik :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                     
-                    <select name="kecamatan"  style="background-color:#f1f1f1"  onClick=getKelurahan()  id="id_kecamatan">
+                    <select name="kecamatan"  style="background-color:#f1f1f1"  onClick=getKelurahan(this.id)  id="id_kecamatan">
                       <option value="..."> </option>         
                     </select>
                   </div>
@@ -194,6 +199,36 @@
               </div>
               
               <div id="home-address" class="row hidden" style="margin: 0;">
+
+                  <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left;z-index:3000">
+                    <p style="font-size:8pt;margin-bottom:3px;text-align:left">Provinsi :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
+                    {{ form.provinsi_home }}
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left;z-index:3000">
+                    <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kota/ Kabupaten :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
+                    
+                    <select name="kota_home" style="background-color:#f1f1f1;" onClick=getKecamatan(this.id) id="id_kota_home">
+                      <option value="..."> </option>
+                    </select>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left;z-index:3000">
+                    <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kecamatan/ Subdistrik :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
+                    
+                    <select name="kecamatan_home"  style="background-color:#f1f1f1"  onClick=getKelurahan(this.id)  id="id_kecamatan_home">
+                      <option value="..."> </option>         
+                    </select>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left;z-index:3000">
+                    <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kelurahan/ Desa :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
+                    
+                    <select  name="kelurahan_home" style="background-color:#f1f1f1" id="id_kelurahan_home">
+                      <option value="..."> </option>                  
+                    </select>
+                  </div>
+
                   <div class="col-xs-12">
                     <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Alamat Rumah *(kosongkan jika sama dengan KTP)<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                     </div>
