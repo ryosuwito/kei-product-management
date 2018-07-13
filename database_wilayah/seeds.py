@@ -7,9 +7,9 @@ with open('database_wilayah/database_indonesia.csv') as file:
     kota = False
     kecamatan = False
     plimit = 34
-    klimit = 50
-    kclimit = 50
-    kllimit = 50
+    klimit = 5
+    kclimit = 5
+    kllimit = 5
     prov, kot, kec, kel = 0, 0, 0, 0
     for index, line in enumerate(file):
         print(index)

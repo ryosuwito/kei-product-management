@@ -117,7 +117,8 @@ class MemberEditProfileForm(forms.ModelForm):
     home_address = forms.CharField(max_length=250, required=False)
     bank_book_photo = forms.ImageField(required=False) 
     ktp_photo = forms.ImageField(required=False)
-    
+    profile_photo = forms.ImageField(required=False) 
+
     provinsi = forms.ModelChoiceField(Provinsi.objects.all(), initial='')  
     def __init__(self, *args, **kwargs):
         super(MemberEditProfileForm, self).__init__(*args, **kwargs)
@@ -131,6 +132,10 @@ class MemberEditProfileForm(forms.ModelForm):
 
         self.fields['bank_book_photo'].widget.attrs['onChange'] = 'Handlechange(event, this.id)'
         self.fields['bank_book_photo'].widget.attrs['class'] = 'hidden'
+
+
+        self.fields['profile_photo'].widget.attrs['onChange'] = 'Handlechange(event, this.id)'
+        self.fields['profile_photo'].widget.attrs['class'] = 'hidden'
 
         self.fields['ktp_photo'].widget.attrs['onChange'] = 'Handlechange(event, this.id)'
         self.fields['ktp_photo'].widget.attrs['class'] = 'hidden'
@@ -150,7 +155,8 @@ class MemberEditProfileForm(forms.ModelForm):
         USERNAME_MIN = 4
         model = Member
         fields = ('instagram_address', 'facebook_address','twitter_address', 'line_address',\
-                  'website_address', 'whatsapp_number', 'bank_book_photo', 'ktp_photo','smart_motto')
+                  'website_address', 'whatsapp_number', 'bank_book_photo', 'ktp_photo',\
+                  'smart_motto', 'profile_photo')
         error_messages = {
             'twitter_address': {
                 'required': 'Harap masukan username dengan benar',

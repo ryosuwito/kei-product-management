@@ -6,7 +6,7 @@
     <a href="{% url 'membership:logout' %}">Logout</a></p>
     </div>
     <div  class="profile-header" style="
-    background-image: url('/media/pictures/indah.jpg')">
+    background-image: url('{% if request.user.member.profile_photo %}{{ request.user.member.get_profile_photo_url }}{% else %}/media/pictures/user.gif{% endif %}')">
     </div>
     <div style="margin:0 5px; 
     position: relative;

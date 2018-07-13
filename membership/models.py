@@ -56,7 +56,7 @@ class Member(models.Model):
     sponsor = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="sponsor", null=True) #done
     member_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=NEW_MEMBER) #done
     phone_regex = RegexValidator(regex=r'^\+?62?\d{9,15}$', message="Nomor Telepon Harus memiliki format +62819999999 atau 0819999999'. Maksimal 15 Digit.")
-    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True) # validator haruslah berupa list
+    phone_number = models.CharField(unique=True, validators=[phone_regex], max_length=17, blank=True) # validator haruslah berupa list
     ktp_address = models.CharField(max_length=250, blank=True)
     home_address = models.CharField(max_length=250, blank=True)
     ktp_number = models.CharField(max_length=30, null=True, blank=True)
@@ -75,6 +75,10 @@ class Member(models.Model):
     qrcode = models.CharField(max_length=20, blank=True)  
 
     smart_motto = models.CharField(max_length=250, blank=True)
+    is_archived = models.BooleanField(default=False)
+    is_member_activated = models.BooleanField(default=False)
+    is_phone_verified = models.BooleanField(default=False)
+    is_email_verified = models.BooleanField(default=False)
 
     @models.permalink
     def get_absolute_url(self):
@@ -82,6 +86,9 @@ class Member(models.Model):
 
     def get_ktp_url(self):
         return ("/media/%s"%self.ktp_photo)
+
+    def get_profile_photo_url(self):
+        return ("/media/%s"%self.profile_photo)
 
     def get_bank_url(self):
         return ("/media/%s"%self.bank_book_photo)

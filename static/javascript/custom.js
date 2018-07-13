@@ -54,6 +54,9 @@ $(document).ready(function () {
    else if(id == "btn_bank"){
       var fileinput = document.getElementById("id_bank_book_photo");
    }
+   else if(id == "btn_profile"){
+      var fileinput = document.getElementById("id_profile_photo");
+   }
    fileinput.click(); 
  }
  function Handlechange(event, id){
@@ -66,6 +69,11 @@ $(document).ready(function () {
         var fileinput = document.getElementById("id_bank_book_photo");
         var textinput = document.getElementById("bank_book_filename");
         var imgtag = document.getElementById("dummy_bank_book_photo");
+    }
+    else if(id == "id_profile_photo"){
+        var fileinput = document.getElementById("id_profile_photo");
+        var textinput = document.getElementById("profile_photo_filename");
+        var imgtag = document.getElementById("dummy_profile_photo");
     }
    textinput.value = fileinput.value.replace("C:\\fakepath\\","");
    var selectedFile = event.target.files[0];

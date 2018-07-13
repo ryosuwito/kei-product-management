@@ -64,12 +64,16 @@ def pre_register_page(request):
 
 def register_page(request): 
     referal_code = False
+    link_camcel = reverse('membership:pre_register', 
+                            current_app=request.resolver_match.namespace)
+
     if request.get_host() != settings.DEFAULT_HOST:
         referal_code = check_host(request, pass_variable=True)
         if not referal_code:
             return  HttpResponseRedirect(request.scheme+"://"+settings.DEFAULT_HOST + 
                         reverse('membership:register', 
                             current_app=request.resolver_match.namespace))
+
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('membership:profile'))
     threshold = ''
@@ -96,10 +100,10 @@ def register_page(request):
 
                 else :
                     return render(request, 'membership/register_%s.html'%(namespace),
-                        {'form': form, 'threshold': threshold})
+                        {'form': form, 'threshold': threshold, 'link_cancel':link_camcel})
             except :
                 return render(request, 'membership/register_%s.html'%(namespace),
-                    {'form': form, 'threshold': threshold})
+                    {'form': form, 'threshold': threshold, 'link_cancel':link_camcel})
 
             username = data.get('username').lower()
             password = data.get('password')
@@ -109,11 +113,14 @@ def register_page(request):
             full_name = data.get('first_name').split(' ')
             user.last_name = full_name[-1] 
             user.first_name = ' '.join([x for x in full_name[:-1]])
+
             if referal_code:
                 user.member.sponsor_code = referal_code
                 user.member.sponsor = Member.objects.get(referal_code=referal_code).user
             else :
                 sponsor_user = random.choice(User.objects.all())
+                while sponsor_user.member.member_type == Member.GUEST :
+                    sponsor_user = random.choice(User.objects.all())                  
                 user.member.sponsor_code = sponsor_user.member.referal_code
                 user.member.sponsor = sponsor_user
 
@@ -158,7 +165,7 @@ def register_page(request):
             'class': 'sponsor-disabled'
             })
     return render(request, 'membership/register_%s.html'%(namespace),
-        {'form': form, 'threshold': threshold})
+        {'form': form, 'threshold': threshold, 'link_cancel':link_camcel})
 
 @login_required(login_url='/member/login')
 def profile_page(request, uname='none'):
@@ -219,8 +226,7 @@ def edit_profile_page(request):
     kelurahan = ''
     home_address = ''
     is_complete = False
-    namespace = reverse('membership:edit_profile', 
-        current_app=request.resolver_match.namespace).split('/')[1]
+    namespace = request.resolver_match.namespace.split('_')[0].lower()
     if request.method == 'POST':   
         if namespace == 'guest':          
             return HttpResponse("Edit Profile Fail")
@@ -264,7 +270,9 @@ def edit_profile_page(request):
             if data.get('bank_book_photo') :
                 user.member.bank_book_photo = data.get('bank_book_photo')
             if data.get('ktp_photo') :
-                user.member.ktp_photo = data.get('ktp_photo')            
+                user.member.ktp_photo = data.get('ktp_photo')        
+            if data.get('profile_photo') :
+                user.member.profile_photo = data.get('profile_photo')       
             if data.get('smart_motto') :
                 user.member.smart_motto = data.get('smart_motto')               
 
