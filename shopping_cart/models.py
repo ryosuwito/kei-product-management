@@ -26,7 +26,6 @@ class Cart(models.Model):
             pass
         return 0                
         
-
     def get_total_price(self): #cart object
         try :
             if CartItem.objects.filter(cart=self):
@@ -34,9 +33,6 @@ class Cart(models.Model):
         except:
             pass
         return 0
-
-
-
 
 class CartItem(models.Model) :
     quantity = models.IntegerField(null=True, blank=True)

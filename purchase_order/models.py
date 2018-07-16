@@ -22,3 +22,4 @@ class PurchaseOrder(models.Model):
 
     def __str__(self):
        return 'Purchase Order No. : %s'%self.pk
+

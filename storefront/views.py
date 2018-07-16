@@ -14,6 +14,7 @@ def product_detail(request, product_pk):
     else :
         cart_object = Cart.objects.get(id=cart)
         
+        
     if request.method == 'POST':
         form = ProductCartForm(request.POST)
         if form.is_valid():
