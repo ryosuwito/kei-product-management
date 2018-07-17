@@ -27,7 +27,7 @@
         </li>
         <li class="divider"></li>
         {% endfor %}
-        <li><a class="text-center" href="">View Cart</a></li>
+        <li><a href="{% url 'cart:index' %}"class="text-center" href="">View Cart</a></li>
     </ul>
     {% endif %}
 </li>

@@ -75,7 +75,7 @@
                     Rp. {{ product.price  | int_to_rupiah }},-
                 </h4>
                 <p>{{ product.description | truncatewords:6 }}</p>
-                <button class="btn btn-success" style="width: 100%">Beli</button>
+                <a href="{{ product.get_detail_url }}"><button class="btn btn-success" style="width: 100%">Beli</button></a>
               </div></div>
             {% endfor %}
   <!-- ====================================================================================================================================== --> 

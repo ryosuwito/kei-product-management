@@ -82,15 +82,15 @@
                   <div class="hidden-xs col-md-12" style="border-top: 1px solid #ccc; padding: 20px">
                     <div class="col-xs-12">
                       {% if discounted_price != 0 %}
-                        <h5 class="title hot" style="text-align:center; margin:0;">
+                        <h5 class="title hot" style="text-align:left; margin:0;">
                         Harga Normal : <del>Rp. {{ product.price | int_to_rupiah }},-</del> <br>
                         <sub>*({{ discount }}% Discount untuk {{ request.user.member.get_member_type_display }})</sub>
                         </h5>
-                        <h3 class="title cool" style="text-align:center; margin:0;">
+                        <h3 class="title cool" style="text-align:left; margin:0;">
                             Rp. {{ discounted_price | int_to_rupiah }},-
                         </h3>
                       {% else %}
-                        <h3 class="title cool" style="text-align:center; margin:0;">
+                        <h3 class="title cool" style="text-align:left; margin:0;">
                             Rp. {{ product.price | int_to_rupiah }},-
                         </h3>
                       {% endif %}
@@ -111,19 +111,29 @@
                             {% endfor %}
                         {% endif %}
                         {% csrf_token %}
-                      <div class="col-xs-12 col-lg-12" style="padding:10px; display: flex; justify-content: center">
+                      <div class="col-xs-12 col-lg-12" style="padding:10px; display: flex; justify-content: left">
                           <div style="display: flex; justify-content:baseline; align-items: baseline; flex-direction: row">
-                              <p class="title" style="margin: 0 15px">Banyaknya:</p>
+                              <p class="title" style="margin: 0">Banyaknya:</p>
                               {{ form.quantity }}
                           </div>
                            
-                            <button class="titlesm daftar-cool effect4" type="submit" 
-                              style="width:60px;margin:0 15px; padding: 12px; display: flex; justify-content: center">
+                            <button class="btn btn-primary" type="submit" 
+                              style="width:auto;margin:0 15px; padding: 12px; display: flex; justify-content: center">
+                              Beli 
                               <span class="glyphicon glyphicon-shopping-cart" style="font-size: 18px"></span>
                               <sup><span class="glyphicon glyphicon-plus" 
                                 style="color: #45ff45; font-size: 8px;"></span></sup>
                             </button>
-                        </div>
+                        </div> 
+                      </div>
+                        <div class="col-xs-12 col-lg-12" style="display: flex; justify-content: center">
+                        <button class="btn btn-danger" type="submit" 
+                          style="width:auto;margin:0 15px; padding: 12px; display: flex; justify-content: center">
+                          Tambah ke Wishlist
+                          <span class="glyphicon glyphicon-heart" style="font-size: 18px"></span>
+                          <sup><span class="glyphicon glyphicon-plus" 
+                            style="color: #45ff45; font-size: 8px;"></span></sup>
+                        </button>
                     </form>
                   </div>
                 </section>

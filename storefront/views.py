@@ -4,15 +4,12 @@ from catalog.models import Product
 from membership.models import Member
 from shopping_cart.models import Cart, CartItem
 from .forms import ProductCartForm
+from shopping_cart import carts
 import datetime
 
 def product_detail(request, product_pk):
-    cart = request.session.get('shopping_cart', -1)
-    if int(cart) < 0:
-        cart_object = Cart.objects.create(user=request.user)
-        cart = cart_object.id
-    else :
-        cart_object = Cart.objects.get(id=cart)
+    cart = carts.get_cart(request)
+    cart_object = cart['cart_object']
         
         
     if request.method == 'POST':
@@ -42,28 +39,25 @@ def product_detail(request, product_pk):
             total_products = cart_object.get_total_items_in_cart()
             total_prices = cart_object.get_total_price()
 
-            request.session['shopping_cart'] = cart
-            return HttpResponse('done : %s : %s' % (total_products, total_prices))
+    form = ProductCartForm()
 
+    product = Product.objects.get(pk=product_pk)
+    discount = request.user.member.get_level()['BENEFIT']
+    discounted_price = 0
+    if not request.user.member.member_type == Member.GUEST and \
+        not request.user.member.member_type == Member.NEW_MEMBER:
+        discounted_price = product.price * (100 - discount) / 100
 
-    elif request.method == 'GET':
-        form = ProductCartForm()
+    response = render(request, 'storefront/product_detail.html', 
+        {'product':product, 'cart':cart_object, 'form':form, 'discount': discount, 'discounted_price': int(discounted_price)})
 
-        product = Product.objects.get(pk=product_pk)
-        discount = request.user.member.get_level()['BENEFIT']
-        discounted_price = 0
-        if not request.user.member.member_type == Member.GUEST and \
-            not request.user.member.member_type == Member.NEW_MEMBER:
-            discounted_price = product.price * (100 - discount) / 100
-
-        response = render(request, 'storefront/product_detail.html', 
-            {'product':product, 'form':form, 'discount': discount, 'discounted_price': int(discounted_price)})
-
-        request.session['shopping_cart'] = cart
+    request.session['shopping_cart'] = cart['cart_id']
 
     return response
 
 def index(request):
+    cart = carts.get_cart(request)
+    cart_object = cart['cart_object']
     product = Product.objects.all();
-    response = render(request, 'storefront/product_all.html', {'products':product})
+    response = render(request, 'storefront/product_all.html', {'cart':cart_object,'products':product})
     return response
