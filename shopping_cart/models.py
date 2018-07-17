@@ -20,32 +20,27 @@ class Cart(models.Model):
 
     def get_total_items_in_cart(self): #cart object
         try :
-            if CartItem.objects.filter(cart=self):
-                return sum([ i.quantity for i in CartItem.objects.filter(cart=self) ])
+            return sum([ i.quantity for i in self.get_items_in_cart()])
         except:
             pass
         return 0                
          
     def get_total_price(self): #cart object
         try :
-            if CartItem.objects.filter(cart=self):
-                return sum([ i.quantity * i.product.price for i in CartItem.objects.filter(cart=self) ])
+            return sum([ i.quantity * i.product.price for i in self.get_items_in_cart()])
         except:
             pass
         return 0
 
 
     def get_total_products(self):
-        total_products = self.get_total_items_in_cart()
-        return total_products
+        return self.get_total_items_in_cart()
 
     def get_total_prices(self):
-        total_prices = self.get_total_price()
-        return total_prices
+        return self.get_total_price()
 
-    def get_items_in_cart(self):
-        items_in_carts = CartItem.objects.filter(cart=self)
-        return items_in_carts
+    def get_items_in_cart(self):   
+        return self.item_in_cart.all()
 
     def get_product_details(self):
         product_details = [x.get_item_details()  for x in self.get_items_in_cart()]
@@ -61,10 +56,18 @@ class CartItem(models.Model) :
 
     def get_item_details(self):
         details = {}
-        details['details'] = Product.get_details(self.product)
+        details['product_details'] = Product.get_details(self.product)
         details['total_weight'] = self.quantity * self.product.unit_weight
         details['subtotal'] = self.quantity * self.product.price
         return details
 
     def __str__(self):
        return 'CartItem%s'%self.pk
+
+class WishList(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+class WishListItem(models.Model):
+    wishlist = models.ForeignKey(WishList,  related_name="item_in_wishlist", on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, related_name="product_in_wishlist", on_delete=models.SET_NULL, null=True)
+

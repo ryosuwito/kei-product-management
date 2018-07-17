@@ -6,6 +6,6 @@ def get_cart(request):
         cart_object = Cart.objects.create(user=request.user)
         cart_id = cart_object.id
     else :
-        cart_object = Cart.objects.get(id=cart_id)
-    
+        cart_object = Cart.objects.get(id=cart_id)    
+    request.session['shopping_cart'] = cart_id
     return {'cart_object':cart_object,'cart_id':cart_id}
