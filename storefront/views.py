@@ -63,8 +63,7 @@ def product_detail(request, product_pk):
 
     return response
 
-def product_all(request):
-    return HttpResponse("OK")
-
 def index(request):
-    return HttpResponse("OK")
+    product = Product.objects.all();
+    response = render(request, 'storefront/product_all.html', {'products':product})
+    return response

@@ -9,6 +9,7 @@ from django.db.models import Q
 from database_wilayah.models import Provinsi, Kota, Kecamatan, Kelurahan
 from .models import Member
 from .forms import MemberLoginForm, MemberRegisterForm, GuestRegisterForm, MemberEditProfileForm
+from shopping_cart import carts
 import random
 # Create your views here.
 
@@ -188,6 +189,7 @@ def register_page(request):
 
 @login_required(login_url='/member/login')
 def profile_page(request, uname='none'):
+    cart = carts.get_cart(request)['cart_object']
     referal_code = False
     if request.get_host() != settings.DEFAULT_HOST:
         referal_code = check_host(request, pass_variable=True)
@@ -228,7 +230,7 @@ def profile_page(request, uname='none'):
         link_sponsor = sponsor.get_absolute_url()
 
     return render(request, 'membership/profile_%s.html'%(member_type),
-        {'user': user, 'link_edit': link_edit, 'link_sponsor': link_sponsor})
+        {'user': user, 'cart':cart, 'link_edit': link_edit, 'link_sponsor': link_sponsor})
 
 @login_required(login_url='/member/login')
 def edit_profile_page(request):

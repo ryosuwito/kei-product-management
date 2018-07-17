@@ -5,7 +5,5 @@ app_name = 'storefront'
 
 urlpatterns = [
     path('detail/<int:product_pk>/', views.product_detail, name='product_detail'),
-    path('products/', views.product_all, name='product_all'),
-    path('products/', views.product_all, name='product_all'),
-    re_path(r'$', views.index, name='index'),
+    re_path(r'$', views.index, name='product_all'),
 ]

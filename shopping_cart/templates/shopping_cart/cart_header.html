@@ -1,16 +1,23 @@
+{% load int_to_rupiah int_to_kilogram int_to_quantity%}
 {% if request.user.is_authenticated %}
 <ul class="nav navbar-nav navbar-right" style="margin-bottom: 0">
 <li class="dropdown dr-two">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> 7 - Items<span class="caret"></span></a>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> 
+        <span class="glyphicon glyphicon-shopping-cart">
+
+        </span> {{ cart.get_total_products }}- Items<span class="caret"></span></a>
+    {% if cart.get_total_products > 0%}
     <ul class="dropdown-menu dr-menu-two dropdown-cart" role="menu" style="padding-bottom: 0">
+        {% for item in cart.get_items_in_cart %}
         <li>
             <span class="item">
             <span class="item-left">
-                <img src="/media/pictures/indah.jpg" width="50" height="auto" alt="" />
+                <img src="{{ item.product.get_photo_url }}" width="50" height="auto" alt="" />
                 <span class="item-info">
-                    <span>Item name</span>
-                    <span>Rp. 245.500</span>
-                    <span>4 pcs</span>
+                    <span><a href="{{ item.product.get_detail_url }}">{{ item.get_item_details.details.name }}</a></span>
+                    <span>Rp. {{ item.get_item_details.subtotal | int_to_rupiah}},-</span>
+                    <span style="font-size: 80%">Quantity: {{ item.quantity | int_to_quantity }} pcs</span>
+                    <span style="font-size: 80%">Weight: {{ item.get_item_details.total_weight | int_to_kilogram }}kg</span>
                 </span>
             </span>
             <span class="item-right">
@@ -19,55 +26,10 @@
         </span>
         </li>
         <li class="divider"></li>
-        <li>
-            <span class="item">
-            <span class="item-left">
-                <img src="/media/pictures/indah.jpg" width="50" height="auto" alt="" />
-                <span class="item-info">
-                    <span>Item name</span>
-                    <span>Rp. 245.500</span>
-                    <span>4 pcs</span>
-                </span>
-            </span>
-            <span class="item-right">
-                <button class="btn btn-xs btn-danger pull-right">x</button>
-            </span>
-        </span>
-        </li>
-        <li class="divider"></li>
-        <li>
-            <span class="item">
-            <span class="item-left">
-                <img src="/media/pictures/indah.jpg" width="50" height="auto" alt="" />
-                <span class="item-info">
-                    <span>Item name</span>
-                    <span>Rp. 245.500</span>
-                    <span>4 pcs</span>
-                </span>
-            </span>
-            <span class="item-right">
-                <button class="btn btn-xs btn-danger pull-right">x</button>
-            </span>
-        </span>
-        </li>
-        <li class="divider"></li>
-        <li>
-            <span class="item">
-            <span class="item-left">
-                <img src="/media/pictures/indah.jpg" width="50" height="auto" alt="" />
-                <span class="item-info">
-                    <span>Item name</span>
-                    <span>Rp. 245.500</span>
-                    <span>4 pcs</span>
-                </span>
-            </span>
-            <span class="item-right">
-                <button class="btn btn-xs btn-danger pull-right">x</button>
-            </span>
-        </span>
-        </li>
+        {% endfor %}
         <li><a class="text-center" href="">View Cart</a></li>
     </ul>
+    {% endif %}
 </li>
 </ul>
 {% endif %}

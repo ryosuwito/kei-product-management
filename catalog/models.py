@@ -51,6 +51,9 @@ class Product(models.Model):
     def get_photo_url(self):
         return "/media/%s" % (self.photo)
 
+    def get_detail_url(self):
+        return "/store/detail/%s/" % (self.pk)
+
     class Meta:
         verbose_name_plural = "Products"
 
