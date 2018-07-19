@@ -6,13 +6,19 @@ from shopping_cart.models import Cart, CartItem
 from .forms import ProductCartForm
 from shopping_cart import carts
 import datetime
+import random
 
 def product_detail(request, product_pk):
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
-        
+    other_product = random.sample(list(Product.objects.all()), 3)
         
     if request.method == 'POST':
+        method = ''
+        try:
+            method = request.POST['method']
+        except:
+            pass
         form = ProductCartForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
@@ -49,7 +55,7 @@ def product_detail(request, product_pk):
         discounted_price = product.price * (100 - discount) / 100
 
     response = render(request, 'storefront/product_detail.html', 
-        {'product':product, 'cart':cart_object, 'form':form, 'discount': discount, 'discounted_price': int(discounted_price)})
+        {'product':product, 'other_product':other_product, 'cart':cart_object, 'form':form, 'discount': discount, 'discounted_price': int(discounted_price)})
 
     request.session['shopping_cart'] = cart['cart_id']
 

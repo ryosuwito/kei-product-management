@@ -70,11 +70,11 @@
                 <img  id="saran-4" class="photo-user saran" onLoad="setHeight(this)" src="{{ product.get_photo_url }}"></div>
               <div class="col-xs-12" style="padding:0">
                 <h5 style="margin:0" id="cards3-title" class="title">
-                    <a href="{{ product.get_detail_url }}">{{ product.name | title }}</a></h5>
+                    <a href="{{ product.get_detail_url }}">{{ product.name | truncatechars:15 | title }}</a></h5>
                 <h4 class="titlesm cool" style="text-align:center; margin:0;">
                     Rp. {{ product.price  | int_to_rupiah }},-
                 </h4>
-                <p>{{ product.description | truncatewords:6 }}</p>
+                <p>{{ product.description | truncatechars:24 }}</p>
                 <a href="{{ product.get_detail_url }}"><button class="btn btn-success" style="width: 100%">Beli</button></a>
               </div></div>
             {% endfor %}
