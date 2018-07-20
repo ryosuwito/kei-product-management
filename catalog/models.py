@@ -32,6 +32,16 @@ class Product(models.Model):
     description = models.TextField(help_text="Deskripsi Produk")
     photo = models.ImageField(upload_to = 'product_photo',
             help_text="Foto Produk")
+    photo_alt1 = models.ImageField(upload_to = 'product_photo', null=True, blank=True,
+            help_text="Foto Produk Alternatif 1")
+    photo_alt2 = models.ImageField(upload_to = 'product_photo', null=True, blank=True,
+            help_text="Foto Produk Alternatif 2")
+    photo_alt3 = models.ImageField(upload_to = 'product_photo', null=True, blank=True,
+            help_text="Foto Produk Alternatif 3")
+    photo_alt4 = models.ImageField(upload_to = 'product_photo', null=True, blank=True,
+            help_text="Foto Produk Alternatif 4")
+    photo_alt5 = models.ImageField(upload_to = 'product_photo', null=True, blank=True,
+            help_text="Foto Produk Alternatif 5")
     price = models.IntegerField(null=True, help_text="Harga Produk")
     unit_weight = models.IntegerField(null=True, help_text="Berat Satuan Produk dalam gram")
     is_available = models.BooleanField(default = True,
@@ -50,6 +60,17 @@ class Product(models.Model):
 
     def get_photo_url(self):
         return "/media/%s" % (self.photo)
+
+    def get_photo_alt1_url(self):
+        return "/media/%s" % (self.photo_alt1)
+    def get_photo_alt2_url(self):
+        return "/media/%s" % (self.photo_alt2)
+    def get_photo_alt3_url(self):
+        return "/media/%s" % (self.photo_alt3)
+    def get_photo_alt4_url(self):
+        return "/media/%s" % (self.photo_alt4)
+    def get_photo_alt5_url(self):
+        return "/media/%s" % (self.photo_alt5)
 
     def get_detail_url(self):
         return "/store/detail/%s/" % (self.pk)

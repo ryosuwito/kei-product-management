@@ -4,5 +4,6 @@ from . import views
 app_name = 'cart'
 
 urlpatterns = [
+    path('wishlist/', views.wishlist_index, name='wishlist_index'),
     re_path(r'$', views.index, name='index'),
 ]

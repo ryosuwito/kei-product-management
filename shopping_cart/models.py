@@ -67,7 +67,21 @@ class CartItem(models.Model) :
 class WishList(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
+    def get_total_products(self):
+        return len(self.get_items_in_wishlist())
+
+    def get_items_in_wishlist(self):
+        return self.item_in_wishlist.all()
+
+
 class WishListItem(models.Model):
     wishlist = models.ForeignKey(WishList,  related_name="item_in_wishlist", on_delete=models.SET_NULL, null=True)
     product = models.ForeignKey(Product, related_name="product_in_wishlist", on_delete=models.SET_NULL, null=True)
 
+class AnonymousCart(Cart):
+    anon_user = models.CharField(max_length = 200,
+            db_index=True,
+            help_text="Nama Anon")
+
+class AnonymousWishlist(WishList):
+    anon_user = models.CharField(max_length = 200,db_index=True,help_text="Nama Anon")

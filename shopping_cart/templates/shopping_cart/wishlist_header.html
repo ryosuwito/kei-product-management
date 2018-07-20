@@ -1,75 +1,42 @@
-{% if request.user.is_authenticated %}
-<ul class="nav navbar-nav navbar-right">
+{% load int_to_rupiah int_to_kilogram int_to_quantity%}
+<ul class="nav navbar-nav navbar-right" style="margin-bottom: 0">
 <li class="dropdown dr-one">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> 
-        <span class="glyphicon glyphicon-heart">        
-        </span> Wishlist<span class="caret"></span></a>
+        {{ wishlist.get_total_products }} items <span class="glyphicon glyphicon-heart"></span>
+        {% if wishlist.get_total_products > 0%}
+             <span style="min-width:8px;
+             position: absolute;
+             top: 6px;
+             right: 11px;
+             min-height: 8px;  
+             padding: 2px;
+             border-radius: 5px; 
+             background-color: #ff4545;"></span>
+        {% endif %}</a>
+    {% if wishlist.get_total_products > 0%}
     <ul class="dropdown-menu dr-menu-one dropdown-cart" role="menu" style="padding-bottom: 0">
-        <li>
-            <span class="item">
-            <span class="item-left">
-                <img src="/media/pictures/indah.jpg" width="50" height="auto" alt="" />
-                <span class="item-info">
-                    <span>Item name</span>
-                    <span>Rp. 245.500</span>
-                    <span>4 pcs</span>
+        {% for item in wishlist.get_items_in_wishlist %}
+            {% if forloop.counter < 5 %}
+                <li>
+                    <span class="item">
+                    <span class="item-left">
+                        <img src="{{ item.product.get_photo_url }}" width="50" height="50" alt="" />
+                        <span class="item-info">
+                            <span><a href="{{ item.product.get_detail_url }}">{{ item.product.name | truncatechars:20}}</a></span>
+                            <span>{{ item.product.price | int_to_rupiah}}</span>
+                            <span style="font-size: 80%">Berat: {{ item.product.unit_weight | int_to_kilogram }}</span>
+                        </span>
+                    </span>
+                    <span class="item-right">
+                        <button class="btn btn-xs btn-danger pull-right">x</button>
+                    </span>
                 </span>
-            </span>
-            <span class="item-right">
-                <button class="btn btn-xs btn-danger pull-right">x</button>
-            </span>
-        </span>
-        </li>
-        <li class="divider"></li>
-        <li>
-            <span class="item">
-            <span class="item-left">
-                <img src="/media/pictures/indah.jpg" width="50" height="auto" alt="" />
-                <span class="item-info">
-                    <span>Item name</span>
-                    <span>Rp. 245.500</span>
-                    <span>4 pcs</span>
-                </span>
-            </span>
-            <span class="item-right">
-                <button class="btn btn-xs btn-danger pull-right">x</button>
-            </span>
-        </span>
-        </li>
-        <li class="divider"></li>
-        <li>
-            <span class="item">
-            <span class="item-left">
-                <img src="/media/pictures/indah.jpg" width="50" height="auto" alt="" />
-                <span class="item-info">
-                    <span>Item name</span>
-                    <span>Rp. 245.500</span>
-                    <span>4 pcs</span>
-                </span>
-            </span>
-            <span class="item-right">
-                <button class="btn btn-xs btn-danger pull-right">x</button>
-            </span>
-        </span>
-        </li>
-        <li class="divider"></li>
-        <li>
-            <span class="item">
-            <span class="item-left">
-                <img src="/media/pictures/indah.jpg" width="50" height="auto" alt="" />
-                <span class="item-info">
-                    <span>Item name</span>
-                    <span>Rp. 245.500</span>
-                    <span>4 pcs</span>
-                </span>
-            </span>
-            <span class="item-right">
-                <button class="btn btn-xs btn-danger pull-right">x</button>
-            </span>
-        </span>
-        </li>
-        <li><a class="text-center" href="">View Wishlist</a></li>
+                </li>
+                <li class="divider"></li>
+            {% endif %}
+        {% endfor %}
+        <li><a href="{% url 'cart:wishlist_index' %}"class="text-center">View Wishlist</a></li>
     </ul>
+    {% endif %}
 </li>
-</ul> 
-{% endif %}
+</ul>
