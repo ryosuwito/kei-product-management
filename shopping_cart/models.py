@@ -32,6 +32,13 @@ class Cart(models.Model):
             pass
         return 0
 
+         
+    def get_total_weight(self): #cart object
+        try :
+            return sum([ i.quantity * i.product.unit_weight for i in self.get_items_in_cart()])
+        except:
+            pass
+        return 0
 
     def get_total_products(self):
         return self.get_total_items_in_cart()
