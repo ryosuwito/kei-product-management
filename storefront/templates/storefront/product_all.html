@@ -12,14 +12,13 @@
             if(img.classList.contains("main-photo") != false){
               img.style.maxHeight = '440px';
             } else {
-              img.style.maxHeight = '140px';
+              img.style.maxHeight = '240px';
             }
           } else {
-            if(img.classList.contains("main-photo") != false){
-              img.style.maxHeight = '240px';
-            } else {
-              img.style.maxHeight = '210px';
-            }
+            img.style.maxHeight = '240px';
+          }
+          if(img.classList.contains("product") != false){
+            img.style.width =  img.clientWidth+20+'px';
           }
           img.style.height = img.clientWidth+'px';
           img.style.backgroundSize='auto 100%';
@@ -36,19 +35,20 @@
 
             {% for product in products %}
             <div class="col-xs-6 col-sm-6 col-md 3 col-lg-2" style="padding:5px;">
+              <a href="{{ product.get_detail_url }}">
               <div class="col-xs-12 card-bottom effect5 card-pointer card-lg" style="height: auto; min-height:0 ">
-                <div style="width: 100%; padding:0 2px">
-                  <img  id="saran-4" class="photo-user saran" onLoad="setHeight(this)" src="{{ product.get_photo_url }}"></div>
+                <img style="margin: -10px -10px 5px -10px" class="photo-user product" onLoad="setHeight(this)" src="{{ product.get_photo_url }}">
                 <div style="width: 100%; padding:0">
-                  <h5 style="margin:0" id="cards3-title" class="title">
-                      <a href="{{ product.get_detail_url }}">{{ product.name | truncatechars:25 | title }}</a></h5>
-                  <p class="titlesm cool" style="text-align:center; margin:0;">
+                  <h5 style="margin:0; word-wrap:break-word" class="title">
+                     {{ product.name | truncatechars:35 | title }}</h5>
+                  <h5 class="titlesm cool" style="text-align:center;">
                       {{ product.price  | int_to_rupiah }}
-                  </p>
-                  <p>{{ product.description | truncatechars:24 }}</p>
-                  <a href="{{ product.get_detail_url }}"><p class="btn btn-success" style="width: 100%">Beli</p></a>
+                  </h5>
+                  <p style="color: #333; word-wrap:break-word">{{ product.description | truncatechars:44 }}</p>
+                 
                 </div>
               </div>
+              </a>
             </div>
             {% endfor %}
   <!-- ====================================================================================================================================== --> 

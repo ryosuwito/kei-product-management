@@ -17,6 +17,9 @@
     <ul class="dropdown-menu dr-menu-one dropdown-cart" role="menu" style="padding-bottom: 0">
         {% for item in wishlist.get_items_in_wishlist %}
             {% if forloop.counter < 5 %}
+            <form action="{% url 'cart:wishlist_index' %}" method="POST">
+                {% csrf_token %} 
+                <input type="hidden" name="item" value="item_{{item.pk}}">
                 <li>
                     <span class="item">
                     <span class="item-left">
@@ -28,11 +31,12 @@
                         </span>
                     </span>
                     <span class="item-right">
-                        <button class="btn btn-xs btn-danger pull-right">x</button>
+                        <button class="btn btn-xs btn-danger pull-right" type="submit">x</button>
                     </span>
                 </span>
                 </li>
                 <li class="divider"></li>
+            </form>
             {% endif %}
         {% endfor %}
         <li><a href="{% url 'cart:wishlist_index' %}"class="text-center">View Wishlist</a></li>

@@ -18,7 +18,7 @@
     <ul class="dropdown-menu dr-menu-two dropdown-cart" role="menu" style="padding-bottom: 0">
         {% for item in cart.get_items_in_cart %}
             {% if forloop.counter < 5 %}
-            <form action="/cart/" method="POST">
+            <form action="{% url 'cart:index' %}" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="item" value="item_{{item.pk}}">
                 <li>

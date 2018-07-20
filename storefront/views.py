@@ -1,13 +1,16 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from catalog.models import Product
 from membership.models import Member
 from shopping_cart.models import Cart, CartItem, WishList, WishListItem
-from .forms import ProductCartForm
 from shopping_cart import carts, wishlists
+from django.urls import reverse
+
 import datetime
 import random
+
+from .forms import ProductCartForm
 
 def product_detail(request, product_pk):
     cart = carts.get_cart(request)
@@ -50,6 +53,9 @@ def product_detail(request, product_pk):
 
                 cart_object.last_update = datetime.datetime.now()
                 cart_object.save()
+            
+            return HttpResponseRedirect(reverse('cart:index', 
+                current_app=request.resolver_match.namespace))
 
     form = ProductCartForm()
 
@@ -87,7 +93,7 @@ def index(request):
     wishlist = wishlists.get_wishlist(request)
     wishlist_object = wishlist['wishlist_object']
     product_list = Product.objects.all();
-    paginator = Paginator(product_list,7)
+    paginator = Paginator(product_list,12)
 
     page = request.GET.get('page', 1)
     max_page = 4
