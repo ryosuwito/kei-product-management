@@ -56,7 +56,7 @@ class Member(models.Model):
     sponsor = models.ForeignKey(User, on_delete=models.SET_NULL, db_index=True,  related_name="sponsor", null=True) #done
     member_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=NEW_MEMBER) #done
     phone_regex = RegexValidator(regex=r'^\+?62?\d{9,15}$', message="Nomor Telepon Harus memiliki format +62819999999 atau 0819999999'. Maksimal 15 Digit.")
-    phone_number = models.CharField(unique=True, validators=[phone_regex], max_length=17, blank=True) # validator haruslah berupa list
+    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True) # validator haruslah berupa list
     ktp_address = models.CharField(max_length=250, blank=True)
     home_address = models.CharField(max_length=250, blank=True)
     ktp_number = models.CharField(max_length=30, null=True, blank=True)
@@ -65,6 +65,16 @@ class Member(models.Model):
     bank_book_photo = models.ImageField(upload_to = 'bank_book_photo', blank=True)
     ktp_photo = models.ImageField(upload_to = 'ktp_photo', blank=True)
     profile_photo = models.ImageField(upload_to = 'profile_photo', blank=True)
+
+    ktp_provinsi = models.CharField(max_length=250, blank=True)
+    ktp_kota = models.CharField(max_length=250, blank=True)
+    ktp_kecamatan = models.CharField(max_length=250, blank=True)
+    ktp_kelurahan = models.CharField(max_length=250, blank=True)
+
+    home_provinsi = models.CharField(max_length=250, blank=True)
+    home_kota = models.CharField(max_length=250, blank=True)
+    home_kecamatan = models.CharField(max_length=250, blank=True)
+    home_kelurahan = models.CharField(max_length=250, blank=True)
 
     instagram_address = models.CharField(max_length=250, blank=True)
     facebook_address = models.CharField(max_length=250, blank=True)
@@ -114,6 +124,7 @@ class Member(models.Model):
         return filename
 
     def get_level(self):
+        level = ''
         if self.member_type == self.DROPSHIPPER :
             level = self.LEVEL['DROPSHIPPER'] 
         if self.member_type == self.RESELLER :
@@ -125,6 +136,29 @@ class Member(models.Model):
         if self.member_type == self.MASTER_SELLER :
             level = self.LEVEL['MASTER_SELLER']
         return level
+
+    def copy_address(self):
+        self.home_provinsi = self.ktp_provinsi
+        self.home_kota = self.ktp_kota
+        self.home_kecamatan = self.ktp_kecamatan
+        self.home_kelurahan = self.ktp_kelurahan
+        self.home_address = self.ktp_address
+
+    def get_home_address(self):
+        return '%s, %s, %s, %s - %s' % (self.home_address, 
+            self.home_kelurahan, 
+            self.home_kecamatan,
+            self.home_kota,
+            self.home_provinsi)
+
+    def get_ktp_address(self):
+        return '%s, %s, %s, %s - %s' % (self.home_address, 
+            self.home_kelurahan, 
+            self.home_kecamatan,
+            self.home_kota,
+            self.home_provinsi)
+
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

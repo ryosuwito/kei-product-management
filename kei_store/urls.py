@@ -21,6 +21,7 @@ import membership.urls as membership
 import database_wilayah.urls as wilayah
 import storefront.urls as storefront
 import shopping_cart.urls as cart
+import purchase_order.urls as order
 
 urlpatterns = [
     path('member/', include(membership, namespace='member_backend')),
@@ -28,5 +29,6 @@ urlpatterns = [
     path('wilayah/', include(wilayah, namespace='wilayah_backend')),
     path('store/', include(storefront, namespace='store_backend')),
     path('cart/', include(cart, namespace='cart_backend')),
+    path('order/', include(order, namespace='order_backend')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

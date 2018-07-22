@@ -21,6 +21,10 @@ class Category(models.Model):
     def __str__(self):
        return self.name
 
+    def get_url(self):
+        return "/store/kategori/%s/" % (self.pk)
+
+
 class Product(models.Model):
     name = models.CharField(max_length = 200,
             db_index=True,
@@ -49,7 +53,7 @@ class Product(models.Model):
     is_archived = models.BooleanField(default = False,
             help_text="Centang untuk Menyembunyikan Produk")
     categories = models.ManyToManyField(Category, 
-            related_name="category",
+            related_name="products_in_category",
             help_text="Kategori Produk")
 
     def get_details(self):

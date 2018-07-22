@@ -4,12 +4,13 @@ from django.contrib.auth.models import User
 import datetime
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, related_name="users_cart", on_delete=models.SET_NULL, null=True)
-    created_date = models.DateTimeField(default=datetime.datetime.now)
-    last_update = models.DateTimeField(db_index=True,default=datetime.datetime.now)
-    is_expired = models.BooleanField(db_index=True,default=False)
-    is_checked_out = models.BooleanField(db_index=True,default=False)
-    is_paid = models.BooleanField(db_index=True,default=False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="users_cart", null=True)
+    #user = models.ForeignKey(User, related_name="users_cart", on_delete=models.SET_NULL, null=True)
+    #created_date = models.DateTimeField(default=datetime.datetime.now)
+    #last_update = models.DateTimeField(db_index=True,default=datetime.datetime.now)
+    #is_expired = models.BooleanField(db_index=True,default=False)
+    #is_checked_out = models.BooleanField(db_index=True,default=False)
+    #is_paid = models.BooleanField(db_index=True,default=False)
     
     class Meta:
         verbose_name_plural = "Carts"
@@ -72,7 +73,8 @@ class CartItem(models.Model) :
        return 'CartItem%s'%self.pk
 
 class WishList(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user_wishlist", null=True)
+    #user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     def get_total_products(self):
         return len(self.get_items_in_wishlist())

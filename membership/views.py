@@ -9,11 +9,18 @@ from django.db.models import Q
 from database_wilayah.models import Provinsi, Kota, Kecamatan, Kelurahan
 from .models import Member
 from .forms import MemberLoginForm, MemberRegisterForm, GuestRegisterForm, MemberEditProfileForm
-from shopping_cart import carts
+from shopping_cart import carts, wishlists
 import random
 # Create your views here.
 
 def login_page(request):   
+    welcome_message = ""
+    try :
+        if 'cart' in request.META['HTTP_REFERER']:
+            welcome_message = "Login untuk Menyelesaikan Pembayaran"
+    except:
+        pass
+
     referal_code = False
     if request.get_host() != settings.DEFAULT_HOST:
         referal_code = check_host(request, pass_variable=True)
@@ -33,10 +40,14 @@ def login_page(request):
             user = authenticate(username=username,
                 password=password)
             if user is not None:
+                anon_cart = carts.get_cart(request)['cart_object']
                 login(request, user)
+                transfer_cart = carts.transfer_cart(request, anon_cart)
+                cart = transfer_cart['cart_object']
                 try :
                     if request.GET['next']:
-                        return HttpResponseRedirect(request.GET['next'])
+                        return HttpResponseRedirect(reverse('storefront:index'))
+                        #return HttpResponseRedirect(request.GET['next'])
                 except :
                     return HttpResponseRedirect(reverse('membership:profile'))
             else:
@@ -45,7 +56,10 @@ def login_page(request):
         if request.user.is_authenticated:
             return HttpResponseRedirect(reverse('membership:profile'))
         form = MemberLoginForm()
-    return render(request, 'membership/login.html',{'form': form, 'form_messages': form_messages})
+    return render(request, 'membership/login.html',
+        {'form': form, 
+        'form_messages': form_messages,
+        'welcome_message': welcome_message})
 
 def pre_register_page(request):
     referal_code = False
@@ -64,8 +78,9 @@ def pre_register_page(request):
     return render(request, 'membership/pre_register.html', {'link':link})
 
 def register_page(request): 
+    threshold = ''
     referal_code = False
-    link_camcel = reverse('membership:pre_register', 
+    link_cancel = reverse('membership:pre_register', 
                             current_app=request.resolver_match.namespace)
 
     if request.get_host() != settings.DEFAULT_HOST:
@@ -77,7 +92,7 @@ def register_page(request):
 
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('membership:profile'))
-    threshold = ''
+        
     namespace = reverse('membership:register', 
         current_app=request.resolver_match.namespace).split('/')[1]
     if namespace != 'guest':
@@ -88,48 +103,85 @@ def register_page(request):
             form = GuestRegisterForm(request.POST)
         else:
             form = MemberRegisterForm(request.POST, request.FILES)
+
         if form.is_valid():
             data = form.cleaned_data
+            """
+            */ alamat utama untuk pendaftaran member / guest
+            */ disimpan di field ktp_address
+            */ alamat ini akan digunakan untuk tujuan pengiriman default
+            */ bagi user tipe guest, alamat berupa home_address
+            """
+            response = render(request, 'membership/register_%s.html'%(namespace),
+                            {'form': form, 'threshold': threshold, 'link_cancel':link_cancel})
+
+            if namespace != 'guest':
+                try :
+                    """
+                    */ cek apakah semua field lengkap, jika tidak kembalikan form 
+                    """
+                    if request.POST['provinsi'] and request.POST['kota'] and \
+                    request.POST['kecamatan'] and request.POST['kelurahan'] :
+                        provinsi = Provinsi.objects.get(pk=request.POST['provinsi']).name
+                        kota = Kota.objects.get(pk=request.POST['kota']).name
+                        kecamatan = Kecamatan.objects.get(pk=request.POST['kecamatan']).name
+                        kelurahan = Kelurahan.objects.get(pk=request.POST['kelurahan']).name
+                    else :
+                        return response
+                except :
+                    return response
+            else :
+                try :
+                    """
+                    */ cek apakah semua field lengkap, jika tidak kembalikan form 
+                    """
+                    if request.POST['provinsi_home'] and request.POST['kota_home'] and \
+                    request.POST['kecamatan_home'] and request.POST['kelurahan_home']:
+                        pass
+                    else :
+                        return response
+                except :
+                    return response
+
+            """
+            */ alamat alternatif untuk pendaftaran member
+            */ disimpan di field home_address
+            */ alamat ini akan digunakan jika alamat rumah berbeda dengan alamat ktp
+            """
             try :
-                if request.POST['provinsi'] and request.POST['kota'] and \
-                request.POST['kecamatan'] and request.POST['kelurahan']:
-
-                    provinsi = data.get('provinsi')
-                    kota = Kota.objects.get(pk=request.POST['kota'])
-                    kecamatan = Kecamatan.objects.get(pk=request.POST['kecamatan'])
-                    kelurahan = Kelurahan.objects.get(pk=request.POST['kelurahan'])
-
-                else :
-                    return render(request, 'membership/register_%s.html'%(namespace),
-                        {'form': form, 'threshold': threshold, 'link_cancel':link_camcel})
-            except :
-                return render(request, 'membership/register_%s.html'%(namespace),
-                    {'form': form, 'threshold': threshold, 'link_cancel':link_camcel})
-            
-            provinsi_home = ''
-            kota_home = ''
-            kecamatan_home = ''
-            kelurahan_home = ''
-
-            try :
+                """
+                */ cek apakah semua field lengkap, jika tidak kosongkan alamat rumah
+                """
                 if request.POST['provinsi_home'] and request.POST['kota_home'] and \
                 request.POST['kecamatan_home'] and request.POST['kelurahan_home']:
-                    provinsi_home = data.get('provinsi_home')
-                    kota_home = Kota.objects.get(pk=request.POST['kota_home'])
-                    kecamatan_home = Kecamatan.objects.get(pk=request.POST['kecamatan_home'])
-                    kelurahan_home = Kelurahan.objects.get(pk=request.POST['kelurahan_home'])
-            except :
-                pass
+                    provinsi_home = Provinsi.objects.get(pk=request.POST['provinsi_home']).name
+                    kota_home = Kota.objects.get(pk=request.POST['kota_home']).name
+                    kecamatan_home = Kecamatan.objects.get(pk=request.POST['kecamatan_home']).name
+                    kelurahan_home = Kelurahan.objects.get(pk=request.POST['kelurahan_home']).name
+            except :        
+                provinsi_home = ''
+                kota_home = ''
+                kecamatan_home = ''
+                kelurahan_home = ''
 
+            """
+            */ Buat akun user baru dengan data yang diberikan pengguna
+            """
             username = data.get('username').lower()
             password = data.get('password')
             email = data.get('email')
-            
             user = User.objects.create_user(username=username, email=email, password=password)
+
+            """
+            */ Pisahkan nama menjadi first name dan last name
+            """
             full_name = data.get('first_name').split(' ')
             user.last_name = full_name[-1] 
             user.first_name = ' '.join([x for x in full_name[:-1]])
 
+            """
+            */ Dapatkan kode sponsor jika tidak ada berikan kode referal acak
+            """
             if referal_code:
                 user.member.sponsor_code = referal_code
                 user.member.sponsor = Member.objects.get(referal_code=referal_code).user
@@ -140,30 +192,40 @@ def register_page(request):
                 user.member.sponsor_code = sponsor_user.member.referal_code
                 user.member.sponsor = sponsor_user
 
+            """
+            */ Tipe member pengguna yang baru daftar
+            """
             if namespace == 'guest':
                 user.member.member_type = 0
             else:
-                user.member.member_type = data.get('member_type')
-            
-            user.member.phone_number = data.get('phone_number')            
+                user.member.member_type = data.get('member_type')      
+               
+            """
+            */ Masukan data-data pengguna
+            """         
             user.member.ktp_number = data.get('ktp_number')   
             user.member.bank_name = data.get('bank_name')          
             user.member.bank_account_number = data.get('bank_account_number')  
             user.member.bank_book_photo = data.get('bank_book_photo')
-            user.member.ktp_photo = data.get('ktp_photo')                   
-            if namespace == 'guest':    
-                user.member.ktp_address = data.get('home_address') + \
-                    ", %s, %s, %s, %s" % (kelurahan, kecamatan, kota, provinsi)
-            else:
-                user.member.ktp_address = data.get('ktp_address') + \
-                    ", %s, %s, %s, %s" % (kelurahan, kecamatan, kota, provinsi)
+            user.member.ktp_photo = data.get('ktp_photo')
+            user.member.phone_number = data.get('phone_number')          
 
+            if namespace != 'guest':
+                user.member.ktp_provinsi = provinsi
+                user.member.ktp_kota = kota
+                user.member.ktp_kecamatan = kecamatan
+                user.member.ktp_kelurahan = kelurahan
+                user.member.ktp_address = data.get('ktp_address')
+    
             if data.get('home_address'):                 
-                user.member.home_address = data.get('home_address') + \
-                    ", %s, %s, %s, %s" % (kelurahan_home, kecamatan_home, kota_home, provinsi_home)
-            else :
-                user.member.home_address = user.member.ktp_address
-            
+                user.member.home_provinsi = provinsi_home
+                user.member.home_kota = kota_home
+                user.member.home_kecamatan = kecamatan_home
+                user.member.home_kelurahan = kelurahan_home
+                user.member.home_address = data.get('home_address')
+            else :      
+                user.member.copy_address();
+                
             user.save()
             if user is not None:
                 logout(request)
@@ -172,6 +234,7 @@ def register_page(request):
                     current_app=request.resolver_match.namespace))
             else:
                 return HttpResponse("Create User Fail")
+
     elif request.method == 'GET': 
         if namespace == 'guest':
             form = GuestRegisterForm()
@@ -185,11 +248,12 @@ def register_page(request):
             'class': 'sponsor-disabled'
             })
     return render(request, 'membership/register_%s.html'%(namespace),
-        {'form': form, 'threshold': threshold, 'link_cancel':link_camcel})
+        {'form': form, 'threshold': threshold, 'link_cancel':link_cancel})
 
 @login_required(login_url='/member/login')
 def profile_page(request, uname='none'):
     cart = carts.get_cart(request)['cart_object']
+    wishlist = wishlists.get_wishlist(request)['wishlist_object']
     referal_code = False
     if request.get_host() != settings.DEFAULT_HOST:
         referal_code = check_host(request, pass_variable=True)
@@ -230,7 +294,11 @@ def profile_page(request, uname='none'):
         link_sponsor = sponsor.get_absolute_url()
 
     return render(request, 'membership/profile_%s.html'%(member_type),
-        {'user': user, 'cart':cart, 'link_edit': link_edit, 'link_sponsor': link_sponsor})
+        {'user': user, 
+        'cart':cart, 
+        'wishlist':wishlist,
+        'link_edit': link_edit, 
+        'link_sponsor': link_sponsor})
 
 @login_required(login_url='/member/login')
 def edit_profile_page(request):
@@ -260,10 +328,10 @@ def edit_profile_page(request):
                 if request.POST['provinsi'] and request.POST['kota'] and \
                 request.POST['kecamatan'] and request.POST['kelurahan']:
 
-                    provinsi = data.get('provinsi')
-                    kota = Kota.objects.get(pk=request.POST['kota'])
-                    kecamatan = Kecamatan.objects.get(pk=request.POST['kecamatan'])
-                    kelurahan = Kelurahan.objects.get(pk=request.POST['kelurahan'])
+                    provinsi = Provinsi.objects.get(pk=request.POST['provinsi']).name
+                    kota = Kota.objects.get(pk=request.POST['kota']).name
+                    kecamatan = Kecamatan.objects.get(pk=request.POST['kecamatan']).name
+                    kelurahan = Kelurahan.objects.get(pk=request.POST['kelurahan']).name
                     is_complete = True
             except :
                 pass
@@ -273,7 +341,11 @@ def edit_profile_page(request):
             
             if data.get('home_address') and is_complete:
                 home_address = data.get('home_address')
-                user.member.home_address = home_address + ", %s, %s, %s, %s" % (kelurahan, kecamatan, kota, provinsi)
+                user.member.home_address = home_address
+                user.member.home_provinsi = provinsi
+                user.member.home_kota = kota
+                user.member.home_kecamatan = kecamatan
+                user.member.home_kelurahan = kelurahan
 
             if data.get('instagram_address') :
                 user.member.instagram_address = data.get('instagram_address')

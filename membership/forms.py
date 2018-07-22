@@ -28,7 +28,7 @@ class MemberRegisterForm(forms.ModelForm):
     ktp_number = forms.IntegerField(required=True)
     bank_account_number = forms.IntegerField(required=True)
     bank_book_photo = forms.ImageField(required=False) 
-    bank_name = forms.CharField(max_length=50, required=True)
+    bank_name = forms.CharField(max_length=50, required=False)
     ktp_photo = forms.ImageField(required=False)
     def __init__(self, *args, **kwargs):
         super(MemberRegisterForm, self).__init__(*args, **kwargs)
@@ -100,14 +100,12 @@ class GuestRegisterForm(MemberRegisterForm):
     member_type = forms.ChoiceField(choices = Member.USER_TYPE_CHOICES[2:-1], initial=0, required=False)
     def __init__(self, *args, **kwargs):
         super(GuestRegisterForm, self).__init__(*args, **kwargs)
-
-        # sets the placeholder key/value in the attrs for a widget
-        # when the form is instantiated (so the widget already exists)
         self.fields['ktp_number'].required = False
         self.fields['bank_account_number'].required = False
         self.fields['phone_number'].required = True
         self.fields['ktp_address'].required = False
-        self.fields['ktp_address'].required = False
+        self.fields['provinsi'].required = False
+        self.fields['home_address'].required = True
 
 class MemberEditProfileForm(forms.ModelForm):   
     instagram_address = forms.CharField(max_length=250, required=False)  

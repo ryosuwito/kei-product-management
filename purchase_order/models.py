@@ -4,7 +4,7 @@ from shopping_cart.models import Cart
 import datetime
 
 class PurchaseOrder(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, related_name="users_order", on_delete=models.SET_NULL, null=True)
     cart = models.OneToOneField(Cart, on_delete=models.SET_NULL, null=True)
     created_date = models.DateTimeField(db_index=True,default=datetime.datetime.now)
     payment_date = models.DateTimeField(null=True, db_index=True, blank=True)

@@ -1,0 +1,24 @@
+<script>
+
+    function setHeight(img){
+        img.style.width = '100%';
+        img.style.minHeight = '0';
+        if(window.innerWidth>767){
+        if(img.classList.contains("main-photo") != false){
+            img.style.maxHeight = '440px';
+        } else {
+            img.style.maxHeight = '140px';
+        }
+        } else {
+        if(img.classList.contains("main-photo") != false){
+            img.style.maxHeight = '140px';
+        } else {
+            img.style.maxHeight = '110px';
+        }
+        }
+        img.style.height = img.clientWidth+'px';
+        img.style.backgroundSize='auto 100%';
+        img.style.overflow='hidden';
+        img.style.objectFit='cover';
+    } 
+</script>

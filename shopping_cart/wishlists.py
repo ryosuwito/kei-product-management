@@ -9,13 +9,21 @@ def get_wishlist(request):
             wishlist_object = WishList.objects.create(user=request.user)
             wishlist_id = wishlist_object.id
         else :
-            wishlist_object = WishList.objects.get(id=wishlist_id)    
+            try:
+                wishlist_object = WishList.objects.get(id=wishlist_id)    
+            except:
+                wishlist_object = WishList.objects.create(user=request.user)
+                wishlist_id = wishlist_object.id
     else:
         if int(wishlist_id) < 0:
             wishlist_object = AnonymousWishlist.objects.create(anon_user=request.session.session_key)
             wishlist_id = wishlist_object.id
         else :
-            wishlist_object = AnonymousWishlist.objects.get(id=wishlist_id)    
+            try:
+                wishlist_object = AnonymousWishlist.objects.get(id=wishlist_id)    
+            except:
+                wishlist_object = AnonymousWishlist.objects.create(anon_user=request.session.session_key)
+                wishlist_id = wishlist_object.id
 
     request.session['wishlist'] = wishlist_id
     return {'wishlist_object':wishlist_object,'wishlist_id':wishlist_id}

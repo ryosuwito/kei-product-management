@@ -4,44 +4,24 @@
     <title>Wishlist | kei-partner.com</title>
   {% endblock %}
   {% block content %}
-    <script>
-
-        function setHeight(img){
-          img.style.width = '100%';
-          img.style.minHeight = '0';
-          if(window.innerWidth>767){
-            if(img.classList.contains("main-photo") != false){
-              img.style.maxHeight = '440px';
-            } else {
-              img.style.maxHeight = '140px';
-            }
-          } else {
-            if(img.classList.contains("main-photo") != false){
-              img.style.maxHeight = '140px';
-            } else {
-              img.style.maxHeight = '110px';
-            }
-          }
-          img.style.height = img.clientWidth+'px';
-          img.style.backgroundSize='auto 100%';
-          img.style.overflow='hidden';
-          img.style.objectFit='cover';
-        } 
-    </script>
+  {% include "shopping_cart/setHeight.html" %}
     <div class="container container-form container-bg">
       <section name="header">
         <div class="container"> 
         <div class="row"style="margin-top:0.5%">
           <div class="col-xs-12 col-lg-12 ">
             <div class="col-lg-12" style="margin-top: 12px;">
-            {% if not wishlist.get_total_products %}
+            {% if not products %}
                 <h4 class="title" style="font-size:20px">Tidak ada produk dalam wishlist <br>
                 <a href="{% url 'storefront:product_all' %}">Kembali ke toko</a></h4></div>
             <!-- ====================================================================================================================================== --> 
 
             {% else %}
                 <h4 class="title" style="font-size:20px">Produk dalam wishlist</h4></div>
-                {% for item in wishlist.get_items_in_wishlist %}
+                {% for item in products %}
+                {% if forloop.counter0|divisibleby:3 or forloop.first%}
+                <div class="row" style="margin:0; padding-top:10px; border-bottom: 1px solid #aaa">
+                {% endif %}
                 <form method="POST">
                     {% csrf_token %}
                     <div class="col-xs-4 card-bottom card-sm"  style="padding:0 5px">
@@ -59,17 +39,23 @@
                             </div>
                             <div class="col-xs-2">                                
                               <input type="hidden" name="item" value="item_{{item.pk}}">
-                              <p onclick="window.location.href='{{item.product.get_detail_url}}'" class="btn btn-primary" style="margin:auto">Beli</p>
-                              <button class="btn btn-danger" style="margin-top:5px" type="submit">Hapus</button>
+                              <p onclick="window.location.href='{{item.product.get_detail_url}}'" class="btn btn-xs btn-primary" style="margin:auto">Beli</p>
+                              <button class="btn btn-xs btn-danger" style="margin-top:5px" type="submit">Hapus</button>
                             </div>
                         </div>
                     </div>
                 </form>
+                {% if forloop.last or forloop.counter0|divisibleby:2 %}
+                  {% if not forloop.first %}
+                    </div>
+                  {% endif %}
+                {% endif %}
                 {% endfor %}
             {% endif %}
   <!-- ====================================================================================================================================== --> 
 
             </div>
+            {% include "shopping_cart/pagination.html" %}
         </div></div></div></div>
   <!-- ====================================================================================================================================== -->
  
