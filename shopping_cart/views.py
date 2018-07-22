@@ -5,14 +5,18 @@ from .models import Cart, CartItem, WishListItem
 import shopping_cart.carts as carts
 import shopping_cart.wishlists as wishlists
 from membership.models import Member
+from shipping_backend.shipping_check import get_courier, get_cost
 
 def index(request):
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
+    shipping_cost = cart_object.shipping_cost
+    services = ''
+    selected_service = ''
     wishlist = wishlists.get_wishlist(request)
     wishlist_object = wishlist['wishlist_object']
     item_list = cart_object.get_items_in_cart();
-    paginator = Paginator(item_list,10)
+    paginator = Paginator(item_list,6)
     page = request.GET.get('page', 1)
     max_page = 4
     min_page = 0
@@ -48,6 +52,19 @@ def index(request):
                     item.save()
             except:
                 pass
+        
+        elif method == 'check_shipping':
+            costs_list = ''
+            try:
+                if request.POST['courier'] :
+                    costs_list = get_cost(request.user, request.POST['courier'])
+                if costs_list:
+                    services = [x for x in costs_list]
+                    selected_service = request.POST['courier']
+            except:
+                pass
+
+    discounted_price = cart_object.get_total_price() + 15000
 
     if request.user.is_authenticated:
         if not request.user.member.member_type == Member.GUEST and \
@@ -55,15 +72,18 @@ def index(request):
             benefit = request.user.member.get_level()['BENEFIT']
             discount = cart_object.get_total_price() * discount / 100
             discounted_price = cart_object.get_total_price() * (100 - discount) / 100
-        else:
-            discounted_price = cart_object.get_total_price() + 15000
 
+    couriers = get_courier()
     return render(request, 'shopping_cart/cart_show_all.html', 
         {'wishlist': wishlist_object,
         'cart':cart_object,
         'products':products,
         'discount':discount,
         'discounted_price':discounted_price,
+        'couriers':couriers,
+        'shipping_cost':shipping_cost,
+        'services':services,
+        'selected_service':selected_service,
         'max_page':max_page,
         'min_page':min_page})
 
@@ -73,7 +93,7 @@ def wishlist_index(request):
     wishlist = wishlists.get_wishlist(request)
     wishlist_object = wishlist['wishlist_object']
     item_list = wishlist_object.get_items_in_wishlist();
-    paginator = Paginator(item_list,10)
+    paginator = Paginator(item_list,6)
     page = request.GET.get('page', 1)
     max_page = 4
     min_page = 0

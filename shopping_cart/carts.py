@@ -47,7 +47,7 @@ def transfer_cart(request, anon_cart):
                         product=item.product)
                     cart_item.quantity = item.quantity
                 cart_item.save()
-                #item.delete()
+                item.delete()
             temp_cart.delete()
     elif not user_cart:
         user_cart = Cart.objects.create(user=request.user)

@@ -5,6 +5,7 @@ import datetime
 
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="users_cart", null=True)
+    shipping_cost = models.IntegerField(null=True, blank=True)
     #user = models.ForeignKey(User, related_name="users_cart", on_delete=models.SET_NULL, null=True)
     #created_date = models.DateTimeField(default=datetime.datetime.now)
     #last_update = models.DateTimeField(db_index=True,default=datetime.datetime.now)
@@ -73,7 +74,7 @@ class CartItem(models.Model) :
        return 'CartItem%s'%self.pk
 
 class WishList(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user_wishlist", null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="users_wishlist", null=True)
     #user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     def get_total_products(self):

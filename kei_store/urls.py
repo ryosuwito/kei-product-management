@@ -22,6 +22,7 @@ import database_wilayah.urls as wilayah
 import storefront.urls as storefront
 import shopping_cart.urls as cart
 import purchase_order.urls as order
+import shipping_backend.urls as shipping
 
 urlpatterns = [
     path('member/', include(membership, namespace='member_backend')),
@@ -30,5 +31,6 @@ urlpatterns = [
     path('store/', include(storefront, namespace='store_backend')),
     path('cart/', include(cart, namespace='cart_backend')),
     path('order/', include(order, namespace='order_backend')),
+    path('shipping/', include(shipping, namespace='shipping_backend')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

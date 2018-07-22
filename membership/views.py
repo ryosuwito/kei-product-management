@@ -41,9 +41,12 @@ def login_page(request):
                 password=password)
             if user is not None:
                 anon_cart = carts.get_cart(request)['cart_object']
+                anon_wishlist = wishlists.get_wishlist(request)['wishlist_object']
                 login(request, user)
                 transfer_cart = carts.transfer_cart(request, anon_cart)
+                transfer_wishlist= wishlists.transfer_wishlist(request, anon_wishlist)
                 cart = transfer_cart['cart_object']
+                wishlist = transfer_wishlist['wishlist_object']
                 try :
                     if request.GET['next']:
                         return HttpResponseRedirect(reverse('storefront:index'))

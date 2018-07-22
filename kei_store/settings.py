@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'database_wilayah',
     'reward_system',
     'storefront',
+    'shipping_backend',
 ]
 
 MIDDLEWARE = [
