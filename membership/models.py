@@ -158,7 +158,8 @@ class Member(models.Model):
             self.home_kota,
             self.home_provinsi)
 
-
+    def __str__(self):
+        return self.get_full_name()
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

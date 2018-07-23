@@ -56,6 +56,9 @@ def get_cost(user, courier):
             if json_data['results'][0]['costs']:
                 try:
                     costs_list = json_data['results'][0]['costs']
+                    for x in costs_list:
+                        x['cost'][0]['int_value'] = x['cost'][0]['value']
+                        x['cost'][0]['value'] = int_to_rupiah( x['cost'][0]['value'])
                     return costs_list
                 except:
                     return 0
@@ -93,3 +96,6 @@ def get_city_id(province_id, city_name):
         else :
             city_id = ''
     return city_id
+
+def int_to_rupiah(value):
+    return 'Rp. '+ '{:,}'.format(value).replace(",",".") + ',-'
