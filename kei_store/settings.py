@@ -26,7 +26,7 @@ SECRET_KEY = KEY.SECRET
 DEBUG = True
 
 ALLOWED_HOSTS = ['.localhost','localhost']
-PORT = ':8000'
+PORT = ':8082'
 DEFAULT_HOST = ALLOWED_HOSTS[1]+ PORT
 
 # Application definition
@@ -127,10 +127,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    '/home/kemong/Webproject/kei-django/kei_store/static/',    
+    '/home/ryo/Webproject/keskei/keskei/static/',    
 ]
 
-MEDIA_ROOT = '/home/kemong/Webproject/kei-django/kei_store/media/'
+MEDIA_ROOT = '/home/ryo/Webproject/keskei/keskei/media/'
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = '/member/'
