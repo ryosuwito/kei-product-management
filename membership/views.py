@@ -49,8 +49,7 @@ def login_page(request):
                 wishlist = transfer_wishlist['wishlist_object']
                 try :
                     if request.GET['next']:
-                        return HttpResponseRedirect(reverse('storefront:index'))
-                        #return HttpResponseRedirect(request.GET['next'])
+                        return HttpResponseRedirect(request.GET['next'])
                 except :
                     return HttpResponseRedirect(reverse('membership:profile'))
             else:

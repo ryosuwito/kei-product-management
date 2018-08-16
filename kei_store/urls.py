@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic.base import RedirectView
@@ -25,15 +25,21 @@ import storefront.urls as storefront
 import shopping_cart.urls as cart
 import purchase_order.urls as order
 import shipping_backend.urls as shipping
+from shipping_backend.views import shipping_redirect
+from purchase_order.views import checkout, pay, history
 
 urlpatterns = [
     path('admin/shipping_backend/shippingorigin/add/', RedirectView.as_view(url='/shipping/origin/', permanent=False)),
+    path('admin/shipping_backend/shippingorigin/<int:pk>/change/', shipping_redirect),
     path('member/', include(membership, namespace='member_backend')),
     path('guest/', include(membership, namespace='guest_backend')),
     path('wilayah/', include(wilayah, namespace='wilayah_backend')),
-    path('store/', include(storefront, namespace='store_backend')),
     path('cart/', include(cart, namespace='cart_backend')),
+    path('checkout/', checkout, name="checkout"),
+    path('pay/', pay, name="pay"),
+    path('history/', history, name="history"),
     path('order/', include(order, namespace='order_backend')),
     path('shipping/', include(shipping, namespace='shipping_backend')),
     path('admin/', admin.site.urls),
+    re_path(r'^', include(storefront, namespace='store_backend')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

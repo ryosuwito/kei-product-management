@@ -17,7 +17,13 @@ def product_detail(request, product_pk):
     cart_object = cart['cart_object']
     wishlist = wishlists.get_wishlist(request)
     wishlist_object = wishlist['wishlist_object']
-    other_product = random.sample(list(Product.objects.all()), 5)       
+    all_product = Product.objects.filter(is_archived=False).exclude(pk=product_pk)
+    is_wishlist = False
+    if len(all_product) >= 5:
+        other_product = random.sample(list(all_product), 5)
+    else:
+        other_product = random.sample(list(all_product), len(all_product))
+
     product = Product.objects.get(pk=product_pk)
     is_in_wishlist = False
 
@@ -28,9 +34,10 @@ def product_detail(request, product_pk):
         except:
             pass
         
-        if method == 'wishlist':   
+        if method == 'wishlist':  
+            is_wishlist = True 
             wishlist_item = WishListItem.objects.get_or_create(wishlist=wishlist_object, product=product)[0]
-
+       
         elif method == 'cart':
             form = ProductCartForm(request.POST)
             if form.is_valid():
@@ -70,21 +77,25 @@ def product_detail(request, product_pk):
         if product_pk == pk:
             is_in_wishlist = True
 
-    response = render(request, 'storefront/product_detail.html', 
-        {'product':product, 
-        'other_product':other_product, 
-        'cart':cart_object, 
-        'wishlist':wishlist_object, 
-        'form':form, 
-        'is_in_wishlist': is_in_wishlist,
-        'discount': discount, 
-        'discounted_price': int(discounted_price)})
+    if is_wishlist:
+        response = HttpResponseRedirect(reverse("storefront:product_detail", kwargs=
+            {'product_pk':product_pk})[:-1]+"#formQuantity")
+    else:
+        response = render(request, 'storefront/product_detail.html', 
+            {'product':product, 
+            'other_product':other_product, 
+            'cart':cart_object, 
+            'wishlist':wishlist_object, 
+            'form':form, 
+            'is_in_wishlist': is_in_wishlist,
+            'discount': discount, 
+            'discounted_price': int(discounted_price)})
 
     return response
     
 def index(request):
     try:
-        product_list = Product.objects.all()
+        product_list = Product.objects.filter(is_archived=False)
     except:
         product_list=''
     if not product_list:
@@ -96,7 +107,7 @@ def index(request):
 def product_by_category(request, category_pk):
     try:
         kategori = Category.objects.get(pk=category_pk)
-        product_list = kategori.products_in_category.all()
+        product_list = kategori.products_in_category.filter(is_archived=False)
     except:
         product_list=''
     if not product_list:
@@ -130,7 +141,7 @@ def paginate_results(request, product_list,product_title):
             pass
 
     try:
-        categories = Category.objects.all()
+        categories = Category.objects.filter(is_archived=False)
     except:
         categories = ''
 

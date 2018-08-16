@@ -6,6 +6,8 @@ import datetime
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="users_cart", null=True)
     shipping_cost = models.IntegerField(null=True, blank=True)
+    shipping_service =  models.CharField(max_length = 200,null=True)
+    shipping_sub_service =  models.CharField(max_length = 200,null=True)
     #user = models.ForeignKey(User, related_name="users_cart", on_delete=models.SET_NULL, null=True)
     #created_date = models.DateTimeField(default=datetime.datetime.now)
     #last_update = models.DateTimeField(db_index=True,default=datetime.datetime.now)

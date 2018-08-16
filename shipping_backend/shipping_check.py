@@ -14,7 +14,7 @@ def get_courier():
     return ['jne','pos','tiki']
 
 def get_shipping_origin_id():
-    shipping_origin = ShippingOrigin.objects.all()[0]
+    shipping_origin = ShippingOrigin.objects.filter(is_default=True)[0]
     provinsi_origin = shipping_origin.provinsi.name
     kota_origin = shipping_origin.kota.name
     return {'provinsi_origin':provinsi_origin, 'kota_origin':kota_origin}

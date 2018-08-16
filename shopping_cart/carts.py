@@ -39,8 +39,8 @@ def transfer_cart(request, anon_cart):
         else:
             for item in temp_cart.get_items_in_cart():
                 try:
-                    cart_item = CartItem.objects.filter(cart=user_cart, 
-                            product=item.product)[0]    
+                    cart_item = CartItem.objects.get(cart=user_cart, 
+                            product=item.product)   
                     cart_item.quantity += item.quantity
                 except:
                     cart_item = CartItem.objects.create(cart=user_cart, 

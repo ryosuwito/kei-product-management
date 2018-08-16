@@ -1588,3 +1588,7 @@ ul.dropdown-cart li .item-right button{
   top: -6px;
   transform: rotate(-45deg);
 }
+
+.modal-backdrop{
+  background: none;
+}

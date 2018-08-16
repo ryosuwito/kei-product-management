@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django_extensions.db.fields import AutoSlugField
 
 class Category(models.Model):
@@ -47,6 +49,7 @@ class Product(models.Model):
     photo_alt5 = models.ImageField(upload_to = 'product_photo', null=True, blank=True,
             help_text="Foto Produk Alternatif 5")
     price = models.IntegerField(null=True, help_text="Harga Produk")
+
     unit_weight = models.IntegerField(null=True, help_text="Berat Satuan Produk dalam gram")
     is_available = models.BooleanField(default = True,
             help_text="Centang Jika Produk Tersedia")
@@ -77,11 +80,10 @@ class Product(models.Model):
         return "/media/%s" % (self.photo_alt5)
 
     def get_detail_url(self):
-        return "/store/detail/%s/" % (self.pk)
+        return "/detail/%s/" % (self.pk)
 
     class Meta:
         verbose_name_plural = "Products"
 
     def __str__(self):
        return self.name
-    

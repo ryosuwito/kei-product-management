@@ -4,7 +4,9 @@ from . import views
 app_name = 'shipping'
 
 urlpatterns = [
-    path('origin/', views.set_shipping_origin, name="origin"),
+    path('<int:pk>/change/', views.ChangeShippingOrigin.as_view(), name="change_origin"),
+    path('<int:pk>/default/', views.set_default, name="set_default"),
+    path('origin/', views.SetShippingOrigin.as_view(), name="origin"),
     path('province/id', views.get_province_id, name='get_province_id'),
     path('province/', views.get_province, name='get_province'),
     path('city/id', views.get_city_id, name='get_city_id'),

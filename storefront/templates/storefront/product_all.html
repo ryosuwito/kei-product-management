@@ -55,8 +55,9 @@
                   <h5 class="titlesm cool" style="text-align:center;">
                       {{ product.price  | int_to_rupiah }}
                   </h5>
-                  <p style="color: #333; word-wrap:break-word">{{ product.description | truncatechars:44 }}</p>
-                 
+                  {% if not product.is_available %}
+                  <p class="title hot">--Stok Kosong--</p>
+                  {% endif %}
                 </div>
               </div>
               </a>

@@ -23,6 +23,16 @@
                   {{origin.alamat}}</p>
                 </div>
                 <div class="col-xs-2">
+                  {% if not origin.is_default %}
+                  <a href="{% url 'shipping:set_default' pk=origin.pk %}">
+                  <p style="width: auto" class="btn btn-xs btn-primary" formmethod="GET">Set Default</p></a>
+                  <br>
+                  {% else %}
+                  <p>Default</p>
+                  {% endif %}
+                  <a href="{% url 'shipping:change_origin' pk=origin.pk %}">
+                  <p style="width: auto" class="btn btn-xs btn-success" formmethod="GET">Ubah</p></a>
+                  <br>
                   <input type="hidden" name="action" value="DELETE">
                   <input type="hidden" name="origin_pk" value="{{origin.pk}}">
                   <button form="deleteItem{{origin.pk}}" style="width: auto" class="btn btn-xs btn-danger" type="submit">Hapus</button>
@@ -70,7 +80,13 @@
                   <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kota/ Kabupaten :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                   
                   <select name="kota" style="background-color:#f1f1f1;" onClick=getKecamatan(this.id) id="id_kota">
+                    {% if not origin %}
                     <option value="..."> </option>
+                    {% else %}
+                      {% for kota in origin.provinsi.kota_provinsi.all %}
+                      <option value="{{kota.pk}}">{{kota.name}}</option>
+                      {% endfor %}
+                    {% endif %}
                   </select>
                 </div>
             </div>
@@ -80,7 +96,13 @@
                   <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kecamatan/ Subdistrik :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                   
                   <select name="kecamatan"  style="background-color:#f1f1f1"  onClick=getKelurahan(this.id)  id="id_kecamatan">
-                    <option value="..."> </option>         
+                    {% if not origin %}
+                    <option value="..."> </option>
+                    {% else %}
+                      {% for kecamatan in origin.kota.kecamatan_kota.all %}
+                      <option value="{{kecamatan.pk}}">{{kecamatan.name}}</option>
+                      {% endfor %}
+                    {% endif %}        
                   </select>
                 </div>
 
@@ -88,7 +110,13 @@
                   <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kelurahan/ Desa :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                   
                   <select  name="kelurahan" style="background-color:#f1f1f1" id="id_kelurahan">
-                    <option value="..."> </option>                  
+                    {% if not origin %}
+                    <option value="..."> </option>
+                    {% else %}
+                      {% for kelurahan in origin.kecamatan.kelurahan_kecamatan.all %}
+                      <option value="{{kelurahan.pk}}">{{kelurahan.name}}</option>
+                      {% endfor %}
+                    {% endif %}   
                   </select>
                 </div>
             </div>

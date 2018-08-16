@@ -119,6 +119,7 @@
                         {% endif %}   
                       </div>
                       <div class="col-xs-8">
+                        {% if product.is_available %}
                         <h5 class="title cool" id="jumlahBayar" style="text-align:left;">
                           Jumlah Bayar : {{ product.price | int_to_rupiah }}
                         </h5>
@@ -145,7 +146,7 @@
                             <div style="display: flex; justify-content:baseline; align-items: baseline; flex-direction: row">
                                 <h5 class="title" style="margin: 0">Banyaknya :</h5>
                                 {{ form.quantity }}
-                            </div>   
+                            </div>  
                         </form>
                         <button class="btn btn-primary" type="submit" form="formQuantity"
                           style="width:100%;margin:4px 0; padding: 6px; display: flex; justify-content: center">
@@ -156,6 +157,10 @@
                         </button>
                         <p class="hidden" id="productPrice">{{ product.price }}</p>
                         <p class="hidden" id="productWeight">{{ product.unit_weight }}</p>
+                        {% else %}
+                           <p class="title hot">--Stok Kosong--</p>
+                        {% endif %} 
+
                       </div>
                     </div>
                 </section>
