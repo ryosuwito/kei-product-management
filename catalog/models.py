@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_extensions.db.fields import AutoSlugField
+from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField(db_index=True,
@@ -80,7 +81,7 @@ class Product(models.Model):
         return "/media/%s" % (self.photo_alt5)
 
     def get_detail_url(self):
-        return "/detail/%s/" % (self.pk)
+        return reverse('storefront:product_detail', kwargs={'product_pk':self.pk})
 
     class Meta:
         verbose_name_plural = "Products"

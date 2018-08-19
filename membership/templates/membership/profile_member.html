@@ -3,146 +3,10 @@
     <title>Member Area | kei-partner.com</title>
   {% endblock %}
   {% block content %}
-    <div class="container container-form container-bg"><!--Container#1 -->
+    <div class="container container-form container-bg" style="padding-bottom: 0"><!--Container#1 -->
        <div class="row" style="padding: 0; margin: 0"><!-- Row#1 of Container#1 -->
-         <div class="col-md-9 col-xs-12" style="padding: 0 20px">
-           <div class="row"  style="padding: 0; margin: 0">
-            <div class="col-xs-6" style="padding:0 5px;text-align:center">
-                <div class="col-xs-12 card-bottom effect5 card-pointer card-md" style="padding:0 0 10px 0">
-                      <h3 id="cards7-title" class="title" style="color:#333">
-                          {% if request.user == user %} MY CARD
-                          {% else %} CARD {% endif %}
-                      </h3>
-                      {% if request.user == user %} 
-                      <h5 class="titlesm cool" style="text-align:center; margin:0;"><sub>*(barcode berisi link store anda)</sub>
-                      </h5>
-                      {% endif %}
-                      <img  id="saran-4" style="margin:5px 0"  width="100%" height="auto" src="/media/pictures/ex-member-card.png">
-                </div>
-            </div>
-            <div class="col-xs-6" style="padding:0 5px;text-align:center">
-                <div class="col-xs-12 card-bottom effect5 card-pointer card-md" style="padding:0 20px 20px 20px">
-                      <h3 id="cards7-title" class="title" style="color:#333"> 
-                          {% if request.user == user %} MY ACCOUNT
-                          {% else %} DETAIL {% endif %}
-                      </h3>
-                      <h6 class="titlesm cool" style="text-align:left;">
-                        Kode Referal :
-                      </h6>
-                      <h5 style="text-align:left; margin:0;">                  
-                          {{ user.member.referal_code }}
-                      </h5>
-                      <h6 class="titlesm cool" style="text-align:left;">
-                        Nama Sponsor :
-                      </h6>
-                      <h5 style="text-align:left; margin:0;">
-                        {{ user.member.sponsor.username }}
-                      </h5>
-                      <h6 class="titlesm cool" style="text-align:left;">
-                        Nomor Rekening :
-                      </h6>
-                      <h5 style="text-align:left; margin:0;">
-                          {{ user.member.bank_name }} <br>
-                          {{ user.member.bank_account_number }}
-                      </h5>
-                      <h6 class="titlesm cool" style="text-align:left;">
-                        Alamat E-mail :
-                      </h6>
-                      <h5 style="text-align:left; margin:0;">
-                        {{ user.email }}
-                      </h5>
-                      {% if request.user != user %}
-                      <h6 class="titlesm cool" style="text-align:left;">
-                        Alamat Rumah :
-                      </h6>
-                      <h5 style="text-align:left; margin:0;">
-                        {% if user.member.get_home_address %}
-                        {{ user.member.get_home_address | title }}
-                        {% else %}
-                        {{ user.member.get_ktp_address | title }}
-                        {% endif %}
-                      </h5>
-                      {% endif %}
-                </div>
-            </div>          
-          </div>
-          <div class="row"  style="padding: 0; margin: 0">
-            {% if request.user == user %}
-                <div class="col-xs-6" style="padding:0 5px;text-align:center">
-                  <div class="col-xs-12 card-bottom effect5 card-pointer card-md" style="padding:0 15px">
-                    <h4 id="cards7-title" class="title" style="color:#333"> MY BANNER</h4>
-                      <img  id="saran-4" style="margin:0" class="photo-user saran" onLoad="setHeight(this)" src="/media/pictures/kost6.jpg">
-
-                        <h5 id="cards7-title" class="title" style="color:#333"> Kumpulan Banner Untuk Promosi Siap Pakai</h5>
-                  </div>
-                </div>
-            {% endif %}
-            <div class="col-xs-6" style="padding:0 5px;text-align:center">
-              {% if user.member.qrcode %}
-              <div class="col-xs-12 card-bottom effect5 card-pointer card-md" style="padding:0 15px">
-                    <img  id="saran-4" style="margin:0" width="160px" height="auto" src="/{{ user.member.qrcode }}">
-              {% else %}
-              <div class="col-xs-12 card-bottom effect5 card-pointer card-md" style="min-height:0; padding:0 15px">
-              {% endif %}
-                <h4 id="cards7-title" class="title" style="color:#333">         
-                    {% if request.user == user %} MY STORE
-                    {% else %} STORE {% endif %}
-                </h4>
-                {% if request.user == user %}
-                <p>Link Toko Replika Anda adalah :
-                {% else %}
-                <p>Link Toko Replika <b>{{ user.member.get_full_name | title}}</b> adalah :{% endif %}
-                    <br>https://{{user.username}}.kei-partner.com/store</p> 
-              </div>
-            </div>
-          </div>
-          {% if request.user == user %}
-              <div class="row"  style="padding: 0; margin: 0">
-                <div class="col-xs-6" style="padding:0 5px;text-align:center">
-                  <div class="col-xs-12 card-bottom effect5 card-pointer card-sm" style="padding:0 0 10px 0">
-                    <h4 id="cards7-title" class="title" style="color:#333"> MY SELLING</h4>
-
-                        <h5 id="cards7-title" class="title" style="color:#333">Grafik Hasil Penjualan dari Toko Replika Anda</h5>
-                  </div>
-                </div>
-                <div class="col-xs-6" style="padding:0 5px;text-align:center">
-                  <div class="col-xs-12 card-bottom effect5 card-pointer card-sn" style="padding:0 0 10px 0">
-                    <h4 id="cards7-title" class="title" style="color:#333"> MY REWARD</h4>
-
-                        <h5 id="cards7-title" class="title" style="color:#333">Cek Reward Perekrutan, Penjualan, dan Bonus.</h5>
-                  </div>
-                </div>
-              </div>
-              <div class="row"  style="padding: 0; margin: 0">
-                <div class="col-xs-3" style="padding:0 5px;text-align:center">
-                  <div class="col-xs-12 card-bottom effect5 card-pointer card-sm" style="padding:0 0 10px 0">
-                    <h4 id="cards7-title" class="title" style="color:#333"> MY POIN</h4>
-                        <h5 id="cards7-title" class="title" style="color:#333">Cek POIN Reward yang Anda Dapatkan</h5>
-                  </div>
-                </div>
-                <div class="col-xs-3" style="padding:0 5px;text-align:center">
-                  <div class="col-xs-12 card-bottom effect5 card-pointer card-sm" style="padding:0 0 10px 0">
-                    <h4 id="cards7-title" class="title" style="color:#333"> MY CUSTOMER</h4>
-                        <h5 id="cards7-title" class="title" style="color:#333">Data Kostumer Toko Replika Anda</h5>
-                  </div>
-                </div>
-                <div class="col-xs-3" style="padding:0 5px;text-align:center">
-                  <div class="col-xs-12 card-bottom effect5 card-pointer card-sm" style="padding:0 0 10px 0">
-                    <h4 id="cards7-title" class="title" style="color:#333"> MY EBOOK</h4>
-                        <h5 id="cards7-title" class="title" style="color:#333">Download Ebook Untuk Meningkatkan Penjualan</h5>
-                  </div>
-                </div>
-                <div class="col-xs-3" style="padding:0 5px;text-align:center">
-                  <div class="col-xs-12 card-bottom effect5 card-pointer card-sm" style="padding:0 0 10px 0">
-                    <h4 id="cards7-title" class="title" style="color:#333"> TRACKING</h4>
-                        <h5 id="cards7-title" class="title" style="color:#333">Lacak Pengiriman Barang ke Kostumer Anda</h5>
-                  </div>
-                </div>
-              </div>
-            {% endif %}
-        </div> 
-         <div name="socio-box" class="col-xs-12 col-md-3" style="padding: 0 20px 0 0">
-           <div class="col-xs-12 card-bottom card-md effect5" style="min-height:auto;padding:0 0 20px 0">
+         <div class="col-xs-12 col-md-2" style="padding: 0; min-height: 600px; max-height: 600px; overflow-y: auto">
+           <div class="col-xs-12 card-bottom card-md" style="background: #fff;  min-height: 600px; max-height: 600px; padding:20px; margin:0">
              <div name="prf-header" class="col-xs-12" style="padding:10px 0">
               <div name="prf-ava" class="col-xs-12" style="text-align: center">
 
@@ -155,13 +19,14 @@
                   {% endif %}
                   " 
                 alt="Avatar" class="photo-user avatar avatars" style="
-               -webkit-filter: none;width:120px;height:120px;border-radius:85px; padding:5px"/></div>
+               -webkit-filter: none;width:90px;height:90px;border-radius:85px; padding:5px"/></div>
               <div name="prf-title" class="col-xs-12">
                 <div style="margin:0;display:block;padding:0">
                   <h4 class="title" style="margin:0">{{ user.member.get_full_name | title }}</h4>
                   <h5 class="title" style="margin:5px 0">{{ user.member.get_member_type_display | title }}
                   </h5></div>
                 <div style="margin:0;display:block;padding:0">
+                                
                   <h6 class="title" style="margin:0">Status Member :
                     {% if user.member.is_member_activated %}
                       Sudah Diaktifkan
@@ -175,17 +40,14 @@
             <div class="col-xs-12 card-bottom " style="background-color:transparent;margin-bottom:0px;display:block;height:auto;padding:0">
               {% if user.member.smart_motto %}
                 <div class="col-xs-12 card-bottom" style="margin-bottom:10px;display:block;height:auto;padding:0">
+                                
                   <h4 class="title" style="margin:10px 0">Smart Motto</h4>
                   <p style="text-align: center; padding: 0 5px">
                   {{ user.member.smart_motto }}
                   </p>
                 </div>
               {% endif %}
-              <div class="col-xs-12 card-bottom" style="margin-bottom:0px;display:block;height:auto;padding:0">
-                <h4 class="title" style="margin:10px 0">Media Sosial</h4></div>
-                </div>
-  
-                <div
+                  <div
                   {% if user.member.instagram_address %}
                     class="col-xs-4 detail-box social"
                     style="background-color:#634334"
@@ -213,19 +75,70 @@
                   style="background-color:#888888"
                 {% endif %}>
                   <h2 class="white" style="text-align:center;padding:0;margin:0"><span class="fa fa-twitter"></span></h2></div>
-              <div class="col-xs-12 card-bottom" style="background-color:transparent;margin-bottom:10px;display:block;height:auto;padding:0 15px">
-                <h4 class="title" style="margin:10px">Kontak</h4></div>
-                <div class="row">
-                  <div class="col-xs-5 col-lg-4 col-sm-2 col-md-5" style="padding:0 0 0 28px;min-height:0;margin:5px 0">
-                      <h5 class="desc cool" style="margin:0">LINE@</h5></div>
-                  <div class="col-xs-7 col-lg-8 col-sm-4 col-md-7" style="padding:0 28px 0 0;min-height:0;margin:5px 0">
-                    <h5 class="desc cool" style="margin:0; padding-left: 10px">: {{ user.member.line_address }}</h5></div>
+                  {% if user == request.user %}
+                  <div class="row">
+                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+                        <a href="{{ link_edit }}"><h3 style="width: 100%;" class="btn btn-primary">Ubah Profil <span class="fa fa-edit"></span></h3></a>
+                    </div>
+                    <div class="col-xs-12" style="min-height:0;margin:5px 0">
+                      <ul class="nav nav-pills nav-stacked">
+                        <li class="bg-info" style="margin: 4px 0; text-align: center">
+                            <a href="#">My Selling</a>
+                        </li>
+                        <li class="bg-info" style="margin: 4px 0; text-align: center">
+                            <a href="#">My Reward</a>
+                        </li>
+                        <li class="bg-info" style="margin: 4px 0; text-align: center">
+                            <a href="#">My Poin</a>
+                        </li>
+                        <li class="bg-info" style="margin: 4px 0; text-align: center">
+                            <a href="#">My Costumer</a>
+                        </li>
+                        <li class="bg-info" style="margin: 4px 0; text-align: center">
+                            <a href="#">My Ebook</a>
+                        </li>
+                        <li class="bg-info" style="margin: 4px 0; text-align: center">
+                            <a href="#">Tracking</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  {% endif %}
                 </div>
+              </div>
+            </div>
+         <div class="col-md-10 col-xs-12" style="padding: 0 15px">
+           <div class="col-xs-12" style="padding: 0; background: #fff; min-height: 600px;">
+               <div class="row" style="margin: 0;">
+                <div class="hidden-xs col-sm-10" style="padding: 0 15px">
+                  <h1>Profil dan Data Akun</h1>
+                </div>
+                {% if user == request.user %}
+                <div class="hidden-xs col-sm-2" style="padding: 0 15px; text-align: right">
+                    <a href="{{ link_edit }}"><h3 style="width: 100%;" class="btn btn-primary">Ubah Profil <span class="fa fa-edit"></span></h3></a>
+                </div>
+                {% endif %}
+              </div>
+                                
+              <div style="width: 100%; border-top: 1px solid #ccc; display: block; min-height: 20px; margin-top:5px"></div>
+              <div class="col-xs-12" style="padding: 0">
+                <div class="col-xs-12 col-lg-6 card-bottom" style="padding:0 25px; margin-bottom:0px;display:block;height:auto">
+                                
+                  <h4 class="title" style="margin:10px 0;  text-align: left">Kontak</h4>
+                {% if user.member.line_address %}
+                <div class="row" >
+                  <div class="col-xs-12" style="min-height:0;margin:5px 0">
+                      <h5 class="desc cool" style="margin:0">LINE@ :</h5></div>
+                  <div class="col-xs-12" style="min-height:0;margin:5px 0">
+                    <h5 class="desc" style="margin:0; padding:0">{{user.member.line_address }}</h5></div>
+                </div>
+                {% endif %}
+                {% if user.member.whatsapp_number or user.member.phone_number %}
                 <div class="row">
-                  <div class="col-xs-5 col-lg-4 col-sm-2 col-md-5" style="padding:0 0 0 28px;min-height:0;margin:5px 0">
-                    <h5 class="desc cool" style="margin:0">WhatsApp</h5></div>
-                  <div class="col-xs-7 col-lg-8 col-sm-4 col-md-7" style="padding:0 28px 0 0;min-height:0;margin:5px 0">
-                    <h5 class="desc cool" style="margin:0; padding-left: 10px">: 
+                  <div class="col-xs-12" style="min-height:0;margin:5px 0">
+                    <h5 class="desc cool" style="margin:0">WhatsApp :</h5></div>
+                  <div class="col-xs-12" style="min-height:0;margin:5px 0">
+                    <h5 class="desc" style="margin:0; padding:0">
                       {% if user.member.whatsapp_number %}
                         {{ user.member.whatsapp_number }}
                       {% else %}
@@ -233,73 +146,75 @@
                       {% endif %}
                     </h5></div>           
                 </div>
+                {% endif %}
+                {% if user.member.website_address %}
                 <div class="row">
-                  <div class="col-xs-5 col-lg-4 col-sm-2 col-md-5" style="padding:0 0 0 28px;min-height:0;margin:5px 0">
-                    <h5 class="desc cool" style="margin:0">Blog/ Website</h5></div>
-                  <div class="col-xs-7 col-lg-8 col-sm-4 col-md-7" style="padding:0 28px 0 0;min-height:0;margin:5px 0">
-                    <h5 class="desc cool" style="margin:0; padding-left: 10px">: 
+                  <div class="col-xs-12" style="min-height:0;margin:5px 0">
+                    <h5 class="desc cool" style="margin:0">Blog/ Website :</h5></div>
+                  <div class="col-xs-12" style="min-height:0;margin:5px 0">
+                    <h5 class="desc" style="margin:0; padding:0">
                       {{ user.member.website_address }}
                     </h5></div>
                 </div>
+                {% endif %}
+                {% if user.member.phone_number %}
                 <div class="row">
-                  <div class="col-xs-5 col-lg-4 col-sm-2 col-md-5" style="padding:0 0 0 28px;min-height:0;margin:5px 0">
-                    <h5 class="desc cool" style="margin:0">Phone/SMS</h5></div>
-                  <div class="col-xs-7 col-lg-8 col-sm-4 col-md-7" style="padding:0 28px 0 0;min-height:0;margin:5px 0">
-                    <h5 class="desc cool" style="margin:0; padding-left: 10px">:                 
+                  <div class="col-xs-12" style="min-height:0;margin:5px 0">
+                    <h5 class="desc cool" style="margin:0">Phone/SMS :</h5></div>
+                  <div class="col-xs-12" style="min-height:0;margin:5px 0">
+                    <h5 class="desc" style="margin:0; padding:0">                 
                         {{user.member.phone_number}}</h5></div>
-                </div></div></div>
-             
-        {% if user == request.user %}
-         <div name="socio-box" class="col-xs-12 col-md-3" style="padding: 0 20px 0 0">
-            <div class="col-xs-12 card-bottom card-md effect5" style="min-height:auto;padding:0 0 20px 0">
-
-                  <div style="text-align: center;">
-                      <h4 class="title" style="margin:10px 0">Data Pribadi</h4>
-                      <div class="row">
-                        <div class="col-xs-5 col-lg-4 col-sm-2 col-md-5" style="padding:0 0 0 28px;min-height:0;margin:5px 0">
-                          <h5 class="desc" style="margin:0">Alamat KTP</h5></div>
-                        <div class="col-xs-7 col-lg-8 col-sm-4 col-md-7" style="padding:0 28px 0 0;min-height:0;margin:5px 0">
-                          <h5 class="desc" style="margin:0; padding-left: 10px">: {{ user.member.get_ktp_address }}</h5></div>
-                      </div>
-
-
-                      <div class="row">
-                        <div class="col-xs-5 col-lg-4 col-sm-2 col-md-5" style="padding:0 0 0 28px;min-height:0;margin:5px 0">
-                          <h5 class="desc" style="margin:0">Alamat Rumah</h5></div>
-                        <div class="col-xs-7 col-lg-8 col-sm-4 col-md-7" style="padding:0 28px 0 0;min-height:0;margin:5px 0">
-                          {% if user.member.get_home_address != user.member.get_ktp_address %}
-                          <h5 class="desc" style="margin:0; padding-left: 10px">: {{ user.member.get_home_address }}</h5>
-                          {% else %}
-                          <h5 class="desc" style="margin:0; padding-left: 10px">: Sama dengan alamat KTP</h5>
-                          {% endif %}
-                        </div>
-                      </div>
-
-                      <div class="row" style="padding-right: 25px">
-                          {% if user.member.ktp_photo%}
-                            <div class="col-xs-5 col-lg-5 col-sm-2 col-md-5" style="padding:0 0 0 28px;min-height:0;margin:5px 0">
-                              <h5 class="desc" style="margin:0">Foto KTP<P</h5></div>
-                              <div class="col-xs-7 col-lg-7 col-sm-4 col-md-7" style="margin:5px 0; background-repeat:no-repeat; background-size:100%; height:100px;overflow:hidden; background-position: top center; background-image: url('{{ user.member.get_ktp_url }}')">
-                                </div>
-                          {% endif %}
-                          
-                          {% if user.member.bank_book_photo %}
-                            <div class="col-xs-5 col-lg-5 col-sm-2 col-md-5" style="padding:0 0 0 28px;min-height:0;margin:5px 0">
-                              <h5 class="desc" style="margin:0">Foto Buku Tabungan<P</h5></div>
-                            <div class="col-xs-7 col-lg-7 col-sm-4 col-md-7" style="margin:5px 0; background-repeat:no-repeat; background-size:100%; height:100px;overflow:hidden; background-position: top center; background-image: url('{{ user.member.get_bank_url }}')">
-                            </div>
-                          {% endif %}
-                      </div>
-                  </div>
-                {% if user == request.user %}
-                <div style="width: 100%; text-align: center">
-                    <a href="{{ link_edit }}"><h3 class="btn btn-primary">Ubah Profil</h3></a>
                 </div>
                 {% endif %}
               </div>
-         </div>        
-         {% endif %}
-        </div></div></div></div>
+              {% if user == request.user %}
+                  <div class="col-xs-12 col-lg-6 card-bottom" style="margin-bottom:0px;display:block;height:auto">
+                    <h4 class="title" style="margin:10px 0;  text-align: left">Data Pribadi</h4>
+                      <div class="row" style="margin: 0">
+                        <div class="col-xs-12" style="min-height:0;margin:5px 0; padding:0">
+                          <h5 class="desc cool" style="margin:0">Alamat KTP : </h5></div>
+                        <div class="col-xs-12" style="min-height:0;margin:5px 0; padding:0">
+                          <h5 class="desc" style="margin:0; padding:0">{{ user.member.get_ktp_address }}</h5></div>
+                      </div>
+
+
+                      <div class="row" style="margin: 0">
+                        <div class="col-xs-12" style="min-height:0;margin:5px 0; padding:0">
+                          <h5 class="desc cool" style="margin:0">Alamat Rumah :</h5></div>
+                        <div class="col-xs-12" style="min-height:0;margin:5px 0; padding:0">
+                          {% if user.member.get_home_address != user.member.get_ktp_address %}
+                          <h5 class="desc" style="margin:0; padding:0">{{ user.member.get_home_address }}</h5>
+                          {% else %}
+                          <h5 class="desc" style="margin:0; padding:0">Sama dengan alamat KTP</h5>
+                          {% endif %}
+                        </div>
+                      </div>
+                    
+                      <div class="row" style="margin: 0">
+                          {% if user.member.ktp_photo%}
+                            <div class="col-xs-12 col-lg-6" style="min-height:0;margin:5px 0; padding:0">
+                              <h5 class="desc cool" style="margin:0">Foto KTP :</h5>
+                                <div style="margin:5px 0; background-repeat:no-repeat; background-size:100%; height:200px;overflow:hidden; background-position: top center; background-image: url('{{ user.member.get_ktp_url }}')">
+                              </div>
+                            </div>
+                          {% endif %}
+                          
+                          {% if user.member.bank_book_photo %}
+                            <div class="col-xs-12 col-lg-6" style="min-height:0;margin:5px 0; padding:0">
+                              <h5 class="desc cool" style="margin:0">Foto Buku Tabungan :</h5>
+                                <div style="margin:5px 0; background-repeat:no-repeat; background-size:100%; height:200px;overflow:hidden; background-position: top center; background-image: url('{{ user.member.get_bank_url }}')">
+                                </div>
+                              </div>
+                            </div>
+                          {% endif %}
+                      </div>
+                    </div>        
+                {% endif %}
+              </div>
+        </div>
+    </div>
+  </div>
+
 {% include "membership/footer.html" %}
 {% include "membership/script.html" %}
 {% endblock %}

@@ -49,7 +49,6 @@ class Member(models.Model):
         (DISTRIBUTOR, 'Distributor'),
         (MASTER_SELLER, 'Master Seller'),
     )
-
     user = models.OneToOneField(User, on_delete=models.CASCADE) #done
     sponsor_code = models.CharField(db_index=True, max_length=12, blank=True) #done
     referal_code = models.CharField(db_index=True, max_length=12, blank=True) #done
@@ -89,6 +88,8 @@ class Member(models.Model):
     is_member_activated = models.BooleanField(default=False)
     is_phone_verified = models.BooleanField(default=False)
     is_email_verified = models.BooleanField(default=False)
+
+    total_spent = models.IntegerField(editable=False,blank=True, null=True)
 
     @models.permalink
     def get_absolute_url(self):
@@ -158,6 +159,12 @@ class Member(models.Model):
             self.home_kota,
             self.home_provinsi)
 
+    def get_total_spent(self):
+        orders = self.user.users_order.all()
+        total_spent = sum([order.total_payment for order in orders])
+        self.total_spent = total_spent
+        return  total_spent
+
     def __str__(self):
         return self.get_full_name()
 
@@ -172,4 +179,5 @@ def create_user_profile(sender, instance, created, **kwargs):
         
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
+
     instance.member.save()

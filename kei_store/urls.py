@@ -41,5 +41,5 @@ urlpatterns = [
     path('order/', include(order, namespace='order_backend')),
     path('shipping/', include(shipping, namespace='shipping_backend')),
     path('admin/', admin.site.urls),
-    re_path(r'^', include(storefront, namespace='store_backend')),
+    re_path(r'^store/', include(storefront, namespace='store_backend')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -77,6 +77,9 @@ def index(request):
             benefit = request.user.member.get_level()['BENEFIT']
             discount = cart_object.get_total_price() * discount / 100
             discounted_price = cart_object.get_total_price() * (100 - discount) / 100
+            if discount <= 0:
+                discount = int(discount)
+                discounted_price = int(discounted_price)
     if shipping_cost:
         discounted_price += shipping_cost
 
@@ -115,8 +118,10 @@ def checkout(request):
             benefit = request.user.member.get_level()['BENEFIT']
             discount = cart_object.get_total_price() * discount / 100
             discounted_price = cart_object.get_total_price() * (100 - discount) / 100
-
-
+            if discount <= 0:
+                discount = int(discount)
+                discounted_price = int(discounted_price)
+                
     order = PurchaseOrder.objects.get_or_create(user=request.user, is_paid=False, is_checked_out=False)[0]
     for item in products:
         order_item = PurchaseOrderItem.objects.create(purchase_order = order)
@@ -158,12 +163,56 @@ def pay(request):
     order.save()
     del request.session['shopping_cart']
     cart = carts.get_cart(request)
-    return JsonResponse(model_to_dict(order), safe=False)
+    return HttpResponseRedirect(reverse('order:history'))
 
 
 @login_required
 def history(request):
-    pass
+    orders = PurchaseOrder.objects.filter(user=request.user).order_by('-created_date')
+    if not orders:
+        return HttpResponseRedirect(reverse('cart:index'))
+    cart = carts.get_cart(request)
+    cart_object = cart['cart_object']
+    wishlist = wishlists.get_wishlist(request)
+    wishlist_object = wishlist['wishlist_object']
+    paginator = Paginator(orders,5)
+    page = request.GET.get('page', 1)
+    max_page = 4
+    min_page = 0
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+        
+    max_page = products.number + 4
+    min_page = products.number - 4
+    token = get_token(request)
+    return render(request, 'purchase_order/order_history.html', 
+        {'wishlist': wishlist_object,
+        'cart':cart_object,
+        'token':token,
+        'products':products,
+        'max_page':max_page,
+        'min_page':min_page})
+
+@login_required
+def detail(request, order_number):
+    cart = carts.get_cart(request)
+    cart_object = cart['cart_object']
+    wishlist = wishlists.get_wishlist(request)
+    wishlist_object = wishlist['wishlist_object']
+    order = PurchaseOrder.objects.get(order_number=order_number.upper())
+    products = order.item_in_order.all()
+
+    token = get_token(request)
+    return render(request, 'purchase_order/order_detail.html', 
+        {'wishlist': wishlist_object,
+        'products': products,
+        'cart':cart_object,
+        'token':token,
+        'order':order})
 
 def format_order(key, value):
     for x in ["order_number", "alamat_tujuan", "service", "sub_service"]:

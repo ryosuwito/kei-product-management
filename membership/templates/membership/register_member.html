@@ -45,7 +45,7 @@
                           <tr id ="{{ th | lower }}_info" class="hidden"
                         {% endif %}
                             style="background-color: #ff5">
-                          <td style="padding: 0 5px">Minimal pembelian <strong>Rp. {{ val.THRESHOLD | int_to_rupiah }},- </strong></td>
+                          <td style="padding: 0 5px">Minimal pembelian <strong>{{ val.THRESHOLD | int_to_rupiah }} </strong></td>
                           <td style="padding: 0 5px">Benefit: Diskon <strong>{{ val.BENEFIT }}%</strong></td>
                       </tr>
                       {% endfor %}

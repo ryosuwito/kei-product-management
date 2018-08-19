@@ -14,7 +14,7 @@
             {% for i in products.paginator.page_range %}
                 {% if products.number == i %}
                 <li class="active"><a href="#">{{ i }}</a></li>
-                {% elif i < max_page and i > min_page%}
+                {% elif i < max_page and i > min_page %}
                 <li><a href="?page={{ i }}">{{ i }}</a></li>
                 {% elif i == min_page or i == max_page %} 
                 <li class="disabled"><a href="#">...</a></li>

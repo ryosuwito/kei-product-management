@@ -12,8 +12,8 @@ def index(request):
     cart_object = cart['cart_object']
     wishlist = wishlists.get_wishlist(request)
     wishlist_object = wishlist['wishlist_object']
-    item_list = cart_object.get_items_in_cart();
-    paginator = Paginator(item_list,10)
+    item_list = cart_object.get_items_in_cart()
+    paginator = Paginator(item_list,5)
     page = request.GET.get('page', 1)
     max_page = 4
     min_page = 0

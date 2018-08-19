@@ -14,6 +14,10 @@ import random
 # Create your views here.
 
 def login_page(request):   
+    cart = carts.get_cart(request)
+    cart_object = cart['cart_object']
+    wishlist = wishlists.get_wishlist(request)
+    wishlist_object = wishlist['wishlist_object']
     welcome_message = ""
     try :
         if 'cart' in request.META['HTTP_REFERER']:
@@ -59,38 +63,43 @@ def login_page(request):
             return HttpResponseRedirect(reverse('membership:profile'))
         form = MemberLoginForm()
     return render(request, 'membership/login.html',
-        {'form': form, 
+        {'wishlist': wishlist_object,
+        'cart':cart_object,
+        'form': form, 
         'form_messages': form_messages,
         'welcome_message': welcome_message})
 
-def pre_register_page(request):
-    referal_code = False
-    if request.get_host() != settings.DEFAULT_HOST:
-        referal_code = check_host(request, pass_variable=True)
-        if not referal_code:
-            return  HttpResponseRedirect(request.scheme+"://"+settings.DEFAULT_HOST + 
-                        reverse('membership:pre_register', 
-                            current_app=request.resolver_match.namespace))
+def pre_register_page(request, *args, **kwargs):
+    try:
+        referal_code = kwargs['referal_code'].lower()
+    except:
+        referal_code = ''
+
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('membership:profile'))
-    link = {
-        'member': reverse('membership:register', current_app='member_backend'),
-        'guest': reverse('membership:register', current_app='guest_backend'),
-    }
+    
+    if referal_code:
+        link = {
+            'member': reverse('membership:register', current_app='member_backend', kwargs={'referal_code':referal_code.lower()}),
+            'guest': reverse('membership:register', current_app='guest_backend', kwargs={'referal_code':referal_code.lower()}),
+        }
+    else:
+        link = {
+            'member': reverse('membership:register', current_app='member_backend'),
+            'guest': reverse('membership:register', current_app='guest_backend'),
+        }
     return render(request, 'membership/pre_register.html', {'link':link})
 
-def register_page(request): 
+def register_page(request, *args, **kwargs): 
     threshold = ''
     referal_code = False
     link_cancel = reverse('membership:pre_register', 
                             current_app=request.resolver_match.namespace)
 
-    if request.get_host() != settings.DEFAULT_HOST:
-        referal_code = check_host(request, pass_variable=True)
-        if not referal_code:
-            return  HttpResponseRedirect(request.scheme+"://"+settings.DEFAULT_HOST + 
-                        reverse('membership:register', 
-                            current_app=request.resolver_match.namespace))
+    try:
+        referal_code = kwargs['referal_code'].upper()
+    except:
+        referal_code = ''
 
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('membership:profile'))
@@ -226,7 +235,7 @@ def register_page(request):
                 user.member.home_kelurahan = kelurahan_home
                 user.member.home_address = data.get('home_address')
             else :      
-                user.member.copy_address();
+                user.member.copy_address()
                 
             user.save()
             if user is not None:
@@ -295,7 +304,7 @@ def profile_page(request, uname='none'):
         sponsor = Member.objects.get(referal_code = user.member.sponsor_code)
         link_sponsor = sponsor.get_absolute_url()
 
-    return render(request, 'membership/profile_%s.html'%(member_type),
+    return render(request, 'membership/profile_member.html',
         {'user': user, 
         'cart':cart, 
         'wishlist':wishlist,

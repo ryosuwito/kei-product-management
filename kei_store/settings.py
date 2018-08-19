@@ -25,9 +25,9 @@ SECRET_KEY = KEY.SECRET
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.localhost','localhost']
-PORT = ':8082'
-DEFAULT_HOST = ALLOWED_HOSTS[1]+ PORT
+ALLOWED_HOSTS = ['keskeiindonesia.com']
+PORT = ':8081'
+DEFAULT_HOST = ALLOWED_HOSTS[0] + PORT
 
 # Application definition
 
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'reward_system',
     'storefront',
     'shipping_backend',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [

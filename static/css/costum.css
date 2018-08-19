@@ -40,22 +40,22 @@ button.link {
 }
 .container-bg{
   width: 100%;
-  padding: 20px 0;
+  padding: 0 0 20px 0;
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position-y: 100%;
-  background-color:#f2f2f2;
+  background-color:#eee;
 }
 .container-footer{
   min-height: 100px;
-  background-color: #4f7854;
+  background-color: rgba(30,178,134,0.64);
   width: 100%;
   padding: 40px 15px 0px 15px;
 }
 .container-header{
   min-height: 0;
   height: auto;
-  background-color: #e4f4f9;
+  background-color: #ffffff;
   width: 100%;
   padding: 5px 15px 5px 15px;
 }
@@ -717,7 +717,7 @@ a:hover{
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
   color: #fff;
-  background-color: #446748;
+  background-color: rgb(75, 139, 120);
 }
 
 
@@ -729,14 +729,14 @@ a:hover{
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   color:#fff;
-  background-color: #446748;
+  background-color: rgb(75, 139, 120)
 }
 
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color:#fff;
-  background-color: #446748;
+  background-color: rgb(75, 139, 120);
   background-size:cover
 }
 .sponsor-box{
@@ -957,7 +957,7 @@ a:hover{
     width:100%;
     position:relative;
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
-    background-color: #4f7854;
+    background-color: rgb(75, 139, 120);
     padding-bottom:0;
     padding-top:0;
     padding-right:1px;
@@ -971,7 +971,7 @@ a:hover{
   .navbar-default .navbar-nav > .open > a:hover,
   .navbar-default .navbar-nav > .open > a:focus {
     color: #fff;
-    background-color:  #446748;
+    background-color:  rgb(36, 84, 70);
   }
 
 
@@ -982,17 +982,17 @@ a:hover{
   .navbar-default .navbar-nav > li > a:hover,
   .navbar-default .navbar-nav > li > a:focus {
     color:#fff;
-    background-color:  rgb(68, 103, 72);
+    background-color:  rgb(36, 84, 70);
   }
 
   .navbar-default .navbar-nav > .active > a,
   .navbar-default .navbar-nav > .active > a:focus {
     color:#ccc;
-    background-color: rgb(68, 103, 72);
+    background-color: rgb(36, 84, 70);
   }
   .navbar-default .navbar-nav > .active > a:hover{
     color:#fff;
-    background-color: rgb(68, 103, 72);
+    background-color: rgb(36, 84, 70);
   }
   .navbar-nav > li > .dropdown-menu {
     margin-top: 0;
@@ -1002,19 +1002,19 @@ a:hover{
   }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
     color:#fff;
-    background-color: rgb(52, 128, 62);
+    background-color: rgb(36, 84, 70);
     padding: 10px 0;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
     color: #fff;
-    background-color: rgb(57, 103, 63);
+    background-color: rgb(36, 84, 70);
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #333;
-    background-color: rgba(105,105,105,0.48);
+    background-color: rgb(36, 84, 70);
   }
 }
 @media (max-width: 767px) {
@@ -1023,7 +1023,7 @@ a:hover{
     padding-bottom:0;
     padding-top:0;
     padding-right:1px;
-    background-color: #4f7854;
+    background-color: rgb(75, 139, 120);
   }
   .navbar-nav > li > .dropdown-menu {
     margin-top: 0;
