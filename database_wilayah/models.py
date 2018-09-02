@@ -1,4 +1,5 @@
 from django.db import models
+from membership.models import Member
 
 class Provinsi(models.Model):
     name = models.CharField(db_index=True, max_length=100)
@@ -24,3 +25,7 @@ class Kelurahan(models.Model):
     kecamatan = models.ForeignKey(Kecamatan, on_delete=models.CASCADE, related_name='kelurahan_kecamatan')
     def __str__(self):
         return self.name
+
+class DropshipAddress(models.Model):
+    member = models.ForeignKey(Member,related_name='member_dropship_addess')
+    provinsi = models.ForeignKey(Provinsi, on_delete=models.SET_NULL, s)

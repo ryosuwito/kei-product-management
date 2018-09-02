@@ -12,6 +12,7 @@ class PurchaseOrder(models.Model):
     user = models.ForeignKey(User, related_name="users_order", on_delete=models.SET_NULL, null=True)
     total_price = models.IntegerField(null=True, help_text="Total Belanja")
     discount = models.IntegerField(null=True, help_text="Diskon Member")
+    shipping_address = models.CharField(max_length=500, blank=True)
     shipping_cost = models.IntegerField(null=True, help_text="Ongkos Kirim")
     total_payment = models.IntegerField(null=True, help_text="Total Belanja")
     created_date = models.DateTimeField(db_index=True,default=datetime.datetime.now)

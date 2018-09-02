@@ -81,27 +81,63 @@
             <div class="col-xs-8" style="padding: 0">
                 <div class="row" style="margin: 0;">
                     <div class="col-xs-2" style="padding: 0">
-                        <h6>Alamat Pengiriman</h6> 
-                    </div>
-                    <div class="col-xs-10" style="padding: 0">
-                        <h6>
-                            :  {{shipping_origin.kecamatan}}, {{shipping_origin.kota}} - {{shipping_origin.provinsi}}
-                        </h6>        
-                    </div>
-                </div>
-                <div class="row" style="margin: 0;">
-                    <div class="col-xs-2" style="padding: 0">
                         <h6>Alamat Tujuan</h6> 
                     </div>
-                    <div class="col-xs-10" style="padding: 0">
-                        <h6>
+                    <div class="col-xs-10" style="padding: 0 15px 0 0">
+                        <h6 id="originalAddress">
                             : {{request.user.member.get_home_address | title}}
                             <br><br>
                             <a href="{% url 'membership:edit_profile' %}">*(ubah alamat tujuan di profile)</a>
                         </h6>        
+                        <input id="setAsDropship" onchange="setAsDropship()" type="checkbox" name="setAsDropship">
+                        <h6 style="display: inline;"> Kirim sebagai Dropship</h6>
+                        <div class="hidden" id="formDropshipContainer" style="padding: 15px 0">
+                            <input type="text" placeholder="Nama Penerima">
+                            <h6>Alamat Penerima</h6>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="methode" value="set_as_dropship">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <select name="provinsi" onclick="getKota(this.id)" id="id_provinsi">
+                                            <option value="0">--pilih provinsi--</option>
+                                            {% for province in provinces %}
+                                            <option value="{{ province.id }}">{{ province.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <select name="kota" onclick="getKecamatan(this.id)" id="id_kota">
+                                            <option value="...">-pilih kota-</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <select name="kecamatan" onclick="getKelurahan(this.id)" id="id_kecamatan">
+                                            <option value="...">-pilih kecamatan-</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <select name="kelurahan" id="id_kelurahan">
+                                            <option value="...">-pilih kelurahan-</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <textarea name="home_address" cols="40" rows="3" placeholder="Contoh: Jl. Angkasa 1 Blok AF6 NO 18" id="id_address"></textarea>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <textarea name="catatan" cols="40" rows="3" placeholder="Catatan Tambahan" id="id_catatan"></textarea>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <p onclick="cancelDropship()" class="btn btn-danger">Batal</p>
+                                        <button type="submit" class="btn btn-primary">Simpan Alamat Dropship</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="row" style="margin: 0;">
+                    <hr>
                     <div class="col-xs-2" style="padding: 0">
                         <h6>Jumlah Barang</h6> 
                     </div>
@@ -217,6 +253,17 @@
 {% include "membership/footer.html" %}
 {% include "membership/script.html" %}
 <script>
+    function cancelDropship(){
+        $('#originalAddress').removeClass('hidden');
+        $('#formDropshipContainer').addClass('hidden');
+        $('#setAsDropship').prop('checked', false)
+    }
+    function setAsDropship(){
+        $('#originalAddress').addClass('hidden');
+        $('#formDropshipContainer').removeClass('hidden');
+    }
+</script>
+<script>
     function checkout(){
         $.post("{% url 'checkout' %}",
             {
@@ -302,4 +349,5 @@
         );
     });
 </script>
+{% include "membership/get_area_script.html" %}
 {% endblock %}

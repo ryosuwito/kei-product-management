@@ -5,6 +5,7 @@ import datetime
 
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="users_cart", null=True)
+    shipping_address = models.CharField(max_length=500, blank=True)
     shipping_cost = models.IntegerField(null=True, blank=True)
     shipping_service =  models.CharField(max_length = 200,null=True)
     shipping_sub_service =  models.CharField(max_length = 200,null=True)

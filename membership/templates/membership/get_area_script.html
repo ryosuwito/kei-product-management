@@ -18,6 +18,7 @@ function getKota(id){
     });
     $.ajax({url: '/wilayah/kota/'+ selected_provinsi +'/', success: function(result){
     var options = '';
+    options += "<option value='0'>--pilih kota--</option>";
     for(i=0; i<result['results'].length; i++){
         options += "<option value='"+result['results'][i]['value']+"'>"+result['results'][i]['nama']+"</option>";
         console.log(result['results'][i]['nama']);
@@ -45,6 +46,7 @@ function getKecamatan(id){
     });
     $.ajax({url: '/wilayah/kecamatan/'+ selected_kota +'/', success: function(result){
     var options = '';
+    options += "<option value='0'>--pilih kecamatan--</option>";
     for(i=0; i<result['results'].length; i++){
         options += "<option value='"+result['results'][i]['value']+"'>"+result['results'][i]['nama']+"</option>";
         console.log(result['results'][i]['nama']);
@@ -72,6 +74,7 @@ function getKelurahan(id){
     });
     $.ajax({url: '/wilayah/kelurahan/'+ selected_kecamatan +'/', success: function(result){
     var options = '';
+    options += "<option value='0'>--pilih kota--</option>";
     for(i=0; i<result['results'].length; i++){
         options += "<option value='"+result['results'][i]['value']+"'>"+result['results'][i]['nama']+"</option>";
         console.log(result['results'][i]['nama']);

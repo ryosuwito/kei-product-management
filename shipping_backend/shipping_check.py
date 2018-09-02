@@ -37,7 +37,7 @@ def get_city(province_id):
     kota = json.loads(data.decode("utf-8"))['rajaongkir']['results']
     return kota
 
-def get_cost(user, courier):
+def get_cost(user, courier, **kwargs):
     shipping_origin = get_shipping_origin_id()
     province_id = get_province_id(shipping_origin['provinsi_origin'])
     origin_id = get_city_id(province_id, shipping_origin['kota_origin'])

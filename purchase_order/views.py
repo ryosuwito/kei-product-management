@@ -13,10 +13,12 @@ from django.forms.models import model_to_dict
 from .models import PurchaseOrder, PurchaseOrderItem
 from membership.templatetags.int_to_rupiah import int_to_rupiah
 from django.urls import reverse
+from database_wilayah.models import Provinsi
 import datetime
 
 @login_required
 def index(request):
+    provinces = Provinsi.objects.all().order_by('name')
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
     services = ''
@@ -53,7 +55,8 @@ def index(request):
                 request.session['services'] = services
                 
             return JsonResponse(list(services), safe=False)
-
+        elif method == 'set_shipping':
+            
         elif method == 'set_shipping':
             if 'services' in request.session :
                 services= request.session['services']
@@ -86,7 +89,8 @@ def index(request):
     couriers = get_courier()
     token = get_token(request)
     return render(request, 'purchase_order/select_shipping.html', 
-        {'wishlist': wishlist_object,
+        {'provinces': provinces,
+        'wishlist': wishlist_object,
         'cart':cart_object,
         'products':products,
         'discount':discount,
