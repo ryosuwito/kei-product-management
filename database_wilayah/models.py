@@ -27,5 +27,4 @@ class Kelurahan(models.Model):
         return self.name
 
 class DropshipAddress(models.Model):
-    member = models.ForeignKey(Member,related_name='member_dropship_addess')
-    provinsi = models.ForeignKey(Provinsi, on_delete=models.SET_NULL, s)
+    member = models.ForeignKey(Member,on_delete=models.CASCADE, related_name='member_dropship_addess')

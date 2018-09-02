@@ -56,7 +56,7 @@ def index(request):
                 
             return JsonResponse(list(services), safe=False)
         elif method == 'set_shipping':
-            
+            pass
         elif method == 'set_shipping':
             if 'services' in request.session :
                 services= request.session['services']
