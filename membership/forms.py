@@ -110,8 +110,7 @@ class GuestRegisterForm(MemberRegisterForm):
 class MemberEditProfileForm(forms.ModelForm):   
     instagram_address = forms.CharField(max_length=250, required=False)  
     facebook_address = forms.CharField(max_length=250, required=False)   
-    twitter_address = forms.CharField(max_length=250, required=False)     
-    line_address = forms.CharField(max_length=250, required=False)  
+    twitter_address = forms.CharField(max_length=250, required=False)   
     website_address = forms.CharField(max_length=250, required=False)
     smart_motto = forms.CharField(max_length=250, required=False)
     whatsapp_number = forms.CharField(required=False)
@@ -128,7 +127,6 @@ class MemberEditProfileForm(forms.ModelForm):
         self.fields['instagram_address'].widget.attrs['placeholder'] = 'contoh : @instagram123'
         self.fields['facebook_address'].widget.attrs['placeholder'] = 'contoh : https://www.facebook.com/fb123'
         self.fields['twitter_address'].widget.attrs['placeholder'] = 'contoh : @twitter123'
-        self.fields['line_address'].widget.attrs['placeholder'] = 'contoh : @line123'
         self.fields['website_address'].widget.attrs['placeholder'] = 'contoh : https://www.blog.com/'
         self.fields['whatsapp_number'].widget = forms.NumberInput()
 
@@ -156,7 +154,7 @@ class MemberEditProfileForm(forms.ModelForm):
         USERNAME_MAX = 30
         USERNAME_MIN = 4
         model = Member
-        fields = ('instagram_address', 'facebook_address','twitter_address', 'line_address',\
+        fields = ('instagram_address', 'facebook_address','twitter_address',\
                   'website_address', 'whatsapp_number', 'bank_book_photo', 'ktp_photo',\
                   'smart_motto', 'profile_photo')
         error_messages = {

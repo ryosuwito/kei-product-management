@@ -10,7 +10,8 @@ def get_cart(request):
         try:
             cart_object = request.user.users_cart
         except:
-            cart_object = Cart.objects.create(user=request.user)
+            cart_object = Cart.objects.get_or_create(user=request.user)[0]
+            cart_id = cart_object.id
             
     else:
         try:

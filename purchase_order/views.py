@@ -56,8 +56,6 @@ def index(request):
                 
             return JsonResponse(list(services), safe=False)
         elif method == 'set_shipping':
-            pass
-        elif method == 'set_shipping':
             if 'services' in request.session :
                 services= request.session['services']
             user_selected_service = request.POST.get('service')
@@ -68,10 +66,15 @@ def index(request):
                     cart_object.save()
                     break
                     
-    if cart_object.shipping_cost != 0 and cart_object.get_total_items_in_cart() == 0:
-        shipping_cost = 0
-    else:
+        if cart_object.shipping_cost != 0 and cart_object.get_total_items_in_cart() == 0:
+            shipping_cost = 0
+        else:
+            shipping_cost = cart_object.shipping_cost
+
+    elif request.method == 'GET':
+        cart_object.shipping_cost = 0
         shipping_cost = cart_object.shipping_cost
+
         
     if request.user.is_authenticated:
         discounted_price = cart_object.get_total_price()
@@ -83,8 +86,8 @@ def index(request):
             if discount <= 0:
                 discount = int(discount)
                 discounted_price = int(discounted_price)
-    if shipping_cost:
-        discounted_price += shipping_cost
+                
+    discounted_price += shipping_cost
 
     couriers = get_courier()
     token = get_token(request)

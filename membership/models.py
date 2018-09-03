@@ -79,7 +79,6 @@ class Member(models.Model):
     instagram_address = models.CharField(max_length=250, blank=True)
     facebook_address = models.CharField(max_length=250, blank=True)
     twitter_address = models.CharField(max_length=250, blank=True)
-    line_address = models.CharField(max_length=250, blank=True)
     website_address = models.CharField(max_length=250, blank=True)
     whatsapp_number = models.CharField(validators=[phone_regex], max_length=17, blank=True, null=True)
     qrcode = models.CharField(max_length=20, blank=True)  

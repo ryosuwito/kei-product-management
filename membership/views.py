@@ -386,8 +386,6 @@ def edit_profile_page(request):
                 user.member.facebook_address = data.get('facebook_address')
             if data.get('twitter_address') :
                 user.member.twitter_address = data.get('twitter_address')
-            if data.get('line_address') :
-                user.member.line_address = data.get('line_address')
             if data.get('website_address') :
                 user.member.website_address = data.get('website_address')
             if data.get('whatsapp_number') :
@@ -418,10 +416,6 @@ def edit_profile_page(request):
             if request.user.member.facebook_address:
                 form.fields['facebook_address'].widget.attrs.update({
                 'placeholder': request.user.member.facebook_address
-                })
-            if request.user.member.line_address:
-                form.fields['line_address'].widget.attrs.update({
-                'placeholder': request.user.member.line_address
                 })
             if request.user.member.twitter_address:
                 form.fields['twitter_address'].widget.attrs.update({

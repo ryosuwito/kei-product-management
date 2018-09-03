@@ -14,6 +14,7 @@ import random
 from .forms import ProductCartForm
 
 def product_detail(request, product_pk):
+    referal_code = False
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
     wishlist = wishlists.get_wishlist(request)
@@ -64,10 +65,9 @@ def product_detail(request, product_pk):
     product = Product.objects.get(pk=product_pk)
 
     discount = 0
-    discounted_price = 0
+    discounted_price = product.price
     
     if request.user.is_authenticated:
-        
         if not request.user.member.member_type == Member.GUEST and \
             not request.user.member.member_type == Member.NEW_MEMBER:
             discount = request.user.member.get_level()['BENEFIT']

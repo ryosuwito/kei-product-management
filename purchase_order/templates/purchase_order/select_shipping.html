@@ -89,8 +89,10 @@
                             <br><br>
                             <a href="{% url 'membership:edit_profile' %}">*(ubah alamat tujuan di profile)</a>
                         </h6>        
-                        <input id="setAsDropship" onchange="setAsDropship()" type="checkbox" name="setAsDropship">
-                        <h6 style="display: inline;"> Kirim sebagai Dropship</h6>
+                        <div id="setAsDropshipBox">
+                            <input id="setAsDropship" onchange="setAsDropship()" type="checkbox" name="setAsDropship">
+                            <h6 style="display: inline;"> Kirim sebagai Dropship</h6>
+                        </div>
                         <div class="hidden" id="formDropshipContainer" style="padding: 15px 0">
                             <input type="text" placeholder="Nama Penerima">
                             <h6>Alamat Penerima</h6>
@@ -128,7 +130,7 @@
                                         <textarea name="catatan" cols="40" rows="3" placeholder="Catatan Tambahan" id="id_catatan"></textarea>
                                     </div>
                                     <div class="col-xs-12">
-                                        <p onclick="cancelDropship()" class="btn btn-danger">Batal</p>
+                                        <button type="button" onclick="cancelDropship()" class="btn btn-danger">Batal</button>
                                         <button type="submit" class="btn btn-primary">Simpan Alamat Dropship</button>
                                     </div>
                                 </div>
@@ -254,11 +256,13 @@
 {% include "membership/script.html" %}
 <script>
     function cancelDropship(){
+        $('#setAsDropshipBox').removeClass('hidden');
         $('#originalAddress').removeClass('hidden');
         $('#formDropshipContainer').addClass('hidden');
         $('#setAsDropship').prop('checked', false)
     }
     function setAsDropship(){
+        $('#setAsDropshipBox').addClass('hidden');
         $('#originalAddress').addClass('hidden');
         $('#formDropshipContainer').removeClass('hidden');
     }
