@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.crypto import get_random_string
+from django.conf import settings
 import pyqrcode
 import os 
 
@@ -52,7 +53,7 @@ class Member(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE) #done
     sponsor_code = models.CharField(db_index=True, max_length=12, blank=True) #done
     referal_code = models.CharField(db_index=True, max_length=12, blank=True) #done
-    sponsor = models.ForeignKey(User, on_delete=models.SET_NULL, db_index=True,  related_name="sponsor", null=True) #done
+    sponsor = models.ForeignKey(User, on_delete=models.SET_NULL, db_index=True,  related_name="sponsor", null=True)
     member_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=NEW_MEMBER) #done
     phone_regex = RegexValidator(regex=r'^\+?62?\d{9,15}$', message="Nomor Telepon Harus memiliki format +62819999999 atau 0819999999'. Maksimal 15 Digit.")
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True) # validator haruslah berupa list
@@ -119,7 +120,7 @@ class Member(models.Model):
             return 'KSK{}'.format(referal_code)
 
     def get_qrcode(content='0123456789AB', name='default'):
-        qr = pyqrcode.create('https://%s.localhost:8000/store/'%content)
+        qr = pyqrcode.create('http://%s.%s/store/'%(content,settings.DEFAULT_HOST ))
         filename = "media/%s_%s.png"%(content,name)
         qr.png(filename, scale=12)
         return filename
@@ -172,9 +173,9 @@ class Member(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         member = Member(user=instance)
-        member.referal_code = Member.get_referal();
+        member.referal_code = Member.get_referal()
         member.qrcode = Member.get_qrcode(name=member.referal_code,
-            content=instance.username);
+            content=instance.username)
         member.save()
         
 @receiver(post_save, sender=User)

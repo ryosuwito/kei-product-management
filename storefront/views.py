@@ -6,6 +6,7 @@ from membership.models import Member
 from shopping_cart.models import Cart, CartItem, WishList, WishListItem
 from shopping_cart import carts, wishlists
 from django.urls import reverse
+from membership.views import check_host
 
 import datetime
 import random

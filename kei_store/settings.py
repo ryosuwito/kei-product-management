@@ -25,9 +25,9 @@ SECRET_KEY = KEY.SECRET
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['keskeiindonesia.com']
+ALLOWED_HOSTS = ['.localhost','localhost']
 PORT = ':8081'
-DEFAULT_HOST = ALLOWED_HOSTS[0] + PORT
+DEFAULT_HOST = ALLOWED_HOSTS[1]+ PORT
 
 # Application definition
 

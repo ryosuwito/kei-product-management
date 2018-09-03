@@ -173,8 +173,10 @@ def pay(request):
 @login_required
 def history(request):
     orders = PurchaseOrder.objects.filter(user=request.user).order_by('-created_date')
+    """
     if not orders:
         return HttpResponseRedirect(reverse('cart:index'))
+    """
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
     wishlist = wishlists.get_wishlist(request)
