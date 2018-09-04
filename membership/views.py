@@ -52,8 +52,8 @@ def login_page(request):
                 cart = transfer_cart['cart_object']
                 wishlist = transfer_wishlist['wishlist_object']
                 try :
-                    if request.GET['next']:
-                        return HttpResponseRedirect(request.GET['next'])
+                    if request.GET.get('next'):
+                        return HttpResponseRedirect(request.GET.get('next'))
                 except :
                     return HttpResponseRedirect(reverse('membership:profile'))
             else:
@@ -62,14 +62,21 @@ def login_page(request):
         if request.user.is_authenticated:
             return HttpResponseRedirect(reverse('membership:profile'))
         form = MemberLoginForm()
+
+    next = request.GET.get('next') if request.GET.get('next') else False
     return render(request, 'membership/login.html',
         {'wishlist': wishlist_object,
-        'cart':cart_object,
+        'cart': cart_object,
+        'next': next,
         'form': form, 
         'form_messages': form_messages,
         'welcome_message': welcome_message})
 
 def pre_register_page(request, *args, **kwargs):
+    cart = carts.get_cart(request)
+    cart_object = cart['cart_object']
+    wishlist = wishlists.get_wishlist(request)
+    wishlist_object = wishlist['wishlist_object']
     referal_code = False
     link = {
         'member': reverse('membership:register', current_app='member_backend'),
@@ -95,9 +102,18 @@ def pre_register_page(request, *args, **kwargs):
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('membership:profile'))
 
-    return render(request, 'membership/pre_register.html', {'link':link})
+    next = request.GET.get('next') if request.GET.get('next') else False
+    return render(request, 'membership/pre_register.html', 
+        {'link':link, 
+        'wishlist': wishlist_object,
+        'cart': cart_object,
+        'next':next})
 
 def register_page(request, *args, **kwargs): 
+    cart = carts.get_cart(request)
+    cart_object = cart['cart_object']
+    wishlist = wishlists.get_wishlist(request)
+    wishlist_object = wishlist['wishlist_object']
     threshold = ''
     referal_code = False
     link_cancel = reverse('membership:pre_register', 
@@ -258,6 +274,9 @@ def register_page(request, *args, **kwargs):
             if user is not None:
                 logout(request)
                 login(request, user)
+                next = request.GET.get('next') if request.GET.get('next') else False
+                if next :
+                    return HttpResponseRedirect(next)
                 return HttpResponseRedirect(reverse('membership:profile', 
                     current_app=request.resolver_match.namespace))
             else:
@@ -276,7 +295,11 @@ def register_page(request, *args, **kwargs):
             'class': 'sponsor-disabled'
             })
     return render(request, 'membership/register_%s.html'%(namespace),
-        {'form': form, 'threshold': threshold, 'link_cancel':link_cancel})
+        {'form': form, 
+         'wishlist': wishlist_object,
+         'cart': cart_object,
+         'threshold': threshold, 
+         'link_cancel':link_cancel})
 
 @login_required(login_url='/member/login')
 def profile_page(request, uname='none'):

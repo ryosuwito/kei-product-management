@@ -29,7 +29,7 @@ def transfer_cart(request, anon_cart):
     try:
         user_cart = request.user.users_cart
     except:
-        pass
+        user_cart = Cart.objects.create(user=request.user)
 
     if anon_cart.get_total_products():
         temp_cart = Cart.objects.get(id=anon_cart.id)

@@ -1,15 +1,16 @@
 {% extends "membership/base.html" %}
+{% load humanize %}
   {% block title %}
     <title>{{ user.member.get_full_name | title }} | kei-partner.com</title>
   {% endblock %}
   {% block content %}
     <div class="container container-form container-bg" style="padding-bottom: 0"><!--Container#1 -->
        <div class="row" style="padding: 0; margin: 0"><!-- Row#1 of Container#1 -->
-         <div class="col-xs-12 col-md-2" style="padding: 0; height:auto; min-height: 600px; max-height: 800px; overflow-y: auto">
+         <div class="col-xs-12 col-md-2" style="padding: 0; height:auto; min-height: 600px;overflow-y: auto">
           {% include 'membership/sidebar_profile.html' %}
         </div>
-         <div class="col-md-10 col-xs-12" style="padding: 0 15px">
-           <div class="col-xs-12" style="padding: 0; background: #fff; height:auto; min-height: 600px;  max-height: 800px;">
+         <div class="col-md-10 col-xs-12" style="padding: 0 0 0 15px">
+           <div class="col-xs-12" style="padding: 0; background: #fff; height:auto; min-height: 600px;">
                <div class="row" style="margin: 0;">
                 <div class="hidden-xs col-sm-10" style="padding: 0 15px">
                   <h2>Profil dan Data Akun</h2>
@@ -22,15 +23,15 @@
               </div>
                                 
               <div style="width: 100%; border-top: 1px solid #ccc; display: block; margin-top:5px"></div>
-              <div class="col-xs-12" style="padding: 0">
-                <div class="col-xs-12 card-bottom" style="padding:0 25px; margin-bottom:0px;display:block;height:auto">
+              <div class="col-xs-12" style="padding: 0 25px">
+                <div class="col-xs-12 card-bottom" style="padding:0; margin-bottom:0px;display:block;height:auto">
                   <div class="row" >
                     <div class="col-xs-12 col-sm-5" style="min-height:0;margin:5px 0">
-                      <div class="row" style="margin: 0">
+                      <div class="row" style="margin: 0 0 15px 0">
                         {% if user.member.sponsor %}
                         <div class="col-xs-12" style="padding: 0">
                           <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-group"></span> Sponsor</h4>
-                          <div class="col-xs-12">
+                          <div class="col-xs-2" style="padding: 0">
                              
                             {% if user.member.sponsor.member.get_profile_photo_url %}
                               <div style="width: 70px; height: 70px; border-radius: 45px; border: 1px solid #ddd; background-position: center;
@@ -41,26 +42,51 @@
                               background-image: url('/media/pictures/user.gif'); background-size: cover">
                             </div>
                             {% endif %}
-                            <h5 class="desc cool" style="margin:10px 0">
+                          </div>
+                          <div class="col-xs-10">
+                            <h5 class="desc cool" style="margin:0 0 10px 0">
                               <a href="{{ link_sponsor }}">
                                {{ user.member.sponsor.get_full_name | title }}
                               </a>
                             </h5>
+                            <p>
+                              Bergabung sejak:<br>
+                              {{ user.member.sponsor.date_joined | naturalday }}
+                            </p>
                           </div>
                         </div>
                         {% endif %}
                       </div>
                       <div class="row" style="margin: 0">
                         <div class="col-xs-12" style="padding: 0">
+                          <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-link"></span> 
+                            {% if user == request.user %}
+                            Kode Referral Anda
+                            {% else %}
+                            Kode Referral {{ user.member.get_full_name | title}}
+                            {% endif %}
+                          </h4>
+                        </div>
+                        <div class="col-xs-11" style="padding-right:0">
+                          <input id="ref-link-1" readonly type="text" value="{{ user.member.referal_code}}">
+                        </div>
+                        <div class="col-xs-1" style="padding-left:0">
+                            <p class="btn btn-primary btn-xs"><span class="fa fa-copy"></span> copy</p>
+                        </div>
+                        <div class="col-xs-12" style="padding: 0">
                           <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-link"></span> Link Referral</h4>
                         </div>
                         <div class="col-xs-12" style="margin-bottom: 5px">
                           <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ request.scheme }}://{{ default_host }}{% url 'membership:pre_register' %}{{ user.member.referal_code}}">
                             <p style="background-color: #3b5998" class="btn btn-primary btn-xs"> 
-                              <span style="font-size: 110%" class="fa fa-facebook"></span> bagikan</p></a>
+                              <span style="font-size: 110%" class="fa fa-facebook"></span> bagikan
+                            </p>
+                          </a>
                           <a target="_blank" href="http://twitter.com/share?text=Bergabunglah%20bersama%20Keskei%20di%20sini&url={{ request.scheme }}://{{ default_host }}{% url 'membership:pre_register' %}{{ user.member.referal_code}}">
                             <p style="background-color: #36a9ff" class="btn btn-primary btn-xs">
-                              <span style="font-size: 110%" class="fa fa-twitter"></span> tweet</p></a>
+                              <span style="font-size: 110%" class="fa fa-twitter"></span> tweet
+                            </p>
+                          </a>
                         </div>
                         <div class="col-xs-11" style="padding-right:0">
                           <input id="ref-link-1" readonly type="text" value="{{ request.scheme }}://{{ default_host }}{% url 'membership:pre_register' %}{{ user.member.referal_code}}">
@@ -115,9 +141,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-12 col-sm-5" style="">
-                      {% if user == request.user %}
-                          <div class="col-xs-12 col-lg-12 card-bottom" style="margin-bottom:0px;display:block;height:auto">
+                    <div class="col-xs-12 col-sm-5" style="padding: 0">
+                          <div class="col-xs-12 col-lg-12" style="margin-bottom:0px;display:block;height:auto">
                             <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-user"></span> Data Pribadi</h4>
                               <div class="row" style="margin: 0">
                                 <div class="col-xs-12" style="min-height:0;margin:5px 0;">
@@ -139,26 +164,27 @@
                                 </div>
                               </div>
                             
-                              <div class="row" style="margin: 0">
-                                  {% if user.member.ktp_photo%}
-                                    <div class="col-xs-12 col-lg-6" style="min-height:0;margin:5px 0;">
-                                      <h5 class="desc cool" style="margin:0">Foto KTP :</h5>
-                                        <div style="margin:5px 0; background-repeat:no-repeat; background-size:100%; height:200px;overflow:hidden; background-position: top center; background-image: url('{{ user.member.get_ktp_url }}')">
-                                      </div>
+                        {% if user == request.user %}
+                          <div class="row" style="margin: 0">
+                              {% if user.member.ktp_photo%}
+                                <div class="col-xs-12 col-lg-6" style="min-height:0;margin:5px 0;">
+                                  <h5 class="desc cool" style="margin:0">Foto KTP :</h5>
+                                    <div style="margin:5px 0; background-repeat:no-repeat; background-size:100%; height:200px;overflow:hidden; background-position: top center; background-image: url('{{ user.member.get_ktp_url }}')">
+                                  </div>
+                                </div>
+                              {% endif %}
+                              
+                              {% if user.member.bank_book_photo %}
+                                <div class="col-xs-12 col-lg-6" style="min-height:0;margin:5px 0;">
+                                  <h5 class="desc cool" style="margin:0">Foto Buku Tabungan :</h5>
+                                    <div style="margin:5px 0; background-repeat:no-repeat; background-size:100%; height:200px;overflow:hidden; background-position: top center; background-image: url('{{ user.member.get_bank_url }}')">
                                     </div>
-                                  {% endif %}
-                                  
-                                  {% if user.member.bank_book_photo %}
-                                    <div class="col-xs-12 col-lg-6" style="min-height:0;margin:5px 0;">
-                                      <h5 class="desc cool" style="margin:0">Foto Buku Tabungan :</h5>
-                                        <div style="margin:5px 0; background-repeat:no-repeat; background-size:100%; height:200px;overflow:hidden; background-position: top center; background-image: url('{{ user.member.get_bank_url }}')">
-                                        </div>
-                                      </div>
-                                    </div>
-                                  {% endif %}
-                          </div>      
-                      {% endif %}
-                    </div>
+                                  </div>
+                                </div>
+                              {% endif %}
+                         </div>   
+                      {% endif %} 
+                    </div>    
                     <div class="col-xs-12 col-sm-2" style="min-height:0;margin:5px 0;">
                       <div class="row" style="margin: 0">
                         <div class="col-xs-12" style="padding: 0">

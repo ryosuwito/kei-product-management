@@ -50,7 +50,7 @@ def index(request):
             except:
                 pass
 
-    discounted_price = cart_object.get_total_price() + 15000
+    discounted_price = cart_object.get_total_price()
 
     if request.user.is_authenticated:
         if not request.user.member.member_type == Member.GUEST and \
