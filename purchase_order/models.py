@@ -69,5 +69,5 @@ class PurchaseOrderItem(models.Model):
 @receiver(post_save, sender=PurchaseOrder)
 def create_purchase_order(sender, instance, created, **kwargs):
     if created:
-        instance.order_number = PurchaseOrder.get_number();
+        instance.order_number = PurchaseOrder.get_number()
         instance.save()

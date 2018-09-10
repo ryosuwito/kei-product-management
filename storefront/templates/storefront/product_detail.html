@@ -13,115 +13,11 @@
   {% include "shopping_cart/setHeight.html" %}
     <div class="container container-form container-bg" style="padding-bottom: 0">
       <div class="row" style="margin: 0">
-        <div class="col-xs-12 col-lg-2" style="padding: 0">
+        <div class="hidden-xs col-md-2" style="padding: 0">
           <section name="post-header">
-            <div class="row" style="margin: 0">
+            <div class="row" style="margin: 15px 0 0 0">
                 <div class="col-xs-12" style="padding: 0; min-height: 600px;background: #fff">
-                  <section name="post-footer">
-                    <div class="col-xs-12" style="margin: 20px 0">
-                          {% if discounted_price != 0 %}
-                          <div class="col-xs-12" style="padding: 0; margin-top: 15px">
-                            <p class="hot" style="text-align:left;">
-                              Harga Normal : <br> <del style="font-size: 150%">{{ product.price | int_to_rupiah }}</del> <br>
-                            *({{ discount }}% Discount untuk {{ request.user.member.get_member_type_display }})
-                            </p>
-                            <p style="text-align:left;">
-                              Harga Diskon : <br>
-                            <span class="cool" style="font-size: 220%; font-weight: 600">{{ discounted_price | int_to_rupiah }}</span>
-                            </p>
-                            <p style="text-align: left">
-                                Berat Satuan : <br>
-                              <span class="cool" style="font-size: 150%; font-weight: 600">{{ product.unit_weight | int_to_kilogram}}</span>  
-                            </p>
-                          </div>
-                          {% else %}
-                          <div class="col-xs-12" style="padding: 0;">
-                              <p style="text-align:left;">
-                              Harga Satuan : <br>
-                              <span class="cool" style="font-size: 200%; font-weight: 600">{{ product.price | int_to_rupiah }}</span>
-                            </p>
-                            <p style="text-align: left">
-                                Berat Satuan : <br>
-                              <span class="cool" style="font-size: 150%; font-weight: 600">{{ product.unit_weight | int_to_kilogram}}</span>  
-                            </p>
-                          </div>
-                          {% endif %}  
-                    </div>
-                    {% if product.is_available %}
-                    <div class="col-xs-12" style="margin: 0 0 20px 0">
-                        <div class="col-lg-12" style="margin-top: 12px; border-top: 1px solid #ccc">
-      
-                        </div>
-                        <div class="col-xs-12" style="padding: 0;">
-                          <h5>Simulasi Total Pembelian</h5>
-                          <p style="text-align:left;">
-                            Jumlah Bayar : <br>
-                            <span id="jumlahBayar" style="font-size: 150%">{{ discounted_price | int_to_rupiah }}</span>
-                          </p>
-                          <p style="text-align:left;">
-                            Jumlah Berat : <br>
-                            <span id="jumlahBerat" style="font-size: 150%">{{ product.unit_weight | int_to_kilogram }}</span>
-                          </p>
-                          <form class="form" method="POST" id="formQuantity">
-                            {% if form.errors %}
-                                {% for field in form %}
-                                    {% for error in field.errors %}
-                                        <div class="alert alert-danger">
-                                            <strong>{{ error|escape }}</strong>
-                                        </div>
-                                    {% endfor %}
-                                {% endfor %}
-                                {% for error in form.non_field_errors %}
-                                    <div class="alert alert-danger">
-                                        <strong>{{ error|escape }}</strong>
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                            {% csrf_token %}
-                              <input type="hidden" name="method" value="cart">
-                              <div>
-                                  <p style="margin: 0">Banyaknya :</p>
-                                  {{ form.quantity }}
-                              </div>  
-                          </form>
-                          <button class="btn btn-primary" type="submit" form="formQuantity"
-                            style="width:100%;margin:4px 0; padding: 6px; display: flex; justify-content: center">
-                            Tambah ke Keranjang 
-                            <span class="glyphicon glyphicon-shopping-cart" style="font-size: 18px"></span>
-                            <sup><span class="glyphicon glyphicon-plus" 
-                              style="color: #45ff45; font-size: 8px;"></span></sup>
-                          </button>
-                          <p class="hidden" id="productPrice">{{ discounted_price }}</p>
-                          <p class="hidden" id="productWeight">{{ product.unit_weight }}</p>
-                          {% else %}
-                              <p class="title hot">--Stok Kosong--</p>
-                          {% endif %} 
-                          {% if not is_in_wishlist %}
-                          <div class="col-xs-12" style="padding: 0;">
-                            <form class="form" method="POST" id="formWishlist">
-                                {% csrf_token %}
-                              <input type="hidden" name="method" value="wishlist">
-                              <button class="btn btn-danger" type="submit", form="formWishlist"
-                                style="width:100%;margin:4px 0; padding: 6px; display: flex; justify-content: center">
-                                Tambah ke Wishlist
-                                <span class="glyphicon glyphicon-heart" style="font-size: 18px"></span>
-                                <sup><span class="glyphicon glyphicon-plus" 
-                                  style="color: #45ff45; font-size: 8px;"></span></sup>
-                              </button>
-                            </form>
-                          </div>
-                          {% else %}
-                          <div class="col-xs-12" style="padding: 0; text-align: center">
-                            <p>Produk ditambahkan ke wishlist</p>
-                          </div>
-                          {% endif %} 
-                        </div>
-                      </div>
-                  </section>
                   {% if other_product %}
-                  <div class="col-lg-12" style="margin-top: 12px; border-top: 1px solid #ccc">
-
-                  </div>
                   <div class="col-lg-12">
                       <h4 class="title" style="font-size:20px">Produk Menarik Lainnya</h4>
                   <!-- ====================================================================================================================================== --> 
@@ -147,7 +43,7 @@
             </div>
           </section>
         </div>
-        <div class="col-xs-12 col-lg-10" style="padding: 0 0 0 15px">
+        <div class="col-xs-12 col-md-10" style="padding: 0">
           <section name="post-header">
             <div class="row" style="margin: 0">
                 <div class="col-xs-12" style="background: #fff">
@@ -188,12 +84,64 @@
                     </div>
                   </div>
                   <div class="col-xs-12 main-photo-box" style="padding: 0">
-                    <div class="col-xs-6" style="margin-bottom: 20px">                
+                      <div class="col-xs-12 hidden-md hidden-lg" style="padding: 0; margin-bottom: 20px">
+                        <div class="col-xs-12" style="padding: 0">
+                          <img id="mainPhoto" onLoad="setHeight(this)" class="photo-user photo-article main-photo" style="display:block;margin:0" 
+                          src="{{ product.get_photo_url }}">
+                        </div>
+                        <div class="col-xs-2" style="padding: 0">
+                          <div style="padding: 3px">
+                            <img onclick="setImage(this)" onLoad="setHeight(this)" class="photo-user photo-article main-photo" style="display:block; margin:0" 
+                            src="{{ product.get_photo_url }}">
+                          </div>
+                        </div>
+                          {% if product.photo_alt2 %}
+                          <div class="col-xs-2" style="padding: 0">
+                            <div style="padding: 3px">
+                              <img onclick="setImage(this)"  onLoad="setHeight(this)" class="photo-user photo-article main-photo" style="display:block; margin:0" 
+                              src="{{ product.get_photo_alt2_url }}">
+                            </div>
+                          </div>
+                          {% endif %}
+                          {% if product.photo_alt4 %}
+                          <div class="col-xs-2" style="padding: 0">
+                            <div style="padding: 3px">
+                              <img onclick="setImage(this)"  onLoad="setHeight(this)" class="photo-user photo-article main-photo" style="display:block; margin:0" 
+                              src="{{ product.get_photo_alt4_url }}">
+                            </div>
+                          </div>
+                          {% endif %}
+                          {% if product.photo_alt1 %}
+                          <div class="col-xs-2" style="padding: 0">
+                            <div style="padding: 3px">
+                              <img onclick="setImage(this)"  onLoad="setHeight(this)" class="photo-user photo-article main-photo" style="display:block; margin:0" 
+                              src="{{ product.get_photo_alt1_url }}">
+                            </div>
+                          </div>
+                          {% endif %}
+                          {% if product.photo_alt3 %}
+                          <div class="col-xs-2" style="padding: 0">
+                            <div style="padding: 3px">
+                              <img onclick="setImage(this)"  onLoad="setHeight(this)" class="photo-user photo-article main-photo" style="display:block; margin:0" 
+                              src="{{ product.get_photo_alt3_url }}">
+                            </div>
+                          </div>
+                          {% endif %}
+                          {% if product.photo_alt5 %}
+                          <div class="col-xs-2" style="padding: 0">
+                            <div style="padding: 3px">
+                              <img  onclick="setImage(this)" onLoad="setHeight(this)" class="photo-user photo-article main-photo" style="display:block; margin:0" 
+                              src="{{ product.get_photo_alt5_url }}">
+                            </div>
+                          </div>
+                          {% endif %}
+                      </div>
+                    <div class="col-xs-12 col-md-8" style="margin-bottom: 20px">                
                       <h5 class="title" style="text-align: left">
                           Deskripsi :</h5>
                       <p>{{ product.description | linebreaksbr }}</p>
                     </div>
-                    <div class="col-xs-6" style="padding: 0; margin-bottom: 20px">
+                    <div class="hidden-xs col-md-4" style="padding: 0; margin-bottom: 20px">
                       <div class="col-xs-12" style="padding: 0">
                         <img id="mainPhoto" onLoad="setHeight(this)" class="photo-user photo-article main-photo" style="display:block;margin:0" 
                         src="{{ product.get_photo_url }}">
@@ -244,13 +192,154 @@
                           </div>
                         </div>
                         {% endif %}
-                      </div>
+                    </div>
+                 </div>
+
+                      <div class="col-xs-12" style="margin: 0 0 20px 0; padding: 0">
+                        <div class="col-lg-12" style="margin-top: 12px; border-top: 1px solid #ccc">
+      
+                        </div>
+                        <div class="col-xs-12 col-md-4" style="padding: 15px 0 0 0;">
+                          <div class="row" style="padding:0">
+                            <div class="col-xs-12 col-sm-12">
+                              {% if discounted_price != 0 %}
+                              <div class="col-xs-12" style="padding: 0;">
+                                <p class="hot" style="text-align:left;">
+                                  Harga Normal : <br> <del style="font-size: 150%">{{ product.price | int_to_rupiah }}</del> <br>
+                                *({{ discount }}% Discount untuk {{ request.user.member.get_member_type_display }})
+                                </p>
+                                <p style="text-align:left;">
+                                  Harga Diskon : <br>
+                                <span class="cool" style="font-size: 220%; font-weight: 600">{{ discounted_price | int_to_rupiah }}</span>
+                                </p>
+                                <p style="text-align: left">
+                                    Berat Satuan : <br>
+                                  <span class="cool" style="font-size: 150%; font-weight: 600">{{ product.unit_weight | int_to_kilogram}}</span>  
+                                </p>
+                              </div>
+                              {% else %}
+                              <div class="col-xs-12" style="padding: 0;">
+                                  <p style="text-align:left;">
+                                  Harga Satuan : <br>
+                                  <span class="cool" style="font-size: 200%; font-weight: 600">{{ product.price | int_to_rupiah }}</span>
+                                </p>
+                                <p style="text-align: left">
+                                    Berat Satuan : <br>
+                                  <span class="cool" style="font-size: 150%; font-weight: 600">{{ product.unit_weight | int_to_kilogram}}</span>  
+                                </p>
+                              </div>
+                              {% endif %}  
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-md-8" style="padding: 0;">
+                          <h4 class="title" style="text-align:left">Simulasi Total Pembelian</h4>
+                          <div class="row" style="padding:0">
+                            <div class="col-xs-6">
+                                {% if product.is_available %}
+                                <p class="hidden" id="productPrice">{{ discounted_price }}</p>
+                                <p class="hidden" id="productWeight">{{ product.unit_weight }}</p>
+                                <form class="form" method="POST" id="formQuantity">
+                                  {% if form.errors %}
+                                      {% for field in form %}
+                                          {% for error in field.errors %}
+                                              <div class="alert alert-danger">
+                                                  <strong>{{ error|escape }}</strong>
+                                              </div>
+                                          {% endfor %}
+                                      {% endfor %}
+                                      {% for error in form.non_field_errors %}
+                                          <div class="alert alert-danger">
+                                              <strong>{{ error|escape }}</strong>
+                                          </div>
+                                      {% endfor %}
+                                  {% endif %}
+                                  {% csrf_token %}
+                                    <input type="hidden" name="method" value="cart">
+                                    <div>
+                                        <p style="margin: 0">Banyaknya :</p>
+                                        {{ form.quantity }}
+                                    </div>  
+                                </form>
+                                <button class="btn btn-primary" type="submit" form="formQuantity"
+                                  style="width:auto;margin:4px 0; padding: 6px; display: flex; justify-content: center">
+                                  Tambah ke Keranjang  <span class="glyphicon glyphicon-shopping-cart" style="margin-left:5px; font-size: 18px"></span>
+                                  <sup><span class="glyphicon glyphicon-plus" 
+                                    style="color: #45ff45; font-size: 8px;"></span></sup>
+                                </button>
+                                {% else %}
+                                    <p class="title hot">--Stok Kosong--</p>
+                                {% endif %} 
+                                {% if not is_in_wishlist %}
+                                <div class="col-xs-12" style="padding: 0;">
+                                  <form class="form" method="POST" id="formWishlist">
+                                      {% csrf_token %}
+                                    <input type="hidden" name="method" value="wishlist">
+                                    <button class="btn btn-danger" type="submit", form="formWishlist"
+                                      style="width:auto;margin:4px 0; padding: 6px; display: flex; justify-content: center">
+                                       Tambah ke Wishlist  <span class="glyphicon glyphicon-heart" style="margin-left:5px; font-size: 18px"></span>
+                                      <sup><span class="glyphicon glyphicon-plus" 
+                                        style="color: #45ff45; font-size: 8px;"></span></sup>
+                                    </button>
+                                  </form>
+                                </div>
+                                {% else %}
+                                <div class="col-xs-12" style="padding: 0; text-align: center">
+                                  <p>Produk ditambahkan ke wishlist</p>
+                                </div>
+                                {% endif %} 
+                            </div>
+                            <div class="col-xs-6">
+                              <p style="text-align:left;">
+                                Jumlah Bayar : <br>
+                                <span id="jumlahBayar" style="font-size: 150%">{{ discounted_price | int_to_rupiah }}</span>
+                              </p>
+                              <p style="text-align:left;">
+                                Jumlah Berat : <br>
+                                <span id="jumlahBerat" style="font-size: 150%">{{ product.unit_weight | int_to_kilogram }}</span>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
                     </div>
                   </div>
                 </div>
-            </div>
+      
+      
+      
+          <div class="col-xs-12 hidden-md hidden-lg" style="padding: 0">
+            <section name="post-header">
+              <div class="row" style="margin: 15px 0 0 0">
+                  <div class="col-xs-12" style="padding: 0; min-height: 600px;background: #fff">
+                    {% if other_product %}
+                    <div class="col-lg-12">
+                        <h4 class="title" style="font-size:20px">Produk Menarik Lainnya</h4>
+                    <!-- ====================================================================================================================================== --> 
+                    {% for p in other_product %}
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-12  card-bottom  card-sm"  style="margin-bottom:4%;padding:0 5px">
+                      <div class="col-xs-4" style="padding:0 2px">
+                        <img  id="saran-4"onLoad="setHeight(this)" src="{{ p.get_photo_url }}"></div>
+                      <div class="col-xs-8" style="padding:0">
+                        <p style="margin:0; word-wrap:break-word;" id="cards3-title" class="title">
+                          <a href="{{ p.get_detail_url }}">{{ p.name | truncatechars:40 | title }}</a></p>
+                        <h5 class="titlesm cool" style="text-align:center; margin:0;">
+                        {{p.price | int_to_rupiah}}
+                        </h5>
+                      </div></div>
+                    {% endfor %}
+          <!-- ====================================================================================================================================== -->                      
+                    <a href="{% url 'storefront:product_all' %}"><button class="btn btn-primary" style="width: 100%; margin-bottom: 20px">
+                      Lihat Lainnya
+                    </button></a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
-        </div> 
+       </div>
+    </div>
+  </div> 
 <script>
   function quantityChange(){
     quantity = $('#id_quantity').val();

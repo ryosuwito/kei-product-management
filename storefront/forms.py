@@ -7,4 +7,4 @@ class ProductCartForm (forms.Form):
     def __init__(self, *args, **kwargs):
         super(ProductCartForm, self).__init__(*args, **kwargs)
         self.fields['quantity'].widget.attrs['oninput'] = 'quantityChange()'
-        self.fields['quantity'].widget.attrs['style'] = 'width:100%'
+        self.fields['quantity'].widget.attrs['style'] = 'width:120px'

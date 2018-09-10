@@ -54,7 +54,7 @@
             {% for product in products %}
             <div class="col-xs-6 col-sm-3 col-md 3 col-lg-2" style="padding:5px;">
               <a href="{{ product.get_detail_url }}">
-              <div class="col-xs-12 card-bottom effect5 card-pointer card-lg" style="background: #fff; min-height:260px; max-height:260px;">
+              <div class="col-xs-12 card-bottom effect5 card-pointer card-lg" style="background: #fff">
                 <img style="margin: -10px -10px 5px -10px" class="photo-user product" onLoad="setHeight(this)" src="{{ product.get_photo_url }}">
                 <div style="width: 100%; padding:0">
                   <p style="margin:0; word-wrap:break-word">

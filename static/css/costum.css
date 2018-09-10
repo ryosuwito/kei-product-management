@@ -40,11 +40,8 @@ button.link {
 }
 .container-bg{
   width: 100%;
-  padding: 0 0 20px 0;
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-position-y: 100%;
-  background-color:#eee;
+  padding: 0;
+  background-color:#fff;
 }
 .container-footer{
   min-height: 100px;
@@ -538,9 +535,17 @@ a:hover{
   box-shadow:0 0 1px 1px rgba(0, 0, 0, 0.241);
 }
 .effect5{
-  box-shadow:0 3px 4px 0 rgba(0,0,0,0.14), 0 3px 3px -2px rgba(0,0,0,0.12), 0 1px 8px 0 rgba(0,0,0,0.2);
-  z-index:3;
-  border:1px solid rgba(85,85,85, 0.241);
+  min-height:240px;
+  max-height: 240px;
+  box-shadow:0 0px 4px 0 rgba(0,0,0,0.14);
+}
+.effect7{
+  background-color: #ffffff;
+  box-shadow:0 0 4px rgba(85,85,85, 0.241);
+}
+.effect7:hover{
+  background-color: #ffffff;
+  box-shadow:0 0 12px rgba(85,85,85, 0.241);
 }
 .effect6{
   background-color:rgba(255,255,255,1);
@@ -880,7 +885,8 @@ a:hover{
     height: 250px
   }
   .effect5{
-    box-shadow: none;
+    max-height: 270px;
+    min-height:270px;
   }
   .effect6{
     border: none;
