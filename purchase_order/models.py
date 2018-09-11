@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from shopping_cart.models import Cart
 from catalog.models import Product
+from membership.models import Member
 
 from django.utils.crypto import get_random_string
 from django.db.models.signals import post_save
@@ -52,7 +53,8 @@ class PurchaseOrderItem(models.Model):
     quantity = models.IntegerField(null=True, blank=True)
     product = models.ForeignKey(Product, related_name="product_in_order", on_delete=models.SET_NULL, null=True)
     purchase_order = models.ForeignKey(PurchaseOrder, related_name="item_in_order", on_delete=models.SET_NULL, null=True)
-
+    product_referal = models.ForeignKey(Member, on_delete=models.SET_NULL, db_index=True,  related_name="product_order_referal", null=True, blank=True) 
+    
     class Meta:
         verbose_name_plural = "items in Order"
 

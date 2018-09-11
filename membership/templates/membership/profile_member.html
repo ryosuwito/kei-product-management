@@ -64,10 +64,10 @@
                 </h4>
               </div>
               <div class="col-xs-11" style="padding-right:0">
-                <input id="ref-link-1" readonly type="text" value="{{ user.member.referal_code}}">
+                <input id="ref-code" readonly type="text" value="{{ user.member.referal_code}}">
               </div>
               <div class="col-xs-1" style="padding-left:0">
-                  <p class="btn btn-primary btn-xs"><span class="fa fa-copy"></span> copy</p>
+                  <p class="btn btn-primary btn-xs" data-input="ref-code" onclick="writeText(this)"><span class="fa fa-copy"></span> copy</p>
               </div>
               <div class="col-xs-12" style="padding: 0">
                 <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-link"></span> Link Referral</h4>
@@ -88,7 +88,7 @@
                 <input id="ref-link-1" readonly type="text" value="{{ request.scheme }}://{{ default_host }}{% url 'membership:pre_register' %}{{ user.member.referal_code}}">
               </div>
               <div class="col-xs-1" style="padding-left:0">
-                  <p class="btn btn-primary btn-xs"><span class="fa fa-copy"></span> copy</p>
+                  <p class="btn btn-primary btn-xs" data-input="ref-link-1" onclick="writeText(this)"><span class="fa fa-copy"></span> copy</p>
               </div>
             </div>
             <div class="row" style="margin: 0">
@@ -101,7 +101,7 @@
                 <input id="ref-link-2" readonly type="text" value="{{ request.scheme }}://{{ user.username }}.{{ default_host }}{% url 'membership:pre_register' %}">
               </div>
               <div class="col-xs-1" style="padding-left:0">
-                <p class="btn btn-primary btn-xs"><span class="fa fa-copy"></span> copy</p>
+                <p class="btn btn-primary btn-xs" data-input="ref-link-2" onclick="writeText(this)"><span class="fa fa-copy"></span> copy</p>
               </div>
             </div>
             <div class="row" style="margin: 0">
@@ -117,10 +117,10 @@
                     <span style="font-size: 110%" class="fa fa-twitter"></span> tweet</p></a>
               </div>
               <div class="col-xs-11" style="padding-right:0">
-                <input id="ref-link-1" readonly type="text" value="{{ request.scheme }}://{{ default_host }}{% url 'storefront:product_all' %}{{ user.member.referal_code}}">
+                <input id="ref-link-3" readonly type="text" value="{{ request.scheme }}://{{ default_host }}{% url 'storefront:product_all' %}{{ user.member.referal_code}}">
               </div>
               <div class="col-xs-1" style="padding-left:0">
-                  <p class="btn btn-primary btn-xs"><span class="fa fa-copy"></span> copy</p>
+                  <p class="btn btn-primary btn-xs" data-input="ref-link-3" onclick="writeText(this)"><span class="fa fa-copy"></span> copy</p>
               </div>
             </div>
             <div class="row" style="margin: 0">
@@ -130,10 +130,10 @@
                 </h5>
               </div>
               <div class="col-xs-11" style="padding-right:0">
-                <input id="ref-link-2" readonly type="text" value="{{ request.scheme }}://{{ user.username }}.{{ default_host }}{% url 'storefront:product_all' %}">
+                <input id="ref-link-4" readonly type="text" value="{{ request.scheme }}://{{ user.username }}.{{ default_host }}{% url 'storefront:product_all' %}">
               </div>
               <div class="col-xs-1" style="padding-left:0">
-                <p class="btn btn-primary btn-xs"><span class="fa fa-copy"></span> copy</p>
+                <p class="btn btn-primary btn-xs" data-input="ref-link-4" onclick="writeText(this)"><span class="fa fa-copy"></span> copy</p>
               </div>
             </div>
           </div>
@@ -204,5 +204,29 @@
       </div>
     </div>
   </div>
-
+  <script>
+      // A minimal polyfill for `navigator.clipboard.writeText()` that works most of the time in most modern browsers.
+      // Note that on Edge this may call `resolve()` even if copying failed.
+      // See https://github.com/lgarron/clipboard-polyfill for a more robust solution.
+      // License: public domain
+      function writeText(button) {
+        var str = document.getElementById(button.dataset.input).value;
+        var snackbar = document.getElementById('snackbar');
+        snackbar.innerHTML = '<p>'+'<span class="fa fa-check-circle" style="color:#0e0; font-size:400%"></span><br>'+str+'<br>'+'Berhasil di copy ke clipboard'+'</p>';
+        snackbar.className = "show";
+        return new Promise(function(resolve, reject) {
+          var success = false;
+          function listener(e) {
+            e.clipboardData.setData("text/plain", str);
+            e.preventDefault();
+            success = true;
+            setTimeout(function(){ snackbar.className = snackbar.className.replace("show", ""); }, 3000);
+          }
+          document.addEventListener("copy", listener);
+          document.execCommand("copy");
+          document.removeEventListener("copy", listener);
+          success ? resolve(): reject();
+        });
+      };
+    </script>
 {% endblock %}

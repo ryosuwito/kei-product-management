@@ -48,7 +48,7 @@
             <div class="row" style="margin: 0">
                 <div class="col-xs-12" style="background: #fff">
                   <div class="row" style="margin: 25px 0">
-                    <div class="col-xs-12 col-md-10">
+                    <div class="col-xs-12 col-md-12">
                         <h3 class="title" style="text-align:left;padding:0 0 10px 0;margin:0">{{ product.name | title }} 
                         </h3>
                         {% if product.categories %}
@@ -64,23 +64,6 @@
                             {% endfor %}
                           </p>
                         {% endif %}
-                    </div>
-                    <div class="hidden-xs col-md-2">
-                      {% if not is_in_wishlist %}
-                      <div class="col-xs-12" style="padding: 0;">
-                        <form class="form" method="POST" id="formWishlist">
-                            {% csrf_token %}
-                          <input type="hidden" name="method" value="wishlist">
-                          <button class="btn btn-danger" type="submit", form="formWishlist"
-                            style="width:100%;margin:4px 0; padding: 6px; display: flex; justify-content: center">
-                            Tambah ke Wishlist
-                            <span class="glyphicon glyphicon-heart" style="font-size: 18px"></span>
-                            <sup><span class="glyphicon glyphicon-plus" 
-                              style="color: #45ff45; font-size: 8px;"></span></sup>
-                          </button>
-                        </form>
-                      </div>
-                      {% endif %} 
                     </div>
                   </div>
                   <div class="col-xs-12 main-photo-box" style="padding: 0">
@@ -284,7 +267,7 @@
                                   </form>
                                 </div>
                                 {% else %}
-                                <div class="col-xs-12" style="padding: 0; text-align: center">
+                                <div class="col-xs-12" style="padding: 0">
                                   <p>Produk ditambahkan ke wishlist</p>
                                 </div>
                                 {% endif %} 

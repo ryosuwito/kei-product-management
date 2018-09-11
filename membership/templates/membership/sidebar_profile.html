@@ -46,7 +46,7 @@
             style="background:linear-gradient(to bottom left, #515db4,#8134af, #dd2a7b, #feda77)"
             {% else %}
             class="col-xs-4 detail-box social-disabled"
-            style="background-color:#888888"
+            style="background-color:#aaa"
             {% endif %}>
             <h2 class="white" style="text-align:center;padding:0;margin:0"><span class="fa fa-instagram"></span></h2></div>                      
         <div onclick="window.open('https://facebook.com/{{ user.member.facebook_address }}')"
@@ -55,7 +55,7 @@
             style="background-color:#3b5998"
         {% else %}
             class="col-xs-4 detail-box social-disabled"
-            style="background-color:#888888"
+            style="background-color:#aaa"
         {% endif %}>
             <h2 class="white" style="text-align:center;padding:0;margin:0"><span class="fa fa-facebook"></span></h2></div>
         
@@ -65,7 +65,7 @@
             style="background-color:#0084b4"
         {% else %}
             class="col-xs-4 detail-box social-disabled"
-            style="background-color:#888888"
+            style="background-color:#aaa"
         {% endif %}>
             <h2 class="white" style="text-align:center;padding:0;margin:0"><span class="fa fa-twitter"></span>
             </h2>
@@ -73,9 +73,15 @@
         {% if user == request.user %}
         <div class="row">
             <div class="col-xs-12">
-                <p class="btn btn-primary" style="border-radius: 0; width: 100%; padding:5px;
-                margin-top: 2.5px;
-                display: flex; justify-content: center; align-items: center">
+                {% if user.member.website_address %}
+                    <p class="btn btn-primary" style="border-radius: 0; width: 100%; padding:5px;
+                    margin-top: 2.5px;
+                    display: flex; justify-content: center; align-items: center">
+                {% else %}
+                    <p class="btn disabled" style="border-radius: 0; width: 100%; padding:5px;
+                    margin-top: 2.5px; background-color:#aaa; color:#fff;
+                    display: flex; justify-content: center; align-items: center">
+                {% endif %}
                     <span style="font-size: 200%; margin: auto 5px auto auto" class="fa fa-globe"></span><span style="margin: auto auto auto 5px">My Site</span>
                 </p>
             </div>

@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from catalog.models import Product, Category
@@ -13,8 +14,22 @@ import random
 
 from .forms import ProductCartForm
 
-def product_detail(request, product_pk):
-    referal_code = False
+def product_detail(request, product_pk, **kwargs):
+    referal_code = redirect_referal_code(request, kwargs=kwargs)
+    if referal_code['code']:
+        referer = Member.objects.get(referal_code = referal_code['code'])
+    else:
+        referer = ''
+
+    if referal_code['message'] == "redirect_to_default":
+        return  HttpResponseRedirect(request.scheme+"://"+settings.DEFAULT_HOST + 
+                reverse('storefront:product_detail', kwargs={'product_pk':product_pk},
+                    current_app=request.resolver_match.namespace))
+    elif referal_code['message'] == 'redirect_to_referal':
+        return HttpResponseRedirect(request.scheme+"://"+referer.user.username+'.'+settings.DEFAULT_HOST + 
+                reverse('storefront:product_detail', kwargs={'product_pk':product_pk},
+                    current_app=request.resolver_match.namespace))
+
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
     wishlist = wishlists.get_wishlist(request)
@@ -55,6 +70,9 @@ def product_detail(request, product_pk):
                     cart_item.quantity = quantity
                 else :
                     cart_item.quantity += int(quantity)
+
+                if referer and not referer == request.user.member:
+                    cart_item.product_referal = referer
                 cart_item.save()
             
             return HttpResponseRedirect(reverse('cart:index', 
@@ -94,7 +112,21 @@ def product_detail(request, product_pk):
 
     return response
     
-def index(request):
+def index(request, **kwargs):
+    referal_code = redirect_referal_code(request, kwargs=kwargs)
+    if referal_code['code']:
+        referer = Member.objects.get(referal_code = referal_code['code'])
+
+    if referal_code['message'] == "redirect_to_default":
+        return  HttpResponseRedirect(request.scheme+"://"+settings.DEFAULT_HOST + 
+                reverse('storefront:product_all', 
+                    current_app=request.resolver_match.namespace))
+    elif referal_code['message'] == 'redirect_to_referal':
+        return HttpResponseRedirect(request.scheme+"://"+referer.user.username+'.'+settings.DEFAULT_HOST + 
+                reverse('storefront:product_all', 
+                    current_app=request.resolver_match.namespace))
+
+
     try:
         product_list = Product.objects.filter(is_archived=False)
     except:
@@ -105,7 +137,7 @@ def index(request):
         product_title = 'Menampilkan Semua Produk'
     return paginate_results(request, product_list,product_title)
     
-def product_by_category(request, category_pk):
+def product_by_category(request, category_pk, **kwargs):
     try:
         kategori = Category.objects.get(pk=category_pk)
         product_list = kategori.products_in_category.filter(is_archived=False)
@@ -155,3 +187,31 @@ def paginate_results(request, product_list,product_title):
          'max_page':max_page,
          'min_page':min_page})
     return response
+
+def  redirect_referal_code(request, kwargs):
+    try:
+        referal_code = kwargs['referal_code']
+    except:
+        referal_code = ''
+
+    if request.get_host() != settings.DEFAULT_HOST:
+        if referal_code:
+            return {'code':referal_code, 'message':'redirect_to_referal'}
+        else:
+            referal_code = check_host(request, pass_variable=True)
+            if not referal_code:
+                return  {'code':'', 'message': 'redirect_to_default'}
+            
+    else :
+        if referal_code:
+            try:
+                referer_user = Member.objects.get(referal_code = referal_code)
+            except:
+                referer_user = ''
+
+            if referer_user:
+                return {'code':referal_code, 'message':'redirect_to_referal'}
+            else:
+                return {'code':'', 'message': 'redirect_to_default'}
+
+    return {'code':referal_code, 'message': 'do_nothing'}
