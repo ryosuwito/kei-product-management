@@ -20,22 +20,70 @@ class Member(models.Model):
 
     LEVEL = {
         'DROPSHIPPER' : {
+            'REFERAL_BONUS':{
+                'TO_DROPSHIPPER':15000,
+                'TO_RESELLER':50000,
+                'TO_AGEN':250000,
+                'TO_DISTRIBUTOR':400000,
+            },
+            'UPGRADE_THRESHOLD':25000000,
+            'PURCHASING_BONUS': 1000000,
+            'SELLING_BONUS': 200000,
+            'TARGET': 5000000,
             'THRESHOLD': 190000,
             'BENEFIT': 5,
         },
         'RESELLER': {
+            'REFERAL_BONUS':{
+                'TO_DROPSHIPPER':25000,
+                'TO_RESELLER':125000,
+                'TO_AGEN':350000,
+                'TO_DISTRIBUTOR':575000,
+            },
+            'UPGRADE_THRESHOLD':45000000,
+            'PURCHASING_BONUS': 1400000,
+            'SELLING_BONUS': 350000,
+            'TARGET': 8000000,
             'THRESHOLD': 1500000,
             'BENEFIT': 10,
         },
         'AGEN': {
+            'REFERAL_BONUS':{
+                'TO_DROPSHIPPER':35000,
+                'TO_RESELLER':200000,
+                'TO_AGEN':425000,
+                'TO_DISTRIBUTOR':680000,
+            },
+            'UPGRADE_THRESHOLD':75000000,
+            'PURCHASING_BONUS': 2400000,
+            'SELLING_BONUS': 600000,
+            'TARGET': 13000000,
             'THRESHOLD': 6800000,
             'BENEFIT': 20,
         },
         'DISTRIBUTOR': {
+            'REFERAL_BONUS':{
+                'TO_DROPSHIPPER':50000,
+                'TO_RESELLER':300000,
+                'TO_AGEN':550000,
+                'TO_DISTRIBUTOR':800000,
+            },
+            'UPGRADE_THRESHOLD':200000000,
+            'PURCHASING_BONUS': 4800000,
+            'SELLING_BONUS': 1200000,
+            'TARGET': 30000000,
             'THRESHOLD': 11900000,
             'BENEFIT': 30,
         },
         'MASTER_SELLER': {
+            'REFERAL_BONUS':{
+                'TO_DROPSHIPPER':100000,
+                'TO_RESELLER':500000,
+                'TO_AGEN':750000,
+                'TO_DISTRIBUTOR':1250000,
+            },
+            'SELLING_BONUS': 0,
+            'TARGET': 0,
             'THRESHOLD': 11900000,
             'BENEFIT': 30,
         }
@@ -181,3 +229,19 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
 
     instance.member.save()
+
+class Customer (models.Model):
+    name = models.CharField(max_length=250, blank=True)
+    seller = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='member_customer')
+    home_provinsi = models.CharField(max_length=250, blank=True)
+    home_kota = models.CharField(max_length=250, blank=True)
+    home_kecamatan = models.CharField(max_length=250, blank=True)
+    home_kelurahan = models.CharField(max_length=250, blank=True)
+    home_address = models.CharField(max_length=250, blank=True)
+    
+    def get_home_address(self):
+        return '%s, %s, %s, %s - %s' % (self.home_address, 
+            self.home_kelurahan, 
+            self.home_kecamatan,
+            self.home_kota,
+            self.home_provinsi)

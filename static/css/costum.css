@@ -397,6 +397,7 @@ a:hover{
   z-index:1;
 }
 .photo-article{
+  cursor: pointer;
   min-height:0px;
   max-height:350px;
   height:auto

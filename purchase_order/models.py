@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from shopping_cart.models import Cart
 from catalog.models import Product
-from membership.models import Member
+from membership.models import Member, Customer
 
 from django.utils.crypto import get_random_string
 from django.db.models.signals import post_save
@@ -13,7 +13,6 @@ class PurchaseOrder(models.Model):
     user = models.ForeignKey(User, related_name="users_order", on_delete=models.SET_NULL, null=True)
     total_price = models.IntegerField(null=True, help_text="Total Belanja")
     discount = models.IntegerField(null=True, help_text="Diskon Member")
-    shipping_address = models.CharField(max_length=500, blank=True)
     shipping_cost = models.IntegerField(null=True, help_text="Ongkos Kirim")
     total_payment = models.IntegerField(null=True, help_text="Total Belanja")
     created_date = models.DateTimeField(db_index=True,default=datetime.datetime.now)
@@ -31,6 +30,9 @@ class PurchaseOrder(models.Model):
     #payment_status = models.TextField(blank=True)
     #payment_token = models.CharField(null=True, max_length=50, blank=True)
 
+    is_set_as_dropship = models.BooleanField(default=False)
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
+
     def get_number():
         order_number_alpha = get_random_string(5, 
             allowed_chars='0123456789')
@@ -47,7 +49,7 @@ class PurchaseOrder(models.Model):
         verbose_name_plural = "Purchase Orders"
 
     def __str__(self):
-       return 'Purchase Order No. : %s'%self.pk
+       return 'Purchase Order No. : %s'%self.order_number
 
 class PurchaseOrderItem(models.Model):
     quantity = models.IntegerField(null=True, blank=True)

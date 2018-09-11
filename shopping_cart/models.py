@@ -1,6 +1,6 @@
 from django.db import models
 from catalog.models import Product
-from membership.models import Member
+from membership.models import Member, Customer
 from django.contrib.auth.models import User
 import datetime
 
@@ -17,6 +17,11 @@ class Cart(models.Model):
     #is_checked_out = models.BooleanField(db_index=True,default=False)
     #is_paid = models.BooleanField(db_index=True,default=False)
     
+
+    is_set_as_dropship = models.BooleanField(default=False)
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
+
+
     class Meta:
         verbose_name_plural = "Carts"
 

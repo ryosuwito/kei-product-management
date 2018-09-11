@@ -55,7 +55,8 @@ def login_page(request):
                     if request.GET.get('next'):
                         return HttpResponseRedirect(request.GET.get('next'))
                 except :
-                    return HttpResponseRedirect(reverse('membership:profile'))
+                    pass
+                return HttpResponseRedirect(reverse('membership:profile'))
             else:
                 form_messages='username atau password salah'
     elif request.method == 'GET':
@@ -303,6 +304,9 @@ def register_page(request, *args, **kwargs):
 
 @login_required(login_url='/member/login')
 def profile_page(request, uname='none'):
+    target = 0
+    current_target = 0
+    member_target = 0
     cart = carts.get_cart(request)['cart_object']
     wishlist = wishlists.get_wishlist(request)['wishlist_object']
     referal_code = False
@@ -343,6 +347,11 @@ def profile_page(request, uname='none'):
             return HttpResponseRedirect("%s%s"%(reverse('membership:profile', 
                 current_app='guest_backend'),uname))
 
+    if user.member.get_member_type_display() != 'Guest':
+        current_target = 4242400
+        member_target = user.member.get_level()['TARGET']
+        target = round(current_target/member_target*100, 2)
+
     link_sponsor = ''
     if user.member.sponsor:
         sponsor = Member.objects.get(referal_code = user.member.sponsor_code)
@@ -350,6 +359,9 @@ def profile_page(request, uname='none'):
 
     return render(request, 'membership/profile_member.html',
         {'user': user, 
+        'target': target,
+        'current_target': current_target,
+        'member_target': member_target,
         'cart':cart, 
         'default_host':default_host,
         'wishlist':wishlist,

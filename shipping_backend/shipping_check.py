@@ -41,8 +41,13 @@ def get_cost(user, courier, **kwargs):
     shipping_origin = get_shipping_origin_id()
     province_id = get_province_id(shipping_origin['provinsi_origin'])
     origin_id = get_city_id(province_id, shipping_origin['kota_origin'])
-    user_province_id = get_province_id(user.member.home_provinsi)
-    destination_id = get_city_id(user_province_id, user.member.home_kota)
+    if not user.users_cart.is_set_as_dropship :
+        user_province_id = get_province_id(user.member.home_provinsi)
+        destination_id = get_city_id(user_province_id, user.member.home_kota)
+    else:
+        user_province_id = get_province_id(user.users_cart.customer.home_provinsi)
+        destination_id = get_city_id(user_province_id, user.users_cart.customer.home_kota)
+
     if destination_id:
         weight = user.users_cart.get_total_weight()
         payload = "origin=%s&destination=%s&weight=%s&courier=%s" % (origin_id, destination_id, weight, courier)

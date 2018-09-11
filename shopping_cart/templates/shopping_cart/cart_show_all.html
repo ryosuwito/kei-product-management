@@ -42,7 +42,7 @@
                                 <form method="POST" id='updateItem'>
                                     {% csrf_token %}
                                     <div class="col-xs-9" style="padding: 0">
-                                        <input style="width: 100%; margin: 0" type="number" name="quantity" value="{{ item.quantity}}">                                  
+                                        <input oninput="limit(this)" style="width: 100%; margin: 0" type="number" name="quantity" value="{{ item.quantity}}">                                  
                                     </div>
                                     <div class="col-xs-3" style="padding: 0">
                                         <button style="width: 100%" class="btn btn-xs btn-primary" type="submit">Ubah</button>  
@@ -134,6 +134,11 @@
 <script>
     function prepareCheckout(){
         window.open("{% url 'order:prepare' %}","_self")
+    }
+    function limit(ins){
+        if (ins.value<0){
+            ins.value=0
+        }
     }
 </script>
 {% include "membership/footer.html" %}

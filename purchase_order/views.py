@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from shopping_cart.models import Cart, CartItem, WishListItem
 import shopping_cart.carts as carts
 import shopping_cart.wishlists as wishlists
-from membership.models import Member
+from membership.models import Member, Customer
 from shipping_backend.shipping_check import get_courier, get_cost
 from django.middleware.csrf import get_token
 from shipping_backend.models import ShippingOrigin
@@ -13,18 +13,21 @@ from django.forms.models import model_to_dict
 from .models import PurchaseOrder, PurchaseOrderItem
 from membership.templatetags.int_to_rupiah import int_to_rupiah
 from django.urls import reverse
-from database_wilayah.models import Provinsi
+from database_wilayah.models import Provinsi, Kota, Kecamatan, Kelurahan
+from reward_system.my_point import count_point
+from membership.forms import CustomerAddForm
 import datetime
 
 @login_required
 def index(request):
-    provinces = Provinsi.objects.all().order_by('name')
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
     services = ''
     selected_service = ''
     wishlist = wishlists.get_wishlist(request)
     wishlist_object = wishlist['wishlist_object']
+    set_as_dropship = False
+    chosen_customer = ''
 
     if not cart_object.get_total_items_in_cart():
         return HttpResponseRedirect(reverse('cart:index'))
@@ -65,6 +68,40 @@ def index(request):
                     cart_object.shipping_cost = s['cost'][0]['int_value']
                     cart_object.save()
                     break
+        elif method == 'add_dropship_address':
+            form = CustomerAddForm(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                try:
+                    customer = Customer()
+                    customer.name = data.get('name')
+                    customer.home_provinsi = data.get('provinsi_home').name
+                    customer.kota_provinsi = Kota.objects.get(pk=request.POST.get('kota_home')).name
+                    customer.home_kecamatan = Kecamatan.objects.get(pk=request.POST.get('kecamatan_home')).name
+                    customer.home_kelurahan = Kelurahan.objects.get(pk=request.POST.get('kelurahan_home')).name
+                    customer.home_address = data.get('home_address')
+                    customer.seller = request.user.member
+                    customer.save()
+                    cart_object.is_set_as_dropship = True
+                    cart_object.customer = customer
+                    cart_object.save()
+                except:
+                    pass
+
+        elif method == 'cancel_dropship':
+            cart_object.is_set_as_dropship = False
+            cart_object.customer = None
+            cart_object.save()
+
+        elif method == 'set_dropship_address':
+            try:
+                customer = Customer.objects.get(id=request.POST.get('customer'))
+                if customer:
+                    cart_object.is_set_as_dropship = True
+                    cart_object.customer = customer
+                    cart_object.save()
+            except:
+                pass
                     
         if cart_object.shipping_cost != 0 and cart_object.get_total_items_in_cart() == 0:
             shipping_cost = 0
@@ -73,6 +110,7 @@ def index(request):
 
     elif request.method == 'GET':
         cart_object.shipping_cost = 0
+        cart_object.save()
         shipping_cost = cart_object.shipping_cost
 
         
@@ -91,9 +129,12 @@ def index(request):
 
     couriers = get_courier()
     token = get_token(request)
+
+    customers = Customer.objects.filter(seller=request.user.member)
+    form = CustomerAddForm()
     return render(request, 'purchase_order/select_shipping.html', 
-        {'provinces': provinces,
-        'wishlist': wishlist_object,
+        {'wishlist': wishlist_object,
+        'customers':customers,
         'cart':cart_object,
         'products':products,
         'discount':discount,
@@ -103,7 +144,8 @@ def index(request):
         'services':services,
         'shipping_origin':shipping_origin,
         'selected_service':selected_service,
-        'token':token,})
+        'token':token,
+        'form':form})
 
 @login_required
 def checkout(request):
@@ -165,9 +207,13 @@ def pay(request):
     order = PurchaseOrder.objects.filter(user=request.user, is_paid=False, is_checked_out = False)[0]
     order.is_checked_out = True
     order.is_paid = True
-    order.is_verified = True
+    order.is_verified = False
     order.payment_date = datetime.datetime.now()
     order.save()
+    if request.user.is_authenticated:
+        if not request.user.member.member_type == Member.GUEST and \
+            not request.user.member.member_type == Member.NEW_MEMBER:
+                count_point(request,order)
     del request.session['shopping_cart']
     cart = carts.get_cart(request)
     return HttpResponseRedirect(reverse('order:history'))

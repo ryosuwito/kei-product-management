@@ -71,8 +71,13 @@ def product_detail(request, product_pk, **kwargs):
                 else :
                     cart_item.quantity += int(quantity)
 
-                if referer and not referer == request.user.member:
-                    cart_item.product_referal = referer
+                if request.user.is_authenticated:
+                    if referer and not referer == request.user.member:
+                        cart_item.product_referal = referer
+                else: 
+                    if referer:
+                        cart_item.product_referal = referer
+                    
                 cart_item.save()
             
             return HttpResponseRedirect(reverse('cart:index', 

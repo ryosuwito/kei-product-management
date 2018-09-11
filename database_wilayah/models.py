@@ -25,6 +25,3 @@ class Kelurahan(models.Model):
     kecamatan = models.ForeignKey(Kecamatan, on_delete=models.CASCADE, related_name='kelurahan_kecamatan')
     def __str__(self):
         return self.name
-
-class DropshipAddress(models.Model):
-    member = models.ForeignKey(Member,on_delete=models.CASCADE, related_name='member_dropship_addess')

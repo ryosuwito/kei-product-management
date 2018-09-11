@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from database_wilayah.models import Provinsi
-from .models import Member
+from .models import Member, Customer
 
 class MemberLoginForm(forms.Form):
     username = forms.CharField(label='Username/ Phone/ Email :', max_length=150)
@@ -9,6 +9,22 @@ class MemberLoginForm(forms.Form):
         "type": "password"
     }
     password = forms.CharField(label='Password :', widget=forms.PasswordInput(attrs=attrs))
+
+class CustomerAddForm(forms.Form):
+    USERNAME_MAX = 20
+    USERNAME_MIN = 6
+    provinsi_home = forms.ModelChoiceField(Provinsi.objects.all(), initial='')
+    home_address = forms.CharField(max_length=250, required=True)
+    name = forms.CharField(required=True, min_length=USERNAME_MIN, max_length=USERNAME_MAX)
+
+    def __init__(self, *args, **kwargs):
+        super(CustomerAddForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs['placeholder'] = 'Nama Penerima'
+        self.fields['provinsi_home'].widget.attrs['onClick'] = 'getKota(this.id)'
+
+        self.fields['home_address'].widget = forms.Textarea() 
+        self.fields['home_address'].widget.attrs['rows'] = '3' 
+        self.fields['home_address'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
 
 class MemberRegisterForm(forms.ModelForm):
     USERNAME_MAX = 20

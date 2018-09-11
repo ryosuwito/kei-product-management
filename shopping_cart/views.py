@@ -45,8 +45,10 @@ def index(request):
                 if request.POST['item'] :
                     item_pk = request.POST['item'].split('_')[1]
                     item = CartItem.objects.get(pk=item_pk)
-                    item.quantity = request.POST.get('quantity', 1)
-                    item.save()
+                    quantity = request.POST.get('quantity', 1)
+                    if int(quantity) > 0:
+                        item.quantity = quantity
+                        item.save()
             except:
                 pass
 
