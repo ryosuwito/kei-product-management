@@ -64,10 +64,25 @@
                   </div>
                   <div class="col-xs-4" style="padding:0; text-align: right"> 
                     {% if user.member.reward.current_point > 5000 %}
-                    <p class="btn btn-sm btn-success">REDEEM POIN</p>
+                    <p class="btn btn-sm btn-success">REDEEM</p>
                     {% else %}
-                    <p class="btn btn-sm btn-danger disabled">REDEEM POIN</p>
+                    <p class="btn btn-sm btn-danger disabled">REDEEM</p>
                     {% endif %}
+                  </div>
+              </div>
+              {% endif %}
+              {% if user.member.reward.bonus_purchasing %}
+              <div class="row" style="margin: 0 0 15px 0">
+                  <div class="col-xs-12" style="padding: 0">
+                    <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-link"></span> 
+                      MY_REWARD
+                    </h4>
+                  </div>
+                  <div class="col-xs-8" style="padding-right:0">
+                    <input type="text" readonly value="{{ user.member.reward.bonus_purchasing | int_to_rupiah }}" style="width:100%"> 
+                  </div>
+                  <div class="col-xs-4" style="padding:0; text-align: right"> 
+                    <p class="btn btn-sm btn-success">REDEEM</p>
                   </div>
               </div>
               {% endif %}

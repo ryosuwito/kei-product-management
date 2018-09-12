@@ -6,6 +6,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.crypto import get_random_string
 from django.conf import settings
+
 import pyqrcode
 import os 
 
@@ -238,7 +239,7 @@ class Customer (models.Model):
     home_kecamatan = models.CharField(max_length=250, blank=True)
     home_kelurahan = models.CharField(max_length=250, blank=True)
     home_address = models.CharField(max_length=250, blank=True)
-    
+
     def get_home_address(self):
         return '%s, %s, %s, %s - %s' % (self.home_address, 
             self.home_kelurahan, 

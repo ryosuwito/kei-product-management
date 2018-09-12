@@ -10,6 +10,9 @@ from database_wilayah.models import Provinsi, Kota, Kecamatan, Kelurahan
 from .models import Member
 from .forms import MemberLoginForm, MemberRegisterForm, GuestRegisterForm, MemberEditProfileForm
 from shopping_cart import carts, wishlists
+from reward_system.models import Reward
+from reward_system.my_purchasing import check_purchasing_bonus
+
 import random
 # Create your views here.
 
@@ -272,6 +275,7 @@ def register_page(request, *args, **kwargs):
                 user.member.copy_address()
                 
             user.save()
+            reward = Reward(member=user.member)
             if user is not None:
                 logout(request)
                 login(request, user)
@@ -348,7 +352,7 @@ def profile_page(request, uname='none'):
                 current_app='guest_backend'),uname))
 
     if user.member.get_member_type_display() != 'Guest':
-        current_target = 4242400
+        current_target = user.member.reward.get_current_purchasing()
         member_target = user.member.get_level()['TARGET']
         target = round(current_target/member_target*100, 2)
 
@@ -357,6 +361,7 @@ def profile_page(request, uname='none'):
         sponsor = Member.objects.get(referal_code = user.member.sponsor_code)
         link_sponsor = sponsor.get_absolute_url()
 
+    check_purchasing_bonus(request)
     return render(request, 'membership/profile_member.html',
         {'user': user, 
         'target': target,

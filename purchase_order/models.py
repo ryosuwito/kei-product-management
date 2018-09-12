@@ -21,6 +21,7 @@ class PurchaseOrder(models.Model):
     #is_tokenized = models.BooleanField(db_index=True,default=False)
     #is_token_expired = models.BooleanField(db_index=True,default=False)
     is_verified = models.BooleanField(db_index=True,default=False)
+    is_valid = models.BooleanField(db_index=True,default=True)
     is_paid = models.BooleanField(db_index=True,default=False)
     is_checked_out = models.BooleanField(db_index=True,default=False)
     order_number = models.CharField(db_index=True, max_length=20, blank=True)

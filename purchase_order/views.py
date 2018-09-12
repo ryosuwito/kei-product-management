@@ -15,6 +15,7 @@ from membership.templatetags.int_to_rupiah import int_to_rupiah
 from django.urls import reverse
 from database_wilayah.models import Provinsi, Kota, Kecamatan, Kelurahan
 from reward_system.my_point import count_point
+from reward_system.my_purchasing import check_purchasing_bonus
 from membership.forms import CustomerAddForm
 import datetime
 
@@ -214,6 +215,7 @@ def pay(request):
         if not request.user.member.member_type == Member.GUEST and \
             not request.user.member.member_type == Member.NEW_MEMBER:
                 count_point(request,order)
+                check_purchasing_bonus(request)
     del request.session['shopping_cart']
     cart = carts.get_cart(request)
     return HttpResponseRedirect(reverse('order:history'))
