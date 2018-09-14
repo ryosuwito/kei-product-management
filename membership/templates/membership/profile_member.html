@@ -23,7 +23,7 @@
       <div class="col-xs-12 card-bottom" style="padding:0; margin-bottom:0px;display:block;height:auto">
         <div class="row" >
           <div class="col-xs-12">
-            <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-shopping-cart"></span> Target Penjualan Bulan Ini</h4>
+            <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-money"></span> Target SMART SELLING Bulan Ini</h4>
             <p>{{ current_target | int_to_rupiah}} / {{member_target | int_to_rupiah}}</p>
           </div>
           <div class="col-xs-12" style="min-height:0;margin:5px 0">
@@ -48,44 +48,74 @@
               </div>
             </div>
           </div>
-          <div class="col-xs-12 col-sm-5" style="min-height:0;margin:5px 0">
-              {% if user.member.reward.current_point %}
-              <div class="row" style="margin: 0 0 15px 0">
-                  <div class="col-xs-12" style="padding: 0">
-                    <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-link"></span> 
-                      MY_POIN
+          <div class="col-xs-12">
+            <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-money"></span> Target MY REWARD Bulan Ini</h4>
+            <p>{{ current_target | int_to_rupiah}} / {{member_target | int_to_rupiah}}</p>
+          </div>
+          <div class="col-xs-12" style="min-height:0;margin:5px 0">
+            <div class="progress">
+              <div class="progress-bar"
+              style="background-color:
+              {% if target > 0 and target < 40 %}
+              #de5b5b
+              {% elif target >= 40 and target < 60 %}
+              #dcde5b
+              {% elif target >= 60 and target < 80 %}
+              #5b9bde
+              {% elif target >= 80 %}
+              #5dde5b
+              {% endif %};
+              color:#333;
+              width:{{target}}%
+              "
+              role="progressbar" aria-valuenow="{{target}}"
+              aria-valuemin="0" aria-valuemax="100">
+              {{target}}%
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12" style="min-height:0;margin:5px 0">
+            <div class="row" style="margin: 0 0 15px 0">
+            {% if user.member.reward.current_point %}
+                <div class="col-xs-12 col-md-5">
+                  <div class="row">
+                    <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-money"></span> 
+                      Bonus POIN REWARD
                     </h4>
                     {% if user.member.reward.current_point < 5000 %}
                     <p class="hot">Minimum penukaran adalah 5000 poin</p>
                     {% endif %}
                   </div>
-                  <div class="col-xs-8" style="padding-right:0">
+                  <div class="col-xs-10">
                     <input type="number" readonly value="{{ user.member.reward.current_point }}" style="width:100%"> 
                   </div>
-                  <div class="col-xs-4" style="padding:0; text-align: right"> 
+                  <div class="col-xs-2" style="text-align: right"> 
                     {% if user.member.reward.current_point > 5000 %}
-                    <p class="btn btn-sm btn-success">REDEEM</p>
+                    <p class="btn btn-xs btn-success">REDEEM</p>
                     {% else %}
-                    <p class="btn btn-sm btn-danger disabled">REDEEM</p>
+                    <p class="btn btn-xs btn-danger disabled">REDEEM</p>
                     {% endif %}
                   </div>
-              </div>
-              {% endif %}
-              {% if user.member.reward.bonus_purchasing %}
-              <div class="row" style="margin: 0 0 15px 0">
-                  <div class="col-xs-12" style="padding: 0">
-                    <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-link"></span> 
-                      MY_REWARD
-                    </h4>
-                  </div>
-                  <div class="col-xs-8" style="padding-right:0">
+                </div>
+            {% endif %}
+            {% if user.member.reward.bonus_purchasing %}
+                <div class="col-xs-12 col-md-5">
+                  <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-money"></span> 
+                    Bonus MY REWARD
+                  </h4>
+                  <div class="col-xs-10">
                     <input type="text" readonly value="{{ user.member.reward.bonus_purchasing | int_to_rupiah }}" style="width:100%"> 
                   </div>
-                  <div class="col-xs-4" style="padding:0; text-align: right"> 
-                    <p class="btn btn-sm btn-success">REDEEM</p>
+                  <div class="col-xs-2" style="text-align: right"> 
+                    <p class="btn btn-xs btn-success">REDEEM</p>
                   </div>
-              </div>
-              {% endif %}
+                </div>
+            {% endif %}
+                <div class="col-xs-12 col-md-2" style="padding: 0"></div>
+            </div>
+            <hr>
+          </div>
+          <div class="col-xs-12 col-sm-5" style="min-height:0;margin:5px 0">
               <div class="row" style="margin: 0 0 15px 0">
               {% if user.member.sponsor %}
               <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-group"></span> Sponsor</h4>
