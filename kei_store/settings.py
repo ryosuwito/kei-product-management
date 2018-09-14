@@ -128,10 +128,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    '/home/ryo/Webproject/keskei/keskei/static/',    
+    #'/home/ryo/Webproject/keskei/keskei/static/',    
+    '/webapps/kei-partner/keskei/static/',
 ]
 
-MEDIA_ROOT = '/home/ryo/Webproject/keskei/keskei/media/'
+#MEDIA_ROOT = '/home/ryo/Webproject/keskei/keskei/media/'
+MEDIA_ROOT = '/webapps/kei-partner/keskei/media/'
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = '/member/'
