@@ -25,7 +25,7 @@ SECRET_KEY = KEY.SECRET
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.kei-partner.com','kei-partner.com']
+ALLOWED_HOSTS = ['.kei-partner.com','kei-partner.com', '139.99.4.177']
 PORT = ':8081'
 DEFAULT_HOST = ALLOWED_HOSTS[1]+ PORT
 
