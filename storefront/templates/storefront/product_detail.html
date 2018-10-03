@@ -178,6 +178,12 @@
                     <div class="email-addto-box">
                       <ul class="add-to-links">
                       <li>
+                        <style>
+                          .add-to-links li button:hover {
+                              color: #333e48;
+                              background: #fed700;
+                          }
+                        </style>
                         <form class="form" method="POST" id="formWishlist">
                             {% csrf_token %}
                           <input type="hidden" name="method" value="wishlist">
