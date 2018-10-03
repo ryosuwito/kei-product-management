@@ -41,14 +41,6 @@
                     <div class="item-img-info"> 
                       <a class="product-image" title="Retis lapen casen" href="{{ product.get_detail_url }}"> 
                       <img alt="{{ product.name | truncatechars:30 | title }}"  class="photo-user product" onLoad="setHeight(this)"  src="{{ product.get_photo_url }}"> </a>
-                      <div class="sale-label sale-top-right">- 40% sale</div>
-                      <div class="box-hover">
-                        <ul class="add-to-links">
-                          <li><a class="link-quickview" href="quick_view.html"></a> </li>
-                          <li><a class="link-wishlist" href="wishlist.html"></a> </li>
-                          <li><a class="link-compare" href="compare.html"></a> </li>
-                        </ul>
-                      </div>
                     </div>
                   </div>
                   <div class="item-info">
@@ -56,14 +48,11 @@
                       <div class="item-title"> <a title="Retis lapen casen" href="{{ product.get_detail_url }}">  {{ product.name | truncatechars:30 | title }}</a> </div>
                       <div class="item-content">
                         <div class="item-price">
-                          <div class="price-box"> <span class="regular-price"> <span class="price">{{ product.price  | int_to_rupiah }}</span> </span>                                  
-                            {% if not product.is_available %}
-                            <p class="title hot">--Stok Kosong--</p>
-                            {% endif %}
+                          <div class="price-box"> <span class="regular-price"> <span class="price">{{ product.price  | int_to_rupiah }}</span> </span> 
                           </div>
                         </div>
                         <div class="action">
-                          <button class="button btn-cart" type="button" title="" data-original-title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                          <button class="button btn-cart" onclick="window.open('{{ product.get_detail_url }}')"><i class="fa fa-shopping-basket"></i></button>
                         </div>
                       </div>
                     </div>
