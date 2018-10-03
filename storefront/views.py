@@ -16,6 +16,7 @@ from .forms import ProductCartForm
 
 def home(request):
     return render(request, 'keskei/index.html')
+    #push error
 
 def product_detail(request, product_pk, **kwargs):
     referal_code = redirect_referal_code(request, kwargs=kwargs)
