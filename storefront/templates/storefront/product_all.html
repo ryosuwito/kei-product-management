@@ -27,7 +27,8 @@
 
       <div class="container container-bg" style="padding-bottom: 0"> 
         <div class="row"style="margin:0">
-          <div class=" hidden-xs hidden-sm hidden-md col-lg-2" style="min-height: 600px; background: #fff">
+          {% comment %}
+          <div class=" hidden-xs hidden-sm hidden-md col-lg-12" style="min-height: 600px; background: #fff">
             <h4 class="title" style="text-align: center">Kategori Produk</h4>
             <div class="col-lg-12" style="margin-top: 12px;">
                 {% if categories %}
@@ -45,7 +46,8 @@
                 {% endif %}
               </div>
           </div>
-          <div class="col-xs-12 col-lg-10" style="overflow-y: auto; min-height: 600px; max-height: 600px">
+          {% endcomment %}
+          <div class="col-xs-12 col-lg-12" style="min-height: 600px;">
             <div class="col-lg-12" style="margin-top: 12px;">
                 <h4 class="title" style="font-size:20px">
                   {{product_title}}
@@ -56,8 +58,9 @@
               <li class="item col-lg-4 col-md-4 col-sm-4 col-xs-6">
                 <div class="item-inner">
                   <div class="item-img">
-                    <div class="item-img-info"> <a class="product-image" title="Retis lapen casen" href="{{ product.get_detail_url }}"> 
-                      <img alt="{{ product.name | truncatechars:30 | title }}" src="{{ product.get_photo_url }}"> </a>
+                    <div class="item-img-info"> 
+                      <a class="product-image" title="Retis lapen casen" href="{{ product.get_detail_url }}"> 
+                      <img alt="{{ product.name | truncatechars:30 | title }}"  class="photo-user product" onLoad="setHeight(this)"  src="{{ product.get_photo_url }}"> </a>
                       <div class="sale-label sale-top-right">- 40% sale</div>
                       <div class="box-hover">
                         <ul class="add-to-links">
