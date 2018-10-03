@@ -174,9 +174,9 @@
                     <div class="short-description">
                         <p>Berat Satuan : <span>{{ product.unit_weight | int_to_kilogram}}</span></p>
                     </div>
+                    {% if not is_in_wishlist %}
                     <div class="email-addto-box">
                       <ul class="add-to-links">
-                      {% if not is_in_wishlist %}
                       <li>
                         <form class="form" method="POST" id="formWishlist">
                             {% csrf_token %}
@@ -187,7 +187,11 @@
                           </button>
                         </form>
                       </li>
-                      {% endif %} 
+                      </ul>
+                    </div>
+                    {% endif %} 
+                    <div class="social">
+                      <ul class="link">
                         <li class="fb"><a href="#"></a></li>
                         <li class="tw"><a href="#"></a></li>
                       </ul>
