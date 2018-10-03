@@ -8,6 +8,7 @@
   {% include "shopping_cart/setHeight.html" %}
     <div class="container container-form container-bg" style="padding-bottom: 0">
       <div class="row" style="margin: 0">
+        {% comment %}
         <div class="hidden-xs col-md-2" style="padding: 0">
           <section name="post-header">
             <div class="row" style="margin: 15px 0 0 0">
@@ -38,6 +39,132 @@
             </div>
           </section>
         </div>
+        {% endcomment %}           
+        <div class="col-sm-12 col-xs-12">
+          <article class="col-main">
+            <div class="product-view">
+              <div class="product-essential">
+                <form action="#" method="post" id="product_addtocart_form">
+                  <input name="form_key" value="6UbXroakyQlbfQzK" type="hidden">
+                  <div class="product-img-box col-lg-5 col-sm-5 col-xs-12">
+                    <div class="product-image">
+                      <div class="product-full"> <img id="product-zoom" src="{{ product.get_photo_url }}" data-zoom-image="{{ product.get_photo_url }}" alt="product-image"/> </div>
+                      <div class="more-views">
+                        <div class="slider-items-products">
+                          <div id="gallery_01" class="product-flexslider hidden-buttons product-img-thumb">
+                            <div class="slider-items slider-width-col4 block-content">
+                              <div class="more-views-items"> 
+                                <a href="#" data-image="{{ product.get_photo_url }}" data-zoom-image="{{ product.get_photo_url }}"> 
+                                  <img id="product-zoom0"  src="{{ product.get_photo_url }}" alt="product-image"/> 
+                                </a>
+                              </div>
+                              {% if product.photo_alt1 %}
+                              <div class="more-views-items"> 
+                                <a href="#" data-image="{{ product.get_photo_alt1_url }}" data-zoom-image="{{ product.get_photo_alt1_url }}"> 
+                                  <img id="product-zoom1"  src="{{ product.get_photo_alt1_url }}" alt="product-image"/> 
+                                </a>
+                              </div>
+                              {% endif %}
+                              {% if product.photo_alt2 %}
+                              <div class="more-views-items"> 
+                                <a href="#" data-image="{{ product.get_photo_alt2_url }}" data-zoom-image="{{ product.get_photo_alt2_url }}"> 
+                                  <img id="product-zoom2"  src="{{ product.get_photo_alt2_url }}" alt="product-image"/> 
+                                </a>
+                              </div>
+                              {% endif %}
+                              {% if product.photo_alt3 %}
+                              <div class="more-views-items"> 
+                                <a href="#" data-image="{{ product.get_photo_alt3_url }}" data-zoom-image="{{ product.get_photo_alt3_url }}"> 
+                                  <img id="product-zoom3"  src="{{ product.get_photo_alt3_url }}" alt="product-image"/> 
+                                </a>
+                              </div>
+                              {% endif %}
+                              {% if product.photo_alt3 %}
+                              <div class="more-views-items"> 
+                                <a href="#" data-image="{{ product.get_photo_alt3_url }}" data-zoom-image="{{ product.get_photo_alt3_url }}"> 
+                                  <img id="product-zoom3"  src="{{ product.get_photo_alt3_url }}" alt="product-image"/> 
+                                </a>
+                              </div>
+                              {% endif %}
+                              {% if product.photo_alt4 %}
+                              <div class="more-views-items"> 
+                                <a href="#" data-image="{{ product.get_photo_alt4_url }}" data-zoom-image="{{ product.get_photo_alt4_url }}"> 
+                                  <img id="product-zoom4"  src="{{ product.get_photo_alt4_url }}" alt="product-image"/> 
+                                </a>
+                              </div>
+                              {% endif %}
+                              {% if product.photo_alt5 %}
+                              <div class="more-views-items"> 
+                                <a href="#" data-image="{{ product.get_photo_alt5_url }}" data-zoom-image="{{ product.get_photo_alt5_url }}"> 
+                                  <img id="product-zoom5"  src="{{ product.get_photo_alt5_url }}" alt="product-image"/> 
+                                </a>
+                              </div>
+                              {% endif %}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end: more-images --> 
+                  </div>
+                  <div class="product-shop col-lg- col-sm-7 col-xs-12">
+                    <div class="product-name">
+                      <h1>{{ product.name | title }} </h1>
+                    </div>
+                    <div class="price-block">
+                      <div class="price-box">
+                        {% if discounted_price != 0 %}
+                        <p class="special-price"> 
+                          <span class="price-label">Special Price</span> 
+                          <span id="product-price-48" class="price"> {{ discounted_price | int_to_rupiah }} </span> </p>
+                        {% endif %}
+                        <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> {{ product.price | int_to_rupiah }} </span> </p>
+                      </div>
+                    </div>
+                    <div class="add-to-box">
+                      <div class="add-to-cart">
+                        <div class="pull-left">
+                          <div class="custom pull-left">
+                            <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="fa fa-minus">&nbsp;</i></button>
+                            <input type="text" class="input-text qty" title="Qty" value="1" maxlength="12" id="qty" name="qty">
+                            <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" class="increase items-count" type="button"><i class="fa fa-plus">&nbsp;</i></button>
+                          </div>
+                        </div>
+                        <button onClick="productAddToCartForm.submit(this)" class="button btn-cart" title="Add to Cart" type="button">Add to Cart</button>
+                      </div>
+                      
+                    </div>
+                    <div class="short-description">
+                        <p>Berat Satuan : <span>{{ product.unit_weight | int_to_kilogram}}</span></p>
+                    </div>
+                    <div class="email-addto-box">
+                      <ul class="add-to-links">
+                        <li> <a class="link-wishlist" href="wishlist.html"><span>Add to Wishlist</span></a></li>
+                        <li class="fb"><a href="#"></a></li>
+                        <li class="tw"><a href="#"></a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="product-collateral">
+                <div class="add_info">
+                  <ul id="product-detail-tab" class="nav nav-tabs product-tabs">
+                    <li class="active"> <a href="#product_tabs_description" data-toggle="tab"> Product Description </a> </li>
+                  </ul>
+                  <div id="productTabContent" class="tab-content">
+                    <div class="tab-pane fade in active" id="product_tabs_description">
+                      <div class="std">
+                          <p>{{ product.description | linebreaksbr }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article> 
+        </div>
+        {% comment %}
         <div class="col-xs-12 col-md-10" style="padding: 0">
           <section name="post-header">
             <div class="row" style="margin: 0">
@@ -316,6 +443,7 @@
             </section>
           </div>
        </div>
+       {% endcomment %}
     </div>
   </div> 
 <script>
