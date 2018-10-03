@@ -177,18 +177,14 @@
                     <div class="email-addto-box">
                       <ul class="add-to-links">
                       {% if not is_in_wishlist %}
-                      <div class="col-xs-12" style="padding: 0;">
                         <form class="form" method="POST" id="formWishlist">
                             {% csrf_token %}
                           <input type="hidden" name="method" value="wishlist">
 
-                          <li><button class="link-wishlist" type="submit" form="formWishlist">
+                          <li><button class="danger link-wishlist" type="submit" form="formWishlist">
                             Add to wishlist
                           </button></li>
                         </form>
-                      </div>
-                      {% else %}
-                        <li><span>In Wishlist</span></li>
                       {% endif %} 
                         <li class="fb"><a href="#"></a></li>
                         <li class="tw"><a href="#"></a></li>
