@@ -27,27 +27,7 @@
 
       <div class="container container-bg" style="padding-bottom: 0"> 
         <div class="row"style="margin:0">
-          {% comment %}
-          <div class=" hidden-xs hidden-sm hidden-md col-lg-12" style="min-height: 600px; background: #fff">
-            <h4 class="title" style="text-align: center">Kategori Produk</h4>
-            <div class="col-lg-12" style="margin-top: 12px;">
-                {% if categories %}
-                  <ul class="nav nav-pills nav-stacked">
-                    {% for category in categories%}
-                      <li class="bg-info" style="margin: 4px 0"><a href="{{category.get_url}}">{{ category.name | title}}</a></li>
-                    {% endfor %}
-                    {% for category in categories%}
-                      <li class="bg-info"  style="margin: 4px 0"><a href="{{category.get_url}}">{{ category.name | title}}</a></li>
-                    {% endfor %}
-                    {% for category in categories%}
-                      <li class="bg-info"  style="margin: 4px 0"><a href="{{category.get_url}}">{{ category.name | title}}</a></li>
-                    {% endfor %}
-                  </ul>
-                {% endif %}
-              </div>
-          </div>
-          {% endcomment %}
-          <div class="col-xs-12 col-lg-12" style="min-height: 600px;">
+          <div class="col-xs-12 col-lg-12" style="min-height: 600px; padding-bottom: 55px">
             <div class="col-lg-12" style="margin-top: 12px;">
                 <h4 class="title" style="font-size:20px">
                   {{product_title}}
@@ -92,25 +72,6 @@
               </li>
               {% endfor %}
             </ul>
-            {% comment %}
-            <div class="col-xs-6 col-sm-3 col-md 3 col-lg-2" style="padding:5px;">
-              <a href="{{ product.get_detail_url }}">
-              <div class="col-xs-12 card-bottom effect5 card-pointer card-lg" style="background: #fff">
-                <img style="margin: -10px -10px 5px -10px" class="photo-user product" onLoad="setHeight(this)" src="{{ product.get_photo_url }}">
-                <div style="width: 100%; padding:0">
-                  <p style="margin:0; word-wrap:break-word">
-                     {{ product.name | truncatechars:30 | title }}</p>
-                  <p class="title cool" style="text-align:center;">
-                      {{ product.price  | int_to_rupiah }}
-                  </p>
-                  {% if not product.is_available %}
-                  <p class="title hot">--Stok Kosong--</p>
-                  {% endif %}
-                </div>
-              </div>
-              </a>
-            </div>
-            {% endcomment %}
   <!-- ====================================================================================================================================== --> 
           </div>
           {% if products.has_other_pages %}

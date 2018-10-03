@@ -168,7 +168,7 @@ def paginate_results(request, product_list,product_title):
     products = ''
     if product_list:
         try:
-            paginator = Paginator(product_list,12)
+            paginator = Paginator(product_list,2)
             page = request.GET.get('page', 1)
             try:
                 products = paginator.page(page)
