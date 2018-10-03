@@ -184,7 +184,7 @@
                     <div class="item-inner">
                     <div class="item-img">
                       <div class="item-img-info"> <a class="product-image" title="Retis lapen casen" href="{{ p.get_detail_url }}"> 
-                        <img alt="Retis lapen casen" onLoad="setHeight(this)" src="{{ p.get_photo_url }}"> </a>
+                        <img style="max-width:380px" alt="Retis lapen casen" class="photo-user photo-article main-photo" onLoad="setHeight(this)" src="{{ p.get_photo_url }}"> </a>
                       </div>
                     </div>
                     <div class="item-info">
@@ -206,7 +206,7 @@
                   {% endfor %}
                 </div>
               </div>
-              <a href="{% url 'storefront:product_all' %}"><button class="btn btn-primary" style="width: 100%; margin-bottom: 20px">
+              <a href="{% url 'storefront:product_all' %}"><button class="btn btn-primary" style="margin-bottom: 20px; padding: 12px 40px">
                   Lihat Lainnya
                 </button></a>
             </div>
