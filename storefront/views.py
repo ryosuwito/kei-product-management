@@ -41,7 +41,7 @@ def product_detail(request, product_pk, **kwargs):
     all_product = Product.objects.filter(is_archived=False).exclude(pk=product_pk)
     is_wishlist = False
     if len(all_product) >= 5:
-        other_product = random.sample(list(all_product), 3)
+        other_product = random.sample(list(all_product), 4)
     else:
         other_product = random.sample(list(all_product), len(all_product))
 
