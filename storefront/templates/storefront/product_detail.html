@@ -152,32 +152,8 @@
                                       {{ form.quantity }}
                                   </div>  
                               </form>
-                              <button class="btn btn-primary" type="submit" form="formQuantity"
-                                style="width:auto;margin:4px 0; padding: 6px; display: flex; justify-content: center">
-                                Tambah ke Keranjang  <span class="glyphicon glyphicon-shopping-cart" style="margin-left:5px; font-size: 18px"></span>
-                                <sup><span class="glyphicon glyphicon-plus" 
-                                  style="color: #45ff45; font-size: 8px;"></span></sup>
-                              </button>
                               {% else %}
                                   <p class="title hot">--Stok Kosong--</p>
-                              {% endif %} 
-                              {% if not is_in_wishlist %}
-                              <div class="col-xs-12" style="padding: 0;">
-                                <form class="form" method="POST" id="formWishlist">
-                                    {% csrf_token %}
-                                  <input type="hidden" name="method" value="wishlist">
-                                  <button class="btn btn-danger" type="submit", form="formWishlist"
-                                    style="width:auto;margin:4px 0; padding: 6px; display: flex; justify-content: center">
-                                      Tambah ke Wishlist  <span class="glyphicon glyphicon-heart" style="margin-left:5px; font-size: 18px"></span>
-                                    <sup><span class="glyphicon glyphicon-plus" 
-                                      style="color: #45ff45; font-size: 8px;"></span></sup>
-                                  </button>
-                                </form>
-                              </div>
-                              {% else %}
-                              <div class="col-xs-12" style="padding: 0">
-                                <p>Produk ditambahkan ke wishlist</p>
-                              </div>
                               {% endif %} 
                           </div>
                           <div class="col-xs-6">
@@ -193,7 +169,7 @@
                         </div>
 
                         <div class="add-to-box">
-                        <button onClick="productAddToCartForm.submit(this)" class="button btn-cart" title="Add to Cart" type="button">Add to Cart</button>
+                        <button type="submit" form="formQuantity" class="button btn-cart">Add to Cart</button>
                         </div>
                       </div>
                     <div class="short-description">
@@ -201,7 +177,20 @@
                     </div>
                     <div class="email-addto-box">
                       <ul class="add-to-links">
-                        <li> <a class="link-wishlist" href="wishlist.html"><span>Add to Wishlist</span></a></li>
+                      {% if not is_in_wishlist %}
+                      <div class="col-xs-12" style="padding: 0;">
+                        <form class="form" method="POST" id="formWishlist">
+                            {% csrf_token %}
+                          <input type="hidden" name="method" value="wishlist">
+
+                          <li><button class="link-wishlist" type="submit",form="formWishlist">
+                            Add to wishlist
+                          </button></li>
+                        </form>
+                      </div>
+                      {% else %}
+                        <li> <a class="link-wishlist" href="wishlist.html"><span>In Wishlist</span></a></li>
+                      {% endif %} 
                         <li class="fb"><a href="#"></a></li>
                         <li class="tw"><a href="#"></a></li>
                       </ul>
