@@ -166,6 +166,54 @@
             </div>
           </article> 
         </div>
+      
+      {% if other_product %}
+      <!-- Related Slider -->
+      <div class="related-pro">
+          <div class="slider-items-products">
+            <div class="related-block">
+              <div class="home-block-inner">
+                <div class="block-title">
+                  <h2>Produk Menarik Lainnya</h2>
+                </div>
+              </div>
+              <div id="related-products-slider" class="product-flexslider hidden-buttons">
+                <div class="slider-items slider-width-col4 products-grid block-content">
+                  {% for p in other_product %}
+                  <div class="item">
+                    <div class="item-inner">
+                    <div class="item-img">
+                      <div class="item-img-info"> <a class="product-image" title="Retis lapen casen" href="{{ p.get_detail_url }}"> 
+                        <img alt="Retis lapen casen" onLoad="setHeight(this)" src="{{ p.get_photo_url }}"> </a>
+                      </div>
+                    </div>
+                    <div class="item-info">
+                      <div class="info-inner">
+                        <div class="item-title"> <a title="Retis lapen casen" href="{{ p.get_detail_url }}">
+                            {{ p.name | truncatechars:40 | title }}</a> </div>
+                        <div class="item-content">
+                          <div class="item-price">
+                            <div class="price-box"> <span class="regular-price"> <span class="price">{{p.price | int_to_rupiah}}</span> </span> </div>
+                          </div>
+                          <div class="action">
+                            <button class="button btn-cart" type="button" onclick="window.open('{{ p.get_detail_url }}','_self')"><i class="fa fa-shopping-basket"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <a href="{% url 'storefront:product_all' %}"><button class="btn btn-primary" style="width: 100%; margin-bottom: 20px">
+                  Lihat Lainnya
+                </button></a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <!-- End related products Slider --> 
         {% comment %}
         <div class="col-xs-12 col-md-10" style="padding: 0">
           <section name="post-header">
