@@ -2,6 +2,10 @@
 {% load int_to_rupiah int_to_kilogram%}
   {% block title %}
     <title>Store | kei-partner.com</title>
+    .wishlist-button:hover {
+          color: #333e48;
+          background: #fed700;
+      }
   {% endblock %}
   {% block content %}
 
@@ -178,17 +182,11 @@
                     <div class="email-addto-box">
                       <ul class="add-to-links">
                       <li>
-                        <style>
-                          .add-to-links li button:hover {
-                              color: #333e48;
-                              background: #fed700;
-                          }
-                        </style>
                         <form class="form" method="POST" id="formWishlist">
                             {% csrf_token %}
                           <input type="hidden" name="method" value="wishlist">
 
-                          <button class="danger link-wishlist" type="submit" form="formWishlist">
+                          <button class="wishlist-button link-wishlist" type="submit" form="formWishlist">
                             Add to wishlist
                           </button>
                         </form>
