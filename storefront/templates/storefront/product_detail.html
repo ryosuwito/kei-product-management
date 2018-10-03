@@ -183,13 +183,13 @@
                             {% csrf_token %}
                           <input type="hidden" name="method" value="wishlist">
 
-                          <li><button class="link-wishlist" type="submit",form="formWishlist">
+                          <li><button class="link-wishlist" type="submit" form="formWishlist">
                             Add to wishlist
                           </button></li>
                         </form>
                       </div>
                       {% else %}
-                        <li> <a class="link-wishlist" href="wishlist.html"><span>In Wishlist</span></a></li>
+                        <li><span>In Wishlist</span></li>
                       {% endif %} 
                         <li class="fb"><a href="#"></a></li>
                         <li class="tw"><a href="#"></a></li>
