@@ -27,6 +27,7 @@ import purchase_order.urls as order
 import shipping_backend.urls as shipping
 from shipping_backend.views import shipping_redirect
 from purchase_order.views import checkout, pay, history
+from storefront.views import home
 
 urlpatterns = [
     path('admin/shipping_backend/shippingorigin/add/', RedirectView.as_view(url='/shipping/origin/', permanent=False)),
@@ -41,5 +42,6 @@ urlpatterns = [
     path('order/', include(order, namespace='order_backend')),
     path('shipping/', include(shipping, namespace='shipping_backend')),
     path('admin/', admin.site.urls),
+    re_path(r'^/$', home, name="home"),
     re_path(r'^store/', include(storefront, namespace='store_backend')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
