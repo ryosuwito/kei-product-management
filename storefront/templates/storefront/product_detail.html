@@ -152,6 +152,9 @@
                                       {{ form.quantity }}
                                   </div>  
                               </form>
+                              <div class="add-to-box">
+                              <button style="margin:0" type="submit" form="formQuantity" class="button btn-cart">Add to Cart</button>
+                              </div>
                               {% else %}
                                   <p class="title hot">--Stok Kosong--</p>
                               {% endif %} 
@@ -166,10 +169,6 @@
                               <span id="jumlahBerat" style="font-size: 150%">{{ product.unit_weight | int_to_kilogram }}</span>
                             </p>
                           </div>
-                        </div>
-
-                        <div class="add-to-box">
-                        <button type="submit" form="formQuantity" class="button btn-cart">Add to Cart</button>
                         </div>
                       </div>
                     <div class="short-description">
