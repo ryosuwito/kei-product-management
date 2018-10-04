@@ -57,6 +57,7 @@ class PurchaseOrderItem(models.Model):
     product = models.ForeignKey(Product, related_name="product_in_order", on_delete=models.SET_NULL, null=True)
     purchase_order = models.ForeignKey(PurchaseOrder, related_name="item_in_order", on_delete=models.SET_NULL, null=True)
     product_referal = models.ForeignKey(Member, on_delete=models.SET_NULL, db_index=True,  related_name="product_order_referal", null=True, blank=True) 
+    is_valid = models.BooleanField(db_index=True,default=True)
     
     class Meta:
         verbose_name_plural = "items in Order"

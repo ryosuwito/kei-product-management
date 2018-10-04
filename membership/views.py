@@ -11,7 +11,6 @@ from .models import Member
 from .forms import MemberLoginForm, MemberRegisterForm, GuestRegisterForm, MemberEditProfileForm
 from shopping_cart import carts, wishlists
 from reward_system.models import Reward
-from reward_system.my_purchasing import check_purchasing_bonus
 
 import random
 # Create your views here.
@@ -363,10 +362,14 @@ def profile_page(request, uname='none'):
 
     if user.member.get_member_type_display() != 'Guest':
         current_target = user.member.reward.get_current_purchasing()
+        current_selling_target = user.member.reward.get_get_current_selling()
         try:
             member_target = user.member.get_level()['TARGET']
+            member_selling_target = user.member.get_level()['TARGET']
             target = round(current_target/member_target*100, 2)
-            check_purchasing_bonus(request)
+            selling_target = round(current_selling_target/member_selling_target*100, 2)
+            member.reward.get_purchasing_bonus(request)
+            member.reward.get_selling_bonus(request)
         except expression as identifier:
             target = 0
 
