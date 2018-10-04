@@ -179,6 +179,7 @@ def checkout(request):
         order_item = PurchaseOrderItem.objects.create(purchase_order = order)
         order_item.quantity = item.quantity
         order_item.product = item.product
+        order_item.product_referal = item.product_referal
         order_item.save()
 
     order.total_price = discounted_price
