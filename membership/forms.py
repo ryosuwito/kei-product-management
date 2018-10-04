@@ -63,32 +63,55 @@ class MemberRegisterForm(forms.ModelForm):
         # sets the placeholder key/value in the attrs for a widget
         # when the form is instantiated (so the widget already exists)
         self.fields['username'].widget.attrs['placeholder'] = 'Masukan Username'
+        self.fields['username'].widget.attrs['class'] = 'input-text'
+        self.fields['username'].widget.attrs['style'] = 'width:100%'
+
         self.fields['password'].widget = forms.PasswordInput()
         self.fields['password'].widget.attrs['placeholder'] = '*********'
+        self.fields['password'].widget.attrs['class'] = 'input-text'
+        self.fields['password'].widget.attrs['style'] = 'width:100%'
+
         self.fields['email'].widget = forms.EmailInput()
         self.fields['email'].widget.attrs['placeholder'] = 'Masukan Email Aktif'
+        self.fields['email'].widget.attrs['class'] = 'input-text'
+        self.fields['email'].widget.attrs['style'] = 'width:100%'
+
         self.fields['sponsor_code'].required = False
+        self.fields['sponsor_code'].widget.attrs['class'] = 'input-text'
+        self.fields['sponsor_code'].widget.attrs['style'] = 'width:100%'
         
         self.fields['provinsi'].widget.attrs['onClick'] = 'getKota(this.id)'
         self.fields['provinsi_home'].widget.attrs['onClick'] = 'getKota(this.id)'
+        self.fields['provinsi'].widget.attrs['style'] = 'width:100%'
+        self.fields['provinsi_home'].widget.attrs['style'] = 'width:100%'
 
         self.fields['phone_number'].widget = forms.NumberInput()
         self.fields['phone_number'].widget.attrs['placeholder'] = 'Contoh : +628129999999 / 0812999999'
+        self.fields['phone_number'].widget.attrs['class'] = 'input-text'
+        self.fields['phone_number'].widget.attrs['style'] = 'width:100%'
 
         self.fields['ktp_number'].widget.attrs['placeholder'] = 'Contoh : 3671081xxxxxxxxxx'
         self.fields['ktp_number'].widget = forms.NumberInput()
+        self.fields['ktp_number'].widget.attrs['class'] = 'input-text'
+        self.fields['ktp_number'].widget.attrs['style'] = 'width:100%'
                 
         self.fields['bank_name'].widget.attrs['placeholder'] = 'Contoh : BRI/ BCA/ BNI'
+        self.fields['bank_name'].widget.attrs['class'] = 'input-text'
+        self.fields['bank_name'].widget.attrs['style'] = 'width:100%'
         self.fields['bank_account_number'].widget.attrs['placeholder'] = 'Contoh : 7211XXCCCCCCDDF'
         self.fields['bank_account_number'].widget = forms.NumberInput()
+        self.fields['bank_account_number'].widget.attrs['class'] = 'input-text'
+        self.fields['bank_account_number'].widget.attrs['style'] = 'width:100%'
 
         self.fields['ktp_address'].widget = forms.Textarea() 
         self.fields['ktp_address'].widget.attrs['rows'] = '3'
         self.fields['ktp_address'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
+        self.fields['ktp_address'].widget.attrs['style'] = 'width:100%'
 
         self.fields['home_address'].widget = forms.Textarea() 
         self.fields['home_address'].widget.attrs['rows'] = '3' 
         self.fields['home_address'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
+        self.fields['home_address'].widget.attrs['style'] = 'width:100%'
 
         self.fields['bank_book_photo'].widget.attrs['onChange'] = 'Handlechange(event, this.id)'
         self.fields['bank_book_photo'].widget.attrs['class'] = 'hidden'
