@@ -306,7 +306,8 @@ def register_page(request, *args, **kwargs):
             form.fields['sponsor_code'].initial = referal_code
             form.fields['sponsor_code'].disabled = True
             form.fields['sponsor_code'].widget.attrs.update({
-            'class': 'sponsor-disabled'
+            'class': 'input-text',
+            'style': 'width:100%'
             })
     return render(request, 'membership/register_%s.html'%(namespace),
         {'form': form, 
