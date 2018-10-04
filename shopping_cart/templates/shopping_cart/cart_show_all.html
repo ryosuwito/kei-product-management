@@ -64,7 +64,7 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="method" value="remove">
                                     <input type="hidden" name="item" value="item_{{item.pk}}">
-                                    <button style="width: 100%" class="btn btn-xs btn-danger" type="submit">Hapus</button>
+                                    <button style="width: 100%" class="btn btn-xs btn-danger" type="submit"><span class="fa fa-trash"></span></button>
                                 </form>
                             </div>
                         </div>
