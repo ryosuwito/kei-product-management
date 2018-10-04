@@ -1,17 +1,19 @@
 {% load int_to_rupiah int_to_kilogram int_to_quantity%}
+{% if cart.get_total_products > 0%}
 <div class="mm-toggle-wrap">
     <div class="mm-toggle"><i class="fa fa-align-justify"></i><span class="mm-label">Menu</span> </div>
 </div>
 <div class="top-cart-contain"> 
 <!-- Top Cart -->
 <div class="mini-cart">
-    <div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle"> <a href="shopping_cart.html"><span>Shopping Cart</span> <span class="cart_count">212</span>
-    <div class="price" style="color: #333">Rp. 458.000</div>
+    <div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle"> 
+        <a href="shopping_cart.html"><span>Shopping Cart</span> 
+            <span class="cart_count">{{ cart.get_total_items_in_cart }}</span>
+    <div class="price" style="color: #333">{{ cart.get_total_price | int_to_rupiah }}</div>
     </a> </div>
     <div>
     <div class="top-cart-content"> 
         <!--block-subtitle-->
-        {% if cart.get_total_products > 0%}
         <ul class="mini-products-list" id="cart-sidebar">
         {% for item in cart.get_items_in_cart %}
             {% if forloop.counter < 5 %}
@@ -43,11 +45,11 @@
         <div class="actions">
         <a href="{% url 'cart:index' %}" class="view-cart"><span>View Cart</span></a> 
     </div>
-        {% endif %}
     </div>
     </div>
 </div>
 </div>
+{% endif %}
 <!-- thm wishlist --> 
 {% comment %}
 <ul class="nav navbar-nav navbar-right" style="margin-bottom: 0">
