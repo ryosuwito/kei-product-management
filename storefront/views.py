@@ -15,7 +15,9 @@ import random
 from .forms import ProductCartForm
 
 def home(request):
-    return render(request, 'keskei/index.html')
+    cart = carts.get_cart(request)
+    cart_object = cart['cart_object']
+    return render(request, 'keskei/index.html', {'cart':cart_object})
     #push error
 
 def product_detail(request, product_pk, **kwargs):
