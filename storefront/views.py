@@ -22,7 +22,7 @@ def home(request):
     return render(request, 'keskei/index.html', 
         {'cart':cart_object, 
         'products':products,
-        'featured_products':featured_products[0]})
+        'featured_products':featured_products})
     #push error
 
 def product_detail(request, product_pk, **kwargs):
