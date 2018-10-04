@@ -48,7 +48,7 @@
                         </tr>
                         {% for order in products %}
                         <tr  {% if not order.is_paid %} class="bg-danger" {% endif %}>
-                                <td>
+                                <td style="font-size:10pt">
                                     <a href="{% url 'order:detail' order_number=order.order_number.lower %}">
                                     {{ order.order_number }}
                                     </a>
