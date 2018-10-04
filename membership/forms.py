@@ -62,6 +62,9 @@ class MemberRegisterForm(forms.ModelForm):
 
         # sets the placeholder key/value in the attrs for a widget
         # when the form is instantiated (so the widget already exists)
+        self.fields['sponsor_code'].widget.attrs['class'] = 'input-text'
+        self.fields['sponsor_code'].widget.attrs['style'] = 'width:100%'
+
         self.fields['username'].widget.attrs['placeholder'] = 'Masukan Username'
         self.fields['username'].widget.attrs['class'] = 'input-text'
         self.fields['username'].widget.attrs['style'] = 'width:100%'
