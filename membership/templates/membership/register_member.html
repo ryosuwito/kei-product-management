@@ -28,13 +28,13 @@
             </div>
           <fieldset id="membership-set" style="width: 100%; margin: 20px 0">
               <legend style="margin-bottom:0">Data Membership :</legend>
-              <div class="col-xs-12" style="padding:0 15px 3px 15px;display:block;text-align:left">
+              <div class="col-xs-12" style="padding:0;display:block;text-align:left">
                 
               <div id="member-type-set" class="col-xs-12" style="padding:3px 15px 20px 15px;display:block;text-align:left">
                 <p style="font-size:8pt;margin-bottom:3px">Pilih Jenis Member :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                 {{ form.member_type }}
               
-                <table style="font-size: 10pt" id="member_type_info">
+                <table style="font-size: 10pt; margin-top: 7px" id="member_type_info">
                   <tbody>
                       {% for th, val in threshold.items %}
                         {% if th == 'DROPSHIPPER' %}
