@@ -7,8 +7,6 @@ from django.db import models
 from django.utils.crypto import get_random_string
 from django.conf import settings
 
-from reward_system.models import Reward
-
 import pyqrcode
 import os 
 
@@ -227,8 +225,6 @@ def create_user_profile(sender, instance, created, **kwargs):
         member.qrcode = Member.get_qrcode(name=member.referal_code,
             content=instance.username)
         member.save()
-        reward = Reward(member=member)
-        reward.save()
         
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
