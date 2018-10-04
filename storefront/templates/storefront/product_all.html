@@ -39,13 +39,13 @@
                 <div class="item-inner">
                   <div class="item-img">
                     <div class="item-img-info"> 
-                      <a class="product-image" title="Retis lapen casen" href="{{ product.get_detail_url }}"> 
+                      <a class="product-image"  href="{{ product.get_detail_url }}"> 
                       <img alt="{{ product.name | truncatechars:30 | title }}"  class="photo-user product" onLoad="setHeight(this)"  src="{{ product.get_photo_url }}"> </a>
                     </div>
                   </div>
                   <div class="item-info">
                     <div class="info-inner">
-                      <div class="item-title"> <a title="Retis lapen casen" href="{{ product.get_detail_url }}">  {{ product.name | truncatechars:30 | title }}</a> </div>
+                      <div class="item-title"> <a  href="{{ product.get_detail_url }}">  {{ product.name | truncatechars:30 | title }}</a> </div>
                       <div class="item-content">
                         <div class="item-price">
                           <div class="price-box"> <span class="regular-price"> <span class="price">{{ product.price  | int_to_rupiah }}</span> </span> 
