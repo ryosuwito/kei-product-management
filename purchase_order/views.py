@@ -85,6 +85,8 @@ def index(request):
                     customer.save()
                     cart_object.is_set_as_dropship = True
                     cart_object.customer = customer
+                    cart_object.shipping_address = customer.get_home_address()
+                    shipping_cost = cart_object.shipping_cost = 0
                     cart_object.save()
                 except:
                     pass
@@ -217,7 +219,7 @@ def pay(request):
     cart_object.delete()
     order = PurchaseOrder.objects.filter(user=request.user, is_paid=False, is_checked_out = False)[0]
     order.is_checked_out = True
-    order.is_paid = True
+    order.is_paid = False
     order.is_verified = False
     order.payment_date = datetime.datetime.now()
     order.save()
