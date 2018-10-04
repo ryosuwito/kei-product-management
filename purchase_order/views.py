@@ -182,7 +182,6 @@ def checkout(request):
     order.total_price = discounted_price
     order.discount = discount
     order.shipping_cost = cart_object.shipping_cost
-    return HttpResponse(cart_object.get_total_items_in_cart())
     order.total_payment = discounted_price + cart_object.shipping_cost
     order.alamat_tujuan = request.user.member.get_home_address()
     order.service = cart_object.shipping_service.upper()
