@@ -102,7 +102,7 @@ class MemberRegisterForm(forms.ModelForm):
         self.fields['ktp_number'].widget = forms.NumberInput()
         self.fields['ktp_number'].widget.attrs['class'] = 'input-text'
         self.fields['ktp_number'].widget.attrs['style'] = 'width:100%'
-                
+        
         self.fields['bank_name'].widget.attrs['placeholder'] = 'Contoh : BRI/ BCA/ BNI'
         self.fields['bank_name'].widget.attrs['class'] = 'input-text'
         self.fields['bank_name'].widget.attrs['style'] = 'width:100%'
