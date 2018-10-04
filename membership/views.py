@@ -370,7 +370,7 @@ def profile_page(request, uname='none'):
             selling_target = round(current_selling_target/member_selling_target*100, 2)
             member.reward.get_purchasing_bonus(request)
             member.reward.get_selling_bonus(request)
-        except expression as identifier:
+        except :
             target = 0
 
     link_sponsor = ''
