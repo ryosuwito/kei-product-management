@@ -360,10 +360,13 @@ def profile_page(request, uname='none'):
             return HttpResponseRedirect("%s%s"%(reverse('membership:profile', 
                 current_app='guest_backend'),uname))
 
-    if user.member.member_type != 'guest':
+    if user.member.member_type_display() != 'Guest':
         current_target = user.member.reward.get_current_purchasing()
-        member_target = user.member.get_level()['TARGET']
-        target = round(current_target/member_target*100, 2)
+        try:
+            member_target = user.member.get_level()['TARGET']
+            target = round(current_target/member_target*100, 2)
+        except expression as identifier:
+            target = 0
 
     link_sponsor = ''
     if user.member.sponsor:
