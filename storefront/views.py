@@ -17,8 +17,12 @@ from .forms import ProductCartForm
 def home(request):
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
-    products = product_list = Product.objects.filter(is_archived=False).order_by('-pk')[:4]
-    return render(request, 'keskei/index.html', {'cart':cart_object, 'products':products})
+    products = Product.objects.filter(is_archived=False).order_by('-pk')[:4]
+    featured_products = Product.objects.filter(is_featured=True).order_by('-pk')[:1]
+    return render(request, 'keskei/index.html', 
+        {'cart':cart_object, 
+        'products':products,
+        'featured_products':featured_products})
     #push error
 
 def product_detail(request, product_pk, **kwargs):
