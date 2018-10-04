@@ -154,62 +154,88 @@
             </div>
             <div class="row" style="margin: 0">
               <div class="col-xs-12" style="padding: 0">
-                <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-link"></span> 
-                  {% if user == request.user %}
-                  Kode Referral Anda
-                  {% else %}
-                  Kode Referral {{ user.member.get_full_name | title}}
-                  {% endif %}
-                </h4>
+                  <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-link"></span> 
+                    {% if user == request.user %}
+                    Kode Referral Anda
+                    {% else %}
+                    Kode Referral {{ user.member.get_full_name | title}}
+                    {% endif %}
+                  </h4>
+                </div>
+                <div class="col-xs-10" style="padding-right:0">
+                  <input id="ref-code" readonly type="text" value="{{ user.member.referal_code}}">
+                </div>
+                <div class="col-xs-2" style="padding:0; text-align:right">
+                    <p class="btn btn-primary btn-xs" data-input="ref-code" onclick="writeText(this)"><span class="fa fa-copy"></span> copy</p>
+                </div>
+                <div class="col-xs-12" style="padding: 0">
+                  <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-link"></span> Link Referral</h4>
+                </div>
+                <div class="col-xs-12" style="margin-bottom: 5px">
+                  <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ request.scheme }}://{{ default_host }}{% url 'membership:pre_register' %}{{ user.member.referal_code}}">
+                    <p style="background-color: #3b5998" class="btn btn-primary btn-xs"> 
+                      <span style="font-size: 110%" class="fa fa-facebook"></span> bagikan
+                    </p>
+                  </a>
+                  <a target="_blank" href="http://twitter.com/share?text=Bergabunglah%20bersama%20Keskei%20di%20sini&url={{ request.scheme }}://{{ default_host }}{% url 'membership:pre_register' %}{{ user.member.referal_code}}">
+                    <p style="background-color: #36a9ff" class="btn btn-primary btn-xs">
+                      <span style="font-size: 110%" class="fa fa-twitter"></span> tweet
+                    </p>
+                  </a>
+                </div>
+                <div class="col-xs-10" style="padding-right:0">
+                  <input id="ref-link-1" readonly type="text" value="{{ request.scheme }}://{{ default_host }}{% url 'membership:pre_register' %}{{ user.member.referal_code}}">
+                </div>
+                <div class="col-xs-2" style="padding:0; text-align: right">
+                    <p class="btn btn-primary btn-xs" data-input="ref-link-1" onclick="writeText(this)"><span class="fa fa-copy"></span> copy</p>
+                </div>
               </div>
-              <div class="col-xs-10" style="padding-right:0">
-                <input class="input-text" id="ref-code" readonly type="text" value="{{ user.member.referal_code}}">
+              <div class="row" style="margin: 0">
+                <div class="col-xs-12">
+                  <h5 class="desc cool" style="margin:0">
+                      Alternatif :
+                  </h5>
+                </div>
+                <div class="col-xs-10" style="padding-right:0">
+                  <input id="ref-link-2" readonly type="text" value="{{ request.scheme }}://{{ user.username }}.{{ default_host }}{% url 'membership:pre_register' %}">
+                </div>
+                <div class="col-xs-2" style="padding:0; text-align: right">
+                  <p class="btn btn-primary btn-xs" data-input="ref-link-2" onclick="writeText(this)"><span class="fa fa-copy"></span> copy</p>
+                </div>
               </div>
-              <div class="col-xs-2" style="padding:0; text-align:right">
-                  <p class="btn btn-primary btn-xs" data-input="ref-code" onclick="writeText(this)"><span class="fa fa-copy"></span> copy</p>
+              <div class="row" style="margin: 0">
+                <div class="col-xs-12" style="padding: 0">
+                  <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-shopping-cart"></span> Link Toko Replika</h4>
+                </div>
+                <div class="col-xs-12"  style="margin-bottom: 5px">
+                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ request.scheme }}://{{ default_host }}{% url 'storefront:product_all' %}{{ user.member.referal_code}}">
+                    <p style="background-color: #3b5998" class="btn btn-primary btn-xs"> 
+                      <span style="font-size: 110%" class="fa fa-facebook"></span> bagikan</p></a>
+                    <a target="_blank" href="http://twitter.com/share?text=Kunjungi%20Toko%20Saya%20di%20sini&url={{ request.scheme }}://{{ default_host }}{% url 'storefront:product_all' %}{{ user.member.referal_code}}">
+                      <p style="background-color: #36a9ff" class="btn btn-primary btn-xs"> 
+                      <span style="font-size: 110%" class="fa fa-twitter"></span> tweet</p></a>
+                </div>
+                <div class="col-xs-10" style="padding-right:0">
+                  <input id="ref-link-3" readonly type="text" value="{{ request.scheme }}://{{ default_host }}{% url 'storefront:product_all' %}{{ user.member.referal_code}}">
+                </div>
+                <div class="col-xs-2" style="padding:0; text-align: right">
+                    <p class="btn btn-primary btn-xs" data-input="ref-link-3" onclick="writeText(this)"><span class="fa fa-copy"></span> copy</p>
+                </div>
               </div>
-              <div class="col-xs-12" style="padding: 0">
-                <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-link"></span> Link Referral</h4>
-              </div>
-              <div class="col-xs-12" style="margin-bottom: 5px">
-                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ request.scheme }}://{{ default_host }}{% url 'membership:pre_register' %}{{ user.member.referal_code}}">
-                  <p style="background-color: #3b5998" class="btn btn-primary btn-xs"> 
-                    <span style="font-size: 110%" class="fa fa-facebook"></span> bagikan
-                  </p>
-                </a>
-                <a target="_blank" href="http://twitter.com/share?text=Bergabunglah%20bersama%20Keskei%20di%20sini&url={{ request.scheme }}://{{ default_host }}{% url 'membership:pre_register' %}{{ user.member.referal_code}}">
-                  <p style="background-color: #36a9ff" class="btn btn-primary btn-xs">
-                    <span style="font-size: 110%" class="fa fa-twitter"></span> tweet
-                  </p>
-                </a>
-              </div>
-              <div class="col-xs-10" style="padding-right:0">
-                <input  class="input-text" id="ref-link-1" readonly type="text" value="{{ request.scheme }}://{{ default_host }}{% url 'membership:pre_register' %}{{ user.member.referal_code}}">
-              </div>
-              <div class="col-xs-2" style="padding:0; text-align: right">
-                  <p class="btn btn-primary btn-xs" data-input="ref-link-1" onclick="writeText(this)"><span class="fa fa-copy"></span> copy</p>
+              <div class="row" style="margin: 0">
+                <div class="col-xs-12">
+                  <h5 class="desc cool" style="margin:0">
+                    Alternatif :
+                  </h5>
+                </div>
+                <div class="col-xs-10" style="padding-right:0">
+                  <input id="ref-link-4" readonly type="text" value="{{ request.scheme }}://{{ user.username }}.{{ default_host }}{% url 'storefront:product_all' %}">
+                </div>
+                <div class="col-xs-2" style="padding:0; text-align: right">
+                  <p class="btn btn-primary btn-xs" data-input="ref-link-4" onclick="writeText(this)"><span class="fa fa-copy"></span> copy</p>
+                </div>
               </div>
             </div>
-            <div class="row" style="margin: 0">
-              <div class="col-xs-12" style="padding: 0">
-                <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-shopping-cart"></span> Link Toko Replika</h4>
-              </div>
-              <div class="col-xs-12"  style="margin-bottom: 5px">
-                  <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ request.scheme }}://{{ default_host }}{% url 'storefront:product_all' %}{{ user.member.referal_code}}">
-                  <p style="background-color: #3b5998" class="btn btn-primary btn-xs"> 
-                    <span style="font-size: 110%" class="fa fa-facebook"></span> bagikan</p></a>
-                  <a target="_blank" href="http://twitter.com/share?text=Kunjungi%20Toko%20Saya%20di%20sini&url={{ request.scheme }}://{{ default_host }}{% url 'storefront:product_all' %}{{ user.member.referal_code}}">
-                    <p style="background-color: #36a9ff" class="btn btn-primary btn-xs"> 
-                    <span style="font-size: 110%" class="fa fa-twitter"></span> tweet</p></a>
-              </div>
-              <div class="col-xs-10" style="padding-right:0">
-                <input class="input-text" id="ref-link-3" readonly type="text" value="{{ request.scheme }}://{{ default_host }}{% url 'storefront:product_all' %}{{ user.member.referal_code}}">
-              </div>
-              <div class="col-xs-2" style="padding:0; text-align: right">
-                  <p class="btn btn-primary btn-xs" data-input="ref-link-3" onclick="writeText(this)"><span class="fa fa-copy"></span> copy</p>
-              </div>
-            </div>
-          </div>
           <div class="col-xs-12 col-sm-5" style="padding: 0">
                 <div class="col-xs-12 col-lg-12" style="margin-bottom:0px;display:block;height:auto">
                   <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-user"></span> Data Pribadi</h4>
