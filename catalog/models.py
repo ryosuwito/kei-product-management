@@ -54,6 +54,8 @@ class Product(models.Model):
     unit_weight = models.IntegerField(null=True, help_text="Berat Satuan Produk dalam gram")
     is_available = models.BooleanField(default = True,
             help_text="Centang Jika Produk Tersedia")
+    is_featured = models.BooleanField(default = False,
+            help_text="Centang untuk menjadikan unggulan")
     is_archived = models.BooleanField(default = False,
             help_text="Centang untuk Menyembunyikan Produk")
     categories = models.ManyToManyField(Category, 
