@@ -44,8 +44,6 @@
           <article class="col-main">
             <div class="product-view">
               <div class="product-essential">
-                <form action="#" method="post" id="product_addtocart_form">
-                  <input name="form_key" value="6UbXroakyQlbfQzK" type="hidden">
                   <div class="product-img-box col-lg-5 col-sm-5 col-xs-12">
                     <div class="product-image">
                       <div class="product-full">
@@ -151,13 +149,13 @@
                                       <p style="margin: 0">Banyaknya :</p>
                                       {{ form.quantity }}
                                   </div>  
-                              </form>
                               <div class="add-to-box" style="margin-top:8px">
                               <button style="margin:0" type="submit" form="formQuantity" class="button btn-cart">Add to Cart</button>
                               </div>
                               {% else %}
                                   <p class="title hot">--Stok Kosong--</p>
                               {% endif %} 
+                              </form>
                           </div>
                           <div class="col-xs-6">
                             <p style="text-align:left;">
@@ -198,7 +196,6 @@
                     </div>
 
                   </div>
-                </form>
               </div>
               <div class="product-collateral">
                 <div class="add_info">
