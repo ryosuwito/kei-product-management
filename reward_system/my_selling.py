@@ -13,7 +13,7 @@ def check_current_selling(user, reward):
         is_valid=True,
         purchase_order__created_date__year=now.year, 
         purchase_order__created_date__month=now.month)
-    return sum([(o.product.price*o.product.quantity) for o in order_items])
+    return sum([(o.product.price*o.quantity) for o in order_items])
 
 def check_selling_bonus(request):
     member = request.user.member
