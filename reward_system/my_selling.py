@@ -8,7 +8,7 @@ def check_current_selling(user, reward):
     now = datetime.datetime.now()
     reward = reward
     order_items = PurchaseOrderItem.objects.filter(
-        product_referalr=user.member, 
+        product_referal=user.member, 
         purchase_order__is_verified=True, 
         is_valid=True,
         purchase_order__created_date__year=now.year, 
