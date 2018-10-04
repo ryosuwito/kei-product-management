@@ -362,7 +362,7 @@ def profile_page(request, uname='none'):
 
     if user.member.get_member_type_display() != 'Guest':
         current_target = user.member.reward.get_current_purchasing()
-        current_selling_target = user.member.reward.get_get_current_selling()
+        current_selling_target = user.member.reward.get_current_selling()
         try:
             member_target = user.member.get_level()['TARGET']
             member_selling_target = user.member.get_level()['TARGET']
