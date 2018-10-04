@@ -10,6 +10,13 @@ class MemberLoginForm(forms.Form):
     }
     password = forms.CharField(label='Password :', widget=forms.PasswordInput(attrs=attrs))
 
+    def __init__(self, *args, **kwargs):
+        super(MemberLoginForm, self).__init__(*args, **kwargs)
+        self.fields['password'].widget.attrs['class'] = 'input-text'
+        self.fields['password'].widget.attrs['style'] = 'width:100%'
+        self.fields['username'].widget.attrs['class'] = 'input-text'
+        self.fields['username'].widget.attrs['style'] = 'width:100%'
+
 class CustomerAddForm(forms.Form):
     USERNAME_MAX = 20
     USERNAME_MIN = 6
