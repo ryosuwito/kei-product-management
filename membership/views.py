@@ -365,6 +365,7 @@ def profile_page(request, uname='none'):
         try:
             member_target = user.member.get_level()['TARGET']
             target = round(current_target/member_target*100, 2)
+            check_purchasing_bonus(request)
         except expression as identifier:
             target = 0
 
@@ -373,7 +374,6 @@ def profile_page(request, uname='none'):
         sponsor = Member.objects.get(referal_code = user.member.sponsor_code)
         link_sponsor = sponsor.get_absolute_url()
 
-    check_purchasing_bonus(request)
     return render(request, 'membership/profile_member.html',
         {'user': user, 
         'target': target,
