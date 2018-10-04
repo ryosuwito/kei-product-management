@@ -105,12 +105,12 @@ def index(request):
                 pass
                     
         if cart_object.shipping_cost != 0 and cart_object.get_total_items_in_cart() == 0:
-            shipping_cost = 0
+            shipping_cost = 2
         else:
             shipping_cost = cart_object.shipping_cost
 
     elif request.method == 'GET':
-        cart_object.shipping_cost = 0
+        cart_object.shipping_cost = 1
         cart_object.save()
         shipping_cost = cart_object.shipping_cost
 
@@ -171,7 +171,7 @@ def checkout(request):
             if discount <= 0:
                 discount = int(discount)
                 discounted_price = int(discounted_price)
-                
+      
     order = PurchaseOrder.objects.get_or_create(user=request.user, is_paid=False, is_checked_out=False)[0]
     for item in products:
         order_item = PurchaseOrderItem.objects.create(purchase_order = order)
