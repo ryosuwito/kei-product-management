@@ -113,7 +113,7 @@ def index(request):
         cart_object.shipping_cost = 1
         cart_object.save()
         shipping_cost = cart_object.shipping_cost
-
+        return HttpResponse(shipping_cost)
         
     if request.user.is_authenticated:
         discounted_price = cart_object.get_total_price()
