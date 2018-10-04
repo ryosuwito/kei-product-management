@@ -4,7 +4,11 @@
   <title>{{ user.member.get_full_name | title }} | kei-partner.com</title>
 {% endblock %}
 {% block main_content %}
-
+  <style>
+  input.input-text, select, textarea{
+    width: 100%
+  }
+  </style>
   <div class="col-xs-12" style="padding: 0; background: #fff; height:auto; min-height: 600px;">
       <div class="row" style="margin: 0;">
       <div class="hidden-xs col-sm-10" style="padding: 0 15px">
@@ -87,7 +91,7 @@
                     {% endif %}
                   </div>
                   <div class="col-xs-10">
-                    <input type="number" readonly value="{{ user.member.reward.current_point }}" style="width:100%"> 
+                    <input class="input-text" type="number" readonly value="{{ user.member.reward.current_point }}" style="width:100%"> 
                   </div>
                   <div class="col-xs-2" style="text-align: right"> 
                     {% if user.member.reward.current_point > 5000 %}
