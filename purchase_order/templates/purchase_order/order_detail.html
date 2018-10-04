@@ -78,10 +78,10 @@
                     </div>
                     <div class="col-xs-10" style="padding: 0">
                         <h6>
-                            {% if not order.shipping_address %}
+                            {% if not order.alamat_tujuan %}
                             : {{request.user.member.get_home_address | title}}
                             {% else %}
-                            : {{ order.shipping_address }}
+                            : {{ order.alamat_tujuan }}
                             {% endif %}
                         </h6>        
                     </div>
