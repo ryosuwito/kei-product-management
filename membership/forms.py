@@ -66,6 +66,9 @@ class MemberRegisterForm(forms.ModelForm):
         self.fields['username'].widget.attrs['class'] = 'input-text'
         self.fields['username'].widget.attrs['style'] = 'width:100%'
 
+        self.fields['member_type'].widget.attrs['class'] = 'input-text'
+        self.fields['member_type'].widget.attrs['style'] = 'width:100%'
+
         self.fields['first_name'].widget.attrs['placeholder'] = 'Masukan Nama Lengkap'
         self.fields['first_name'].widget.attrs['class'] = 'input-text'
         self.fields['first_name'].widget.attrs['style'] = 'width:100%'
