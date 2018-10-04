@@ -31,7 +31,7 @@
                             <img alt="{{ item.product.name | truncatechars:20}}" src="{{ item.product.get_photo_url }}"> </a>
                     <div class="product-details">
                         <div class="access"><button class="btn-remove1" type="submit">X</button>  </div>
-                        <p class="product-name"><a href="#">{{ item.product.name | truncatechars:20}}</a> </p>
+                        <p class="product-name"><a href="{{ item.product.get_detail_url }}">{{ item.product.name | truncatechars:20}}</a> </p>
                         {{ item.quantity | int_to_quantity }} x <span class="price">{{ item.get_item_details.subtotal | int_to_rupiah}}</span>
                     </div>
                     </div>
