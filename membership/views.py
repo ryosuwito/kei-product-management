@@ -367,8 +367,8 @@ def profile_page(request, uname='none'):
         member_selling_target = user.member.get_level()['TARGET']
         target = round(current_target/member_target*100, 2)
         selling_target = round(current_selling_target/member_selling_target*100, 2)
-        member.reward.get_purchasing_bonus(request)
-        member.reward.get_selling_bonus(request)
+        user.member.reward.get_purchasing_bonus(request)
+        user.member.reward.get_selling_bonus(request)
 
     link_sponsor = ''
     if user.member.sponsor:
