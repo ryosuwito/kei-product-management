@@ -143,7 +143,7 @@
                     </a>
                   </h5>
                   <p>
-                    <strong>Bergabung sejak:</strong><br>
+                    <strong>Bergabung sejak</strong><br>
                     {{ user.member.sponsor.date_joined | naturalday }}
                   </p>
                 </div>
@@ -213,13 +213,13 @@
                   <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-user"></span> Data Pribadi</h4>
                     <div class="row" style="margin: 0">
                       <div class="col-xs-12" style="min-height:0;margin:5px 0;">
-                        <h5 class="desc cool" style="margin:0"><strong>Nomor Rekening : </strong></h5></div>
+                        <h5 class="desc cool" style="margin:0"><strong>Nomor Rekening</strong></h5></div>
                       <div class="col-xs-12" style="min-height:0;margin:5px 0;">
                         <h5 class="desc" style="margin:0; padding:0">{{ user.member.bank_name }} - {{ user.member.bank_account_number }}</h5></div>
                     </div>
                     <div class="row" style="margin: 0">
                       <div class="col-xs-12" style="min-height:0;margin:5px 0;">
-                        <h5 class="desc cool" style="margin:0"><strong>Alamat KTP : </strong></h5></div>
+                        <h5 class="desc cool" style="margin:0"><strong>Alamat KTP</strong></h5></div>
                       <div class="col-xs-12" style="min-height:0;margin:5px 0;">
                         <h5 class="desc" style="margin:0; padding:0">{{ user.member.get_ktp_address }}</h5></div>
                     </div>
@@ -227,7 +227,7 @@
 
                     <div class="row" style="margin: 0">
                       <div class="col-xs-12" style="min-height:0;margin:5px 0;">
-                        <h5 class="desc cool" style="margin:0"><strong>Alamat Rumah :</strong></h5></div>
+                        <h5 class="desc cool" style="margin:0"><strong>Alamat Rumah</strong></h5></div>
                       <div class="col-xs-12" style="min-height:0;margin:5px 0;">
                         {% if user.member.get_home_address != user.member.get_ktp_address %}
                         <h5 class="desc" style="margin:0; padding:0">{{ user.member.get_home_address }}</h5>
@@ -241,7 +241,7 @@
                 <div class="row" style="margin: 0">
                   {% if user.member.ktp_photo%}
                     <div class="col-xs-12 col-lg-6" style="min-height:0;margin:5px 0;">
-                      <h5 class="desc cool" style="margin:0"><strong>Foto KTP :</strong></h5>
+                      <h5 class="desc cool" style="margin:0"><strong>Foto KTP</strong></h5>
                         <div style="margin:5px 0; background-repeat:no-repeat; background-size:100%; height:200px;overflow:hidden; background-position: top center; background-image: url('{{ user.member.get_ktp_url }}')">
                       </div>
                     </div>
@@ -249,7 +249,7 @@
                   
                   {% if user.member.bank_book_photo %}
                     <div class="col-xs-12 col-lg-6" style="min-height:0;margin:5px 0;">
-                      <h5 class="desc cool" style="margin:0"><strong>Foto Buku Tabungan :</strong></h5>
+                      <h5 class="desc cool" style="margin:0"><strong>Foto Buku Tabungan</strong></h5>
                         <div style="margin:5px 0; background-repeat:no-repeat; background-size:100%; height:200px;overflow:hidden; background-position: top center; background-image: url('{{ user.member.get_bank_url }}')">
                         </div>
                       </div>
