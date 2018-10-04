@@ -105,16 +105,16 @@ def index(request):
                 pass
                     
         if cart_object.shipping_cost != 0 and cart_object.get_total_items_in_cart() == 0:
-            shipping_cost = 2
+            shipping_cost = 0
         else:
             shipping_cost = cart_object.shipping_cost
-    return HttpResponse(request.method)
-    if request.method == 'GET':
-        cart_object.shipping_cost = 1
-        cart_object.save()
+            
+    elif request.method == 'GET':
+        if cart_object.shipping_cost != 0 and cart_object.get_total_items_in_cart() == 0:
+            cart_object.shipping_cost = 231
+            cart_object.save()
+            
         shipping_cost = cart_object.shipping_cost
-    
-        return HttpResponse(cart_object.shipping_cost)
         
     if request.user.is_authenticated:
         discounted_price = cart_object.get_total_price()
