@@ -109,7 +109,7 @@ def index(request):
         else:
             shipping_cost = cart_object.shipping_cost
 
-    elif request.method == 'GET':
+    if request.method == 'GET':
         cart_object.shipping_cost = 1
         cart_object.save()
         shipping_cost = cart_object.shipping_cost
