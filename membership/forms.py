@@ -182,10 +182,24 @@ class MemberEditProfileForm(forms.ModelForm):
         super(MemberEditProfileForm, self).__init__(*args, **kwargs)
         
         self.fields['instagram_address'].widget.attrs['placeholder'] = 'contoh : @instagram123'
+        self.fields['instagram_address'].widget.attrs['class'] = 'input-text'
+        self.fields['instagram_address'].widget.attrs['style'] = 'width:100%'
+        
         self.fields['facebook_address'].widget.attrs['placeholder'] = 'contoh : https://www.facebook.com/fb123'
+        self.fields['facebook_address'].widget.attrs['class'] = 'input-text'
+        self.fields['facebook_address'].widget.attrs['style'] = 'width:100%'
+
         self.fields['twitter_address'].widget.attrs['placeholder'] = 'contoh : @twitter123'
+        self.fields['twitter_address'].widget.attrs['class'] = 'input-text'
+        self.fields['twitter_address'].widget.attrs['style'] = 'width:100%'
+
         self.fields['website_address'].widget.attrs['placeholder'] = 'contoh : https://www.blog.com/'
+        self.fields['website_address'].widget.attrs['class'] = 'input-text'
+        self.fields['website_address'].widget.attrs['style'] = 'width:100%'
+
         self.fields['whatsapp_number'].widget = forms.NumberInput()
+        self.fields['whatsapp_number'].widget.attrs['class'] = 'input-text'
+        self.fields['whatsapp_number'].widget.attrs['style'] = 'width:100%'
 
         self.fields['bank_book_photo'].widget.attrs['onChange'] = 'Handlechange(event, this.id)'
         self.fields['bank_book_photo'].widget.attrs['class'] = 'hidden'
@@ -198,14 +212,17 @@ class MemberEditProfileForm(forms.ModelForm):
         self.fields['ktp_photo'].widget.attrs['class'] = 'hidden'
       
         self.fields['provinsi'].widget.attrs['onClick'] = 'getKota()'
+        self.fields['provinsi'].widget.attrs['style'] = 'width:100%'
         
         self.fields['home_address'].widget = forms.Textarea() 
         self.fields['home_address'].widget.attrs['rows'] = '3' 
         self.fields['home_address'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
+        self.fields['home_address'].widget.attrs['style'] = 'width:100%'
 
         self.fields['smart_motto'].widget = forms.Textarea() 
         self.fields['smart_motto'].widget.attrs['rows'] = '3' 
         self.fields['smart_motto'].widget.attrs['placeholder'] = 'Contoh: Waktu adalah uang'
+        self.fields['smart_motto'].widget.attrs['style'] = 'width:100%'
 
     class Meta:
         USERNAME_MAX = 30
