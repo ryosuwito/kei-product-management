@@ -108,7 +108,7 @@ def index(request):
             shipping_cost = 2
         else:
             shipping_cost = cart_object.shipping_cost
-
+    return HttpResponse(request.method)
     if request.method == 'GET':
         cart_object.shipping_cost = 1
         cart_object.save()
