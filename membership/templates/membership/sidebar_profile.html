@@ -22,7 +22,7 @@
 </style>
 <div class="col-xs-12 card-bottom card-md" style="background: #fff; height:auto;  min-height: 600px; max-height: 800px; padding:20px 0; margin:0">
     <div name="prf-header" class="col-xs-12" style="padding:10px 0">
-        <div name="prf-ava" class="col-xs-12" style="text-align: center">
+        <div name="prf-ava" class="col-xs-12" style="text-align: center; padding: 0">
 
         <img id="ava" 
         src="
@@ -34,9 +34,9 @@
             " 
         alt="Avatar" class="photo-user avatar avatars" style="
         -webkit-filter: none;width:90px;height:90px;border-radius:85px; padding:5px"/></div>
-        <div name="prf-title" class="col-xs-12">
+        <div name="prf-title" class="col-xs-12" style="padding:0">
         <div style="margin:0;display:block;padding:0">
-            <h4 class="title" style="margin:0">{{ user.member.get_full_name | title }}</h4>
+            <h4 class="title" style="margin:0"><strong>{{ user.member.get_full_name | title }}</strong></h4>
             <h5 class="title" style="margin:5px 0">{{ user.member.get_member_type_display | title }}
             </h5></div>
         <div style="margin:0;display:block;padding:0">
