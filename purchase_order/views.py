@@ -126,8 +126,9 @@ def index(request):
             if discount <= 0:
                 discount = int(discount)
                 discounted_price = int(discounted_price)
-                
-    discounted_price += shipping_cost
+
+    if shipping_cost:                
+        discounted_price += shipping_cost
 
     couriers = get_courier()
     token = get_token(request)
