@@ -183,6 +183,7 @@
                     </p>
                   </a>
                 </div>
+                {% comment %}
                 <div class="col-xs-10" style="padding-right:0">
                   <input class="input-text" style="width:100%" id="ref-link-1" readonly type="text" value="{{ request.scheme }}://{{ default_host }}{% url 'membership:pre_register' %}{{ user.member.referal_code}}">
                 </div>
@@ -196,6 +197,7 @@
                       Alternatif :
                   </h5>
                 </div>
+                {% endcomment %}
                 <div class="col-xs-10" style="padding-right:0">
                   <input class="input-text" style="width:100%" id="ref-link-2" readonly type="text" value="{{ request.scheme }}://{{ user.username }}.{{ default_host }}{% url 'membership:pre_register' %}">
                 </div>
@@ -215,6 +217,7 @@
                       <p style="background-color: #36a9ff" class="btn btn-primary btn-xs"> 
                       <span style="font-size: 110%" class="fa fa-twitter"></span> tweet</p></a>
                 </div>
+                {% comment %}
                 <div class="col-xs-10" style="padding-right:0">
                   <input class="input-text" style="width:100%" id="ref-link-3" readonly type="text" value="{{ request.scheme }}://{{ default_host }}{% url 'storefront:product_all' %}{{ user.member.referal_code}}">
                 </div>
@@ -228,6 +231,7 @@
                     Alternatif :
                   </h5>
                 </div>
+                {% endcomment %}
                 <div class="col-xs-10" style="padding-right:0">
                   <input class="input-text" style="width:100%" id="ref-link-4" readonly type="text" value="{{ request.scheme }}://{{ user.username }}.{{ default_host }}{% url 'storefront:product_all' %}">
                 </div>
