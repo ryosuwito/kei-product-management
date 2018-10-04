@@ -277,8 +277,14 @@ def register_page(request, *args, **kwargs):
             user.save()
             reward = Reward(member=user.member)
             if user is not None:
+                anon_cart = carts.get_cart(request)['cart_object']
+                anon_wishlist = wishlists.get_wishlist(request)['wishlist_object']
                 logout(request)
                 login(request, user)
+                transfer_cart = carts.transfer_cart(request, anon_cart)
+                transfer_wishlist= wishlists.transfer_wishlist(request, anon_wishlist)
+                cart = transfer_cart['cart_object']
+                wishlist = transfer_wishlist['wishlist_object']
                 next = request.GET.get('next') if request.GET.get('next') else False
                 if next :
                     return HttpResponseRedirect(next)
@@ -286,7 +292,7 @@ def register_page(request, *args, **kwargs):
                     current_app=request.resolver_match.namespace))
             else:
                 return HttpResponse("Create User Fail")
-
+                
     elif request.method == 'GET': 
         if namespace == 'guest':
             form = GuestRegisterForm()
