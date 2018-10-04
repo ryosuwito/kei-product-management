@@ -51,7 +51,10 @@
                                 <td style="min-width:150px">
                                     <a href="{% url 'order:detail' order_number=order.order_number.lower %}">
                                     {{ order.order_number }}
-                                    </a>
+                                    </a><br>
+                                    {% if order.is_set_as_dropship %}
+                                        Dropship : <br>{{ order.costumer.name | title }}
+                                    {% endif %}
                                 </td>
                                 <td>
                                     {{ order.created_date | date:"d/m/Y" | title }}
