@@ -179,15 +179,10 @@ def checkout(request):
                 discounted_price = int(discounted_price)
       
     order = PurchaseOrder.objects.get_or_create(user=request.user, is_paid=False, is_checked_out=False)[0]
-    old_order_items = order.item_in_order.all()
-    if old_order_items:
-        for old_item in old_order_items:
-            old_item.delete()
 
     for item in products:
-        order_item = PurchaseOrderItem.objects.create(purchase_order = order)
+        order_item = PurchaseOrderItem.objects.get_or_create(purchase_order = order, product=item.product)[0]
         order_item.quantity = item.quantity
-        order_item.product = item.product
         order_item.product_referal = item.product_referal
         order_item.save()
 
