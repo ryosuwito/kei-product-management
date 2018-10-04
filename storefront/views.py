@@ -17,7 +17,8 @@ from .forms import ProductCartForm
 def home(request):
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
-    return render(request, 'keskei/index.html', {'cart':cart_object})
+    products = product_list = Product.objects.filter(is_archived=False)[:4]
+    return render(request, 'keskei/index.html', {'cart':cart_object, 'products':products})
     #push error
 
 def product_detail(request, product_pk, **kwargs):
