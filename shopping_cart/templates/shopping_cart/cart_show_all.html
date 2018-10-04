@@ -43,10 +43,10 @@
                               <h6 style="text-align:left; margin:0" class="title">
                                   <a href="{{ item.product.get_detail_url }}">{{ item.product.name | title | truncatechars:70}}</a>
                               </h6>
-                              <p>
+                              <h6>
                                  Harga Satuan : {{ item.product.price| int_to_rupiah }}<br>
                                  Berat Satuan : {{ item.product.unit_weight | int_to_kilogram }}
-                              </p>
+                              </h6>
                             </div>
                             <div class="col-xs-3">
                                 <form method="POST" id='updateItem'>
@@ -65,7 +65,7 @@
                                         {% csrf_token %}
                                         <input type="hidden" name="method" value="remove">
                                         <input type="hidden" name="item" value="item_{{item.pk}}">
-                                        <button style="width: auto; margin-top: 7px" class="btn btn-xs btn-danger" type="submit"><span class="fa fa-close"></span> Hapus</button>
+                                        <button style="width: auto; margin-top: 7px" class="btn btn-sm btn-danger" type="submit"><span class="fa fa-close"></span> Hapus</button>
                                     </form>
                                 </div>
                             </div>
