@@ -4,8 +4,6 @@
   {% endblock %}
   {% block content %}
     <div class="container container-form container-bg">
-      <h3 class="title" style="margin:15px">Selamat Datang di Kei-Partner.<br>
-        Silahkan isi form berikut ini untuk membuat akun.</h3>
     <div class="hidden-xs col-sm-1 col-lg-2"></div>
     <div class="col-xs-12 col-sm-10 col-lg-8" style="padding: 0">
       <div class="col-xs-12 card-bottom" style="background:#fff">
@@ -74,7 +72,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-6">
                   <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Masukan ulang kata sandi<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
-                    <input   style="width:100%" type="password" placeholder="Ulangi Kata Sandi" name="psw2"></div>
+                    <input class="input-text" style="width:100%" type="password" placeholder="Ulangi Kata Sandi" name="psw2"></div>
                 </div>
               </div>
 
@@ -93,7 +91,7 @@
                 <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left;z-index:3000">
                   <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kota/ Kabupaten :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                   
-                  <select name="kota_home" style="background-color:#f1f1f1;" onClick=getKecamatan(this.id) id="id_kota_home">
+                  <select style="width:100%" name="kota_home" style="background-color:#f1f1f1;" onClick=getKecamatan(this.id) id="id_kota_home">
                     <option value="..."> </option>
                   </select>
                 </div>
@@ -103,7 +101,7 @@
                 <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left;z-index:3000">
                   <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kecamatan/ Subdistrik :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                   
-                  <select name="kecamatan_home"  style="background-color:#f1f1f1"  onClick=getKelurahan(this.id)  id="id_kecamatan_home">
+                  <select style="width:100%" name="kecamatan_home"  style="background-color:#f1f1f1"  onClick=getKelurahan(this.id)  id="id_kecamatan_home">
                     <option value="..."> </option>         
                   </select>
                 </div>
@@ -111,7 +109,7 @@
                 <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left;z-index:3000">
                   <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kelurahan/ Desa :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                   
-                  <select  name="kelurahan_home" style="background-color:#f1f1f1" id="id_kelurahan_home">
+                  <select style="width:100%"  name="kelurahan_home" style="background-color:#f1f1f1" id="id_kelurahan_home">
                     <option value="..."> </option>                  
                   </select>
                 </div>
