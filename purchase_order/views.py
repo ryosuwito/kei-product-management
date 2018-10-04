@@ -92,7 +92,7 @@ def index(request):
         elif method == 'cancel_dropship':
             cart_object.is_set_as_dropship = False
             cart_object.customer = None
-            cart_object.shipping_address = None
+            cart_object.shipping_address = ''
             shipping_cost = cart_object.shipping_cost = 0
             cart_object.save()
 
