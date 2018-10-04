@@ -363,15 +363,12 @@ def profile_page(request, uname='none'):
     if user.member.get_member_type_display() != 'Guest':
         current_target = user.member.reward.get_current_purchasing()
         current_selling_target = user.member.reward.get_current_selling()
-        try:
-            member_target = user.member.get_level()['TARGET']
-            member_selling_target = user.member.get_level()['TARGET']
-            target = round(current_target/member_target*100, 2)
-            selling_target = round(current_selling_target/member_selling_target*100, 2)
-            member.reward.get_purchasing_bonus(request)
-            member.reward.get_selling_bonus(request)
-        except :
-            target = 0
+        member_target = user.member.get_level()['TARGET']
+        member_selling_target = user.member.get_level()['TARGET']
+        target = round(current_target/member_target*100, 2)
+        selling_target = round(current_selling_target/member_selling_target*100, 2)
+        member.reward.get_purchasing_bonus(request)
+        member.reward.get_selling_bonus(request)
 
     link_sponsor = ''
     if user.member.sponsor:
@@ -383,6 +380,9 @@ def profile_page(request, uname='none'):
         'target': target,
         'current_target': current_target,
         'member_target': member_target,
+        'selling_target': selling_target,
+        'current_selling_target': current_selling_target,
+        'member_selling_target': member_selling_target,
         'cart':cart, 
         'default_host':default_host,
         'wishlist':wishlist,
