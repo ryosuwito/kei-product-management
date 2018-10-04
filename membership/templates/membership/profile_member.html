@@ -26,6 +26,7 @@
     <div class="col-xs-12" style="padding: 0 25px">
       <div class="col-xs-12 card-bottom" style="padding:0; margin-bottom:0px;display:block;height:auto">
         <div class="row" >
+          {% if request.user.member.get_member_type_display != 'Guest' %}
           <div class="col-xs-12">
             <h4 class="title" style="margin:10px 0;  text-align: left"> <span class="fa fa-money"></span> Target SMART SELLING Bulan Ini</h4>
             <p>{{ current_target | int_to_rupiah}} / {{member_target | int_to_rupiah}}</p>
@@ -119,6 +120,7 @@
             </div>
             <hr>
           </div>
+          {% endif %}
           <div class="col-xs-12 col-sm-5" style="min-height:0;margin:5px 0">
               <div class="row" style="margin: 0 0 15px 0">
               {% if user.member.sponsor %}
