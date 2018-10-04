@@ -8,7 +8,7 @@
       <section name="header">
         <div class="container" style="background: #fff; padding-bottom: 20px"> 
         <div class="row" style="margin: 0">
-            <div class="col-xs-12" style="padding: 0">
+            <div class="col-xs-12" style="padding: 0; overflow-x: auto">
                 <h4 class="title" style="font-size:20px">Riwayat Transaksi</h4>
                 <p>Total Nilai Transaksi = {{ request.user.member.get_total_spent | int_to_rupiah }}</p>
                 <p>Jumlah Transaksi = {{ request.user.users_order.all.count }} invoice </p>
