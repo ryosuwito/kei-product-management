@@ -20,11 +20,13 @@ class CustomerAddForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(CustomerAddForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs['placeholder'] = 'Nama Penerima'
+        self.fields['name'].widget.attrs['class'] = 'input-text'
         self.fields['provinsi_home'].widget.attrs['onClick'] = 'getKota(this.id)'
 
         self.fields['home_address'].widget = forms.Textarea() 
         self.fields['home_address'].widget.attrs['rows'] = '3' 
         self.fields['home_address'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
+        self.fields['home_address'].widget.attrs['style'] = 'width:100%'
 
 class MemberRegisterForm(forms.ModelForm):
     USERNAME_MAX = 20
