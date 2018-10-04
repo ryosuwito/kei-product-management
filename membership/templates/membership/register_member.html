@@ -214,11 +214,16 @@
                       <img src="" id="dummy_bank_book_photo" style="width: 200px; height: auto;">
                       <img src="" id="dummy_ktp_photo" style="width: 200px; height: auto;">
                   </div>
-                  <div class="col-xs-12"style="margin:0">  
-                      <h2 class="unggah" style="top:21%;right:-0.64%;" id="btn_ktp" onclick="HandleBrowseClick(this.id);"/>&plus;</h2>
+
+                  <div class="col-xs-12"style="text-align: center">  
                       <p style="font-size:8pt;margin-bottom:3px;text-align:left">Foto KTP<i style="font-size:80%"> *(.JPG/.JPEG/.PNG/.GIF)</i></p>
+                    <div style="width:100%; padding:50px; border: 2px dashed #4b8b78; cursor:pointer" id="btn_ktp" onclick="HandleBrowseClick(this.id);"/>
+                      <h2>&plus;</h2>
+                    </div>
+                  </div>
+                  <div class="col-xs-12"style="margin:0">  
                       {{ form.ktp_photo }}
-                      <input type="text" id="ktp_filename" readonly="true"placeholder="Klik Tombol + untuk Mengunggah Foto"/>
+                      <input type="hidden" id="ktp_filenamee" readonly="true"placeholder=""/>
                   </div>
                   <div class="col-xs-12"style="margin:0">  
                       <h2 class="unggah" style="top:21%;right:-0.64%;" id="btn_bank" onclick="HandleBrowseClick(this.id);"/>&plus;</h2>
