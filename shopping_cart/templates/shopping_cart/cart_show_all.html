@@ -44,7 +44,7 @@
                                         <input oninput="limit(this)" style="width: 100%; margin: 0" type="number" name="quantity" value="{{ item.quantity}}">                                  
                                     </div>
                                     <div class="col-xs-3" style="padding: 0">
-                                        <button style="width: 100%" class="btn btn-xs btn-primary" type="submit">Ubah</button>  
+                                        <button style="width: 100%" class="btn btn-sm btn-primary" type="submit"><span class="fa fa-edit"></span></button>  
                                     </div>
                                     <input type="hidden" name="method" value="update">
                                     <input type="hidden" name="item" value="item_{{item.pk}}">
@@ -63,7 +63,7 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="method" value="remove">
                                     <input type="hidden" name="item" value="item_{{item.pk}}">
-                                    <button style="width: 100%" class="btn btn-xs btn-danger" type="submit"><span class="fa fa-trash"></span></button>
+                                    <button style="width: 100%" class="btn btn-sm btn-danger" type="submit"><span class="fa fa-close"></span></button>
                                 </form>
                             </div>
                         </div>
