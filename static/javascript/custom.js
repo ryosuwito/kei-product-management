@@ -64,16 +64,19 @@ $(document).ready(function () {
         var fileinput = document.getElementById("id_ktp_photo");
         var textinput = document.getElementById("ktp_filename");
         var imgtag = document.getElementById("dummy_ktp_photo");
+        $('#btn_ktp').css('display') = none;
     }
     else if(id == "id_bank_book_photo"){
         var fileinput = document.getElementById("id_bank_book_photo");
         var textinput = document.getElementById("bank_book_filename");
         var imgtag = document.getElementById("dummy_bank_book_photo");
+        $('#btn_bank').css('display') = none;
     }
     else if(id == "id_profile_photo"){
         var fileinput = document.getElementById("id_profile_photo");
         var textinput = document.getElementById("profile_photo_filename");
         var imgtag = document.getElementById("dummy_profile_photo");
+        $('#btn_profile').css('display') = none;
     }
    textinput.value = fileinput.value.replace("C:\\fakepath\\","");
    var selectedFile = event.target.files[0];
