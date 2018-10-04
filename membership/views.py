@@ -361,15 +361,15 @@ def profile_page(request, uname='none'):
                 current_app='guest_backend'),uname))
 
     if user.member.get_member_type_display() != 'Guest':
-        try:
-            current_target = user.member.reward.get_current_purchasing()
-            current_selling_target = user.member.reward.get_current_selling()
-            member_target = user.member.get_level()['TARGET']
-            member_selling_target = user.member.get_level()['TARGET']
-            target = round(current_target/member_target*100, 2)
-            selling_target = round(current_selling_target/member_selling_target*100, 2)
-            user.member.reward.get_purchasing_bonus(request)
-            user.member.reward.get_selling_bonus(request)
+        current_target = user.member.reward.get_current_purchasing()
+        current_selling_target = user.member.reward.get_current_selling()
+        member_target = user.member.get_level()['TARGET']
+        member_selling_target = user.member.get_level()['TARGET']
+        target = round(current_target/member_target*100, 2)
+        selling_target = round(current_selling_target/member_selling_target*100, 2)
+        user.member.reward.get_purchasing_bonus(request)
+        user.member.reward.get_selling_bonus(request)
+        """
         except:
             target = 0
             current_target = 0
@@ -377,7 +377,7 @@ def profile_page(request, uname='none'):
             selling_target = 0
             current_selling_target = 0
             member_selling_target = 0
-
+        """
     link_sponsor = ''
     if user.member.sponsor:
         sponsor = Member.objects.get(referal_code = user.member.sponsor_code)
