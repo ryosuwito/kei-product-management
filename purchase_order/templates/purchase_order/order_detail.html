@@ -76,11 +76,10 @@
                 <div class="row" style="margin: 0;">
                     <div class="col-xs-2" style="padding: 0">
                         <h6>Nama Penerima</h6> 
-                        <p>(Kirim sebagai dropship)</p>
                     </div>
                     <div class="col-xs-10" style="padding: 0">
                         <h6>
-                            {{ order.customer.name | title}}
+                            :{{ order.customer.name | title}} <sub>(Kirim sebagai dropship)</sub>
                         </h6>        
                     </div>
                 </div>
