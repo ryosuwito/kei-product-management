@@ -100,6 +100,7 @@ def index(request):
                 if customer:
                     cart_object.is_set_as_dropship = True
                     cart_object.customer = customer
+                    cart_object.shipping_address = customer.get_home_address()
                     shipping_cost = cart_object.shipping_cost = 0
                     cart_object.save()
             except:
@@ -187,7 +188,10 @@ def checkout(request):
     order.discount = discount
     order.shipping_cost = cart_object.shipping_cost
     order.total_payment = discounted_price + cart_object.shipping_cost
-    order.alamat_tujuan = request.user.member.get_home_address()
+    if not cart_object.shipping_address and not cart_object.is_set_as_dropship:
+        order.alamat_tujuan = request.user.member.get_home_address()
+    else:
+        order.alamat_tujuan = cart_object.shipping_address
     order.service = cart_object.shipping_service.upper()
     order.sub_service = cart_object.shipping_sub_service
     order.save()
