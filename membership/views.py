@@ -285,6 +285,9 @@ def register_page(request, *args, **kwargs):
                 transfer_wishlist= wishlists.transfer_wishlist(request, anon_wishlist)
                 cart = transfer_cart['cart_object']
                 wishlist = transfer_wishlist['wishlist_object']
+
+                reward = Reward(member=user.member)
+                reward.save()
                 next = request.GET.get('next') if request.GET.get('next') else False
                 if next :
                     return HttpResponseRedirect(next)
