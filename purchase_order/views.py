@@ -195,6 +195,7 @@ def checkout(request):
     if not cart_object.shipping_address and not cart_object.is_set_as_dropship:
         order.alamat_tujuan = request.user.member.get_home_address()
     else:
+        order.customer = cart_object.customer
         order.alamat_tujuan = cart_object.shipping_address
     order.service = cart_object.shipping_service.upper()
     order.sub_service = cart_object.shipping_sub_service
