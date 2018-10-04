@@ -100,6 +100,7 @@ def index(request):
                 if customer:
                     cart_object.is_set_as_dropship = True
                     cart_object.customer = customer
+                    shipping_cost = cart_object.shipping_cost = 0
                     cart_object.save()
             except:
                 pass
