@@ -1,0 +1,281 @@
+﻿{% extends 'keskei/base.html' %}
+{% load int_to_rupiah %}
+{% block content %}
+<script>
+
+    function setHeight(img){
+      img.style.minHeight = '0';
+      if(window.innerWidth>767){
+        if(img.classList.contains("main-photo") != false){
+          img.style.maxHeight = '440px';
+        } else {
+          img.style.maxHeight = '220px';
+        }
+      }
+      if(img.classList.contains("product") != false){
+        img.style.width =  img.clientWidth+20+'px';
+      }
+      img.style.height = img.clientWidth+'px';
+      img.style.backgroundSize='auto 100%';
+      img.style.overflow='hidden';
+      img.style.objectFit='cover';
+    } 
+</script>
+  <!-- end header -->
+  <div class="container-fluid"> 
+   <div class="row"> 
+    <!-- Slider -->
+    <div class="home-slider5 hidden-xs">
+      <div id="thmg-slideshow" class="thmg-slideshow">
+        <div id='rev_slider_4_wrapper' class='rev_slider_wrapper fullwidthbanner-container' >
+          <div id='rev_slider_4' class='rev_slider fullwidthabanner'>
+            <ul>
+              <li data-transition='random' data-slotamount='7' data-masterspeed='1000' data-thumb='/media/images/slide-img1.jpg'><img src='/media/images/slide-img1.jpg'  data-bgfit='cover' data-bgrepeat='no-repeat' alt="banner"/>
+              </li>
+              <li data-transition='random' data-slotamount='7' data-masterspeed='1000' data-thumb='/media/images/slide-img2.jpg'><img src='/media/images/slide-img2.jpg'  data-bgfit='cover' data-bgrepeat='no-repeat' alt="banner"/>
+                                <div class="container">
+                                <div style="background-position:right" class="content_slideshow">
+                <div class="row">
+                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-8">
+<div class="info" style="margin-top: 5%">
+                    <div class='tp-caption LargeTitle sfl  tp-resizeme ' data-endspeed='500' data-speed='500' data-start='1300' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:3; white-space:nowrap;'><span style="font-weight:normal; display:block">Aplikasi Belanja Online</span> Kei-Shop</div>
+                    <div style="padding: 0" class='tp-caption Title sft  tp-resizeme ' data-endspeed='500' data-speed='500' data-start='1450' data-easing='Power2.easeInOut' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:4; white-space:nowrap;'>Dari KEISKEI INDONESIA</div>
+                    <div class='tp-caption sfb  tp-resizeme ' data-endspeed='500' data-speed='500' data-start='1500' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:4; white-space:nowrap;'>
+                    <a style="padding:15px 23px; margin-top: 25px" href='#' class="buy-btn">Download Sekarang</a> </div>
+                  </div>
+                </div>
+                    </div>
+                </div>
+ </div>
+              </li>
+            </ul>
+            <div class="tp-bannertimer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  <div class="section-element container">
+  <div class="row">
+    <div class="large-6">
+      <div class="wpb_wrapper">
+        <div class="banner">
+        <div class="banner-img">
+          <a href="#"><img src="/media/images/banner-left.png" alt=""></a>
+          </div>
+            
+         </div>
+      </div>
+    </div>
+    <div class="nasa-col large-6 columns desktop-padding-left-5  vc_">
+      <div class="wpb_wrapper">
+         <div class="large-6">
+                <div class="wpb_wrapper">
+                
+                <div class="banner" style="border: 1px solid #e8c506;">
+                <div class="banner-content1">
+                	<!--
+                        <h6 style="color: #df3737;">"Shop123"</h6>
+                        <h3>Use Promo Code</h3>
+                        <p>Get Upto 20% Off</p> -->
+                       </div>
+                          <div class="banner-img" style="max-height: 245px">
+                       <a href="#"><img src="/media/images/banner2.jpeg" alt=""> </a>      
+                       </div>  
+                  
+
+                    
+              </div>
+              </div>
+              </div>
+     
+          <div class="large-6">
+              <div class="wpb_wrapper">
+               <div class="banner">
+                <div class="banner-img" style="max-height: 245px">
+               <a href="#"> 
+                 <img src="/media/images/banner3.png" alt="">
+                 </a>
+                </div>
+                </div>
+
+            </div>
+          </div>
+          </div>
+
+        <div class="row margin-top-5">
+          <div class="large-12">
+              <div class="wpb_wrapper">
+               <div class="banner">
+              <div class="banner-content">
+                  
+                        <h4>Decorative</h4>
+                        <h5>Now starting at $99</h5>
+              <a href="" class="readmore-link">Read more <i class="fa fa-chevron-circle-right"></i></a>
+                    </div>
+                     <div class="banner-img">
+               <a href="#"> 
+           <img src="/media/images/banner1.png" alt="">
+                    
+        </a>
+        </div>
+            
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  
+  <div class="container">
+  <div class="content-page"> 
+            
+            <!-- featured category -->
+            <div class="category-product">
+              <div class="navbar nav-menu">
+                <div class="navbar-collapse">
+                  <h1>Produk Terbaru</h1>
+                </div>
+                <!-- /.navbar-collapse --> 
+                
+              </div>
+              <div class="product-bestseller">
+                <div class="product-bestseller-content">
+                  <div class="product-bestseller-list">
+                    <div class="tab-container"> 
+                      <!-- tab product -->
+                      <div class="tab-panel active" id="tab-1">
+                        <div class="category-products">
+                          <ul class="products-grid">
+                            {% for product in products %}
+                            <li class="item col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                              <div class="item-inner">
+                                <div class="item-img">
+                                  <div class="item-img-info"> 
+                                    <a class="product-image" href="{{ product.get_detail_url }}"> 
+                                      <img alt="{{ product.name | truncatechars:30 | title }}"  class="photo-user product"   onLoad="setHeight(this)"  src="{{ product.get_photo_url }}"> </a>
+                                  </div>
+                                </div>
+                                <div class="item-info">
+                                  <div class="info-inner">
+                                    <div class="item-title"> <a href="{{ product.get_detail_url }}"> {{ product.name | truncatechars:30 | title }}</a> </div>
+                                    <div class="item-content">
+                                      <div class="item-price">
+                                        <div class="price-box"> <span class="regular-price"> <span class="price">{{ product.price  | int_to_rupiah }}</span> </span> </div>
+                                      </div>
+                                      <div class="action">
+                                          <button class="button btn-cart" onclick="window.open('{{ product.get_detail_url }}', '_self')"><i class="fa fa-shopping-basket"></i></button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- End  Item inner--> 
+                            </li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  </div>
+  
+  
+  
+<div class="container">
+
+  <div class="wide-banner">
+  <div class="row">
+  		<!--
+            <div class="figure banner-with-effects effect-sadie1 banner-width  with-button"><img src="/media/images/watch.jpg" alt="">
+              <div class="figcaption">
+                <div class="banner-content right top"><em>Beat Brand</em>
+                  <h5>Digital <span>World</span></h5>
+                  <h6>Save 50% Today</h6>
+                  <a href="" class="right bottom btn_type_1" rel="nofollow">Read more <i class="fa fa-chevron-circle-right"></i></a>
+                  </div>
+              </div>
+              </div>
+            <div class="figure banner-with-effects effect-sadie1 banner-width  with-button"><img src="/media/images/shoes-banner.jpg" alt="">
+              <div class="figcaption">
+              <div class="banner-content left top">
+              <em>Don't miss</em>
+                  <h5>New <span>Generation</span></h5>
+                   <h6>Get Free delivery </h6>
+                  
+                   <a href="#" class="left bottom btn_type_1" rel="nofollow">Read more <i class="fa fa-chevron-circle-right"></i></a>
+                  </div>
+              </div>
+             </div>
+             -->
+          </div>
+  </div>
+  </div>
+  
+
+  
+  
+  <section class="deals-block" style="background: url(/media/images/bg-banner.jpg) no-repeat;
+  background-size: 100%;
+  background-position: bottom;
+  min-height: 85%;
+  padding-bottom:0">
+  <div class="container">
+  <div class="row">
+  <div class="col-lg-9">
+  <div class="hot-deal">
+
+            <ul class="products-grid">
+              <li class="right-space two-height item">
+                <div class="item-inner" style="border: 4px solid #fed700;border-left: 4px solid #e6c50c;border-bottom: 4px solid #caac07;">
+                <div class="item-info">
+                    <div class="info-inner" style="padding: 20px">
+      				  <h4 style="margin-bottom: 0">Promo Hari Ini</h4>
+
+                      <div class="item-title" style="padding-top: 0"> 
+                        <a style="color:#333" href="{{ featured_products.get_detail_url }}" > {{ featured_products.name | truncatechars:30 | title }}</a> </div>
+                      <div class="item-content">
+                        <div class="item-price">
+                          <div class="price-box"> 
+                            <span class="regular-price"> 
+                              <span class="price" style="font-size: 24pt; color: #333">{{ featured_products.price  | int_to_rupiah }}</span> 
+                            </span> 
+                            <br><span style="color:#e00 !important; text-decoration: line-through;">
+                              <span class="price" style="font-size: 16pt; color:#e00">{{ featured_products.price  | int_to_rupiah }}</span>
+                            </span></div>
+                        </div>
+                      <hr style="border-color: #666; margin-bottom: 0">
+                      <div class="offer-text">Penawaran Terbatas, Beli Sekarang !</div>
+                      <button class="btn btn-primary"  onclick="window.open('{{ featured_products.get_detail_url }}', '_self')" style="margin-top:5px;min-width: 140px; padding: 10px 15px"><i class="fa fa-shopping-basket"></i> Tambahkan ke keranjang</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item-img">
+                    <div class="item-img-info"> <a href="{{ featured_products.get_detail_url }}"  class="product-image"> 
+                      <img class="photo-user main-photo" onLoad="setHeight(this)"  src="{{ featured_products.get_photo_url }}" alt="{{ featured_products.name | truncatechars:30 | title }}"> </a>
+                      <div class="hot-label hot-top-left">Hot Deal</div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </li>
+            </ul>
+          </div>
+          </div>
+          <div class="col-lg-3">
+          </div>
+          </div>
+          </div>
+          </div>
+  </section>
+  
+  {% endblock %}
