@@ -28,56 +28,55 @@
       </div>
       <div class="col-lg-10">
           <div class="content-page"> 
-            
-            <!-- featured category -->
-            <div class="category-product">
-              <div class="navbar nav-menu">
-                <div class="navbar-collapse">
-                  <h1>Produk Terbaru</h1>
-                </div>
-                <!-- /.navbar-collapse --> 
+            <div class="row">
+              <div class="col-lg-6">
                 
               </div>
-              <div class="product-bestseller">
-                <div class="product-bestseller-content">
-                  <div class="product-bestseller-list">
-                    <div class="tab-container"> 
-                      <!-- tab product -->
-                      <div class="tab-panel active" id="tab-1">
-                        <div class="category-products">
-                          <ul class="products-grid">
-                            {% for product in products %}
-                            <li class="item col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                              <div class="item-inner">
-                                <div class="item-img">
-                                  <div class="item-img-info"> 
-                                    <a class="product-image" href="{{ product.get_detail_url }}"> 
-                                      <img alt="{{ product.name | truncatechars:30 | title }}"  class="photo-user product"   onLoad="setHeight(this)"  src="{{ product.get_photo_url }}"> </a>
-                                  </div>
-                                </div>
-                                <div class="item-info">
-                                  <div class="info-inner">
-                                    <div class="item-title"> <a href="{{ product.get_detail_url }}"> {{ product.name | truncatechars:30 | title }}</a> </div>
-                                    <div class="item-content">
-                                      <div class="item-price">
-                                        <div class="price-box"> <span class="regular-price"> <span class="price">{{ product.price  | int_to_rupiah }}</span> </span> </div>
+              <div class="col-lg-6">
+                  <!-- featured category -->
+                  <div class="category-product">
+                    <div class="product-bestseller">
+                      <div class="product-bestseller-content">
+                        <div class="product-bestseller-list">
+                          <div class="tab-container"> 
+                            <!-- tab product -->
+                            <div class="tab-panel active" id="tab-1">
+                              <div class="category-products">
+                                <ul class="products-grid">
+                                  {% for product in products %}
+                                  <li class="item col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                    <div class="item-inner">
+                                      <div class="item-img">
+                                        <div class="item-img-info"> 
+                                          <a class="product-image" href="{{ product.get_detail_url }}"> 
+                                            <img alt="{{ product.name | truncatechars:30 | title }}"  class="photo-user product"   onLoad="setHeight(this)"  src="{{ product.get_photo_url }}"> </a>
+                                        </div>
                                       </div>
-                                      <div class="action">
-                                          <button class="button btn-cart" onclick="window.open('{{ product.get_detail_url }}', '_self')"><i class="fa fa-shopping-basket"></i></button>
+                                      <div class="item-info">
+                                        <div class="info-inner">
+                                          <div class="item-title"> <a href="{{ product.get_detail_url }}"> {{ product.name | truncatechars:30 | title }}</a> </div>
+                                          <div class="item-content">
+                                            <div class="item-price">
+                                              <div class="price-box"> <span class="regular-price"> <span class="price">{{ product.price  | int_to_rupiah }}</span> </span> </div>
+                                            </div>
+                                            <div class="action">
+                                                <button class="button btn-cart" onclick="window.open('{{ product.get_detail_url }}', '_self')"><i class="fa fa-shopping-basket"></i></button>
+                                            </div>
+                                          </div>
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                </div>
+                                    <!-- End  Item inner--> 
+                                  </li>
+                                  {% endfor %}
+                                </ul>
                               </div>
-                              <!-- End  Item inner--> 
-                            </li>
-                            {% endfor %}
-                          </ul>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
               </div>
             </div>
           </div>
