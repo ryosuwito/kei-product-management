@@ -26,7 +26,7 @@ SECRET_KEY = KEY.SECRET
 DEBUG = True
 
 ALLOWED_HOSTS = ['.kei-partner.com','kei-partner.com', '139.99.4.177']
-PORT = '8000'
+PORT = ''
 DEFAULT_HOST = ALLOWED_HOSTS[1]+ PORT
 
 # Application definition
