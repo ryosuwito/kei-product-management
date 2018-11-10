@@ -130,11 +130,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     #'/home/ryo/Webproject/keskei/keskei/static/',    
-    '/webapps/kei-partner/keskei/static/',
+    '/webapps/kei/static/',
 ]
 
 #MEDIA_ROOT = '/home/ryo/Webproject/keskei/keskei/media/'
-MEDIA_ROOT = '/webapps/kei-partner/keskei/media/'
+MEDIA_ROOT = '/webapps/kei/media/'
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = '/member/'
