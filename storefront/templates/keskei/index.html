@@ -8,7 +8,10 @@
       if(window.innerWidth>767){
         if(img.classList.contains("main-photo") != false){
           img.style.maxHeight = '440px';
-        } else {
+        } 
+        else if(img.classList.contains("main-photo") != false){
+          img.style.maxHeight = '';
+        }else {
           img.style.maxHeight = '220px';
         }
       }
@@ -45,9 +48,10 @@
                                       <div class="item-img">
                                         <div class="item-img-info"> 
                                           <a class="product-image" href="{{ featured_products.get_detail_url }}"> 
-                                            <img alt="{{ featured_products.name | truncatechars:30 | title }}"  class="photo-user product"   onLoad="setHeight(this)"  src="{{ featured_products.get_photo_url }}"> </a>
+                                            <img alt="{{ featured_products.name | truncatechars:30 | title }}"  class="photo-user product main-large"   onLoad="setHeight(this)"  src="{{ featured_products.get_photo_url }}"> </a>
                                         </div>
                                       </div>
+                                      {% comment %}
                                       <div class="item-info">
                                         <div class="info-inner">
                                           <div class="item-title"> <a href="{{ featured_products.get_detail_url }}"> {{ featured_products.name | truncatechars:30 | title }}</a> </div>
@@ -61,6 +65,7 @@
                                           </div>
                                         </div>
                                       </div>
+                                      {% endcomment %}
                                     </div>
                                     <!-- End  Item inner--> 
                                   </li>
@@ -94,6 +99,7 @@
                                             <img alt="{{ product.name | truncatechars:30 | title }}"  class="photo-user product"   onLoad="setHeight(this)"  src="{{ product.get_photo_url }}"> </a>
                                         </div>
                                       </div>
+                                      {% comment %}
                                       <div class="item-info">
                                         <div class="info-inner">
                                           <div class="item-title"> <a href="{{ product.get_detail_url }}"> {{ product.name | truncatechars:30 | title }}</a> </div>
@@ -107,6 +113,7 @@
                                           </div>
                                         </div>
                                       </div>
+                                      {% endcomment %}
                                     </div>
                                     <!-- End  Item inner--> 
                                   </li>
