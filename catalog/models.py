@@ -4,6 +4,29 @@ from django.dispatch import receiver
 from django_extensions.db.fields import AutoSlugField
 from django.urls import reverse
 
+class Brand(models.Model):
+    name = models.CharField(db_index=True,
+            max_length = 100,
+            help_text="Nama Brand")
+    slug = AutoSlugField(max_length=100, 
+            unique=True, 
+            db_index=True,
+            populate_from=('name',))
+    description = models.TextField(blank=True,
+            help_text="Deskripsi Brand")
+    is_archived = models.BooleanField(default = False,
+            help_text="Centang untuk Menyembunyikan Kategori") 
+
+    class Meta:
+        verbose_name_plural = "Brands"
+
+
+    def __str__(self):
+       return self.name
+
+    def get_url(self):
+        return "/store/kategori/%s/" % (self.pk)
+
 class Category(models.Model):
     name = models.CharField(db_index=True,
             max_length = 100,
@@ -63,6 +86,11 @@ class Product(models.Model):
     categories = models.ManyToManyField(Category, 
             related_name="products_in_category",
             help_text="Kategori Produk")
+    brands = models.ForeignKey(Brand, 
+            on_delete=models.SET_NULL,
+            null=True,
+            related_name="products_in_brand",
+            help_text="Brand Produk")
 
     def get_details(self):
         details = {'name': self.name,
