@@ -26,7 +26,7 @@ SECRET_KEY = KEY.SECRET
 DEBUG = True
 
 ALLOWED_HOSTS = ['.kei-partner.com','kei-partner.com', '139.99.4.177']
-PORT = ''
+PORT = '8000'
 DEFAULT_HOST = ALLOWED_HOSTS[1]+ PORT
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'reward_system',
     'storefront',
     'shipping_backend',
+    'voucher_system',
     'django.contrib.humanize',
 ]
 

@@ -36,7 +36,8 @@ class Product(models.Model):
             db_index=True,
             unique=True, 
             populate_from=('name',))
-    description = models.TextField(help_text="Deskripsi Produk")
+    description = models.TextField(null=True,help_text="Deskripsi Produk")
+    summary = models.TextField(null=True,help_text="Ringkasan Produk")
     photo = models.ImageField(upload_to = 'product_photo',
             help_text="Foto Produk")
     photo_alt1 = models.ImageField(upload_to = 'product_photo', null=True, blank=True,
@@ -49,9 +50,10 @@ class Product(models.Model):
             help_text="Foto Produk Alternatif 4")
     photo_alt5 = models.ImageField(upload_to = 'product_photo', null=True, blank=True,
             help_text="Foto Produk Alternatif 5")
-    price = models.IntegerField(null=True, help_text="Harga Produk")
+    price = models.PositiveIntegerField(null=True, help_text="Harga Produk", default=0)
+    point = models.PositiveIntegerField(null=True, help_text="Poin Produk", default=0)
 
-    unit_weight = models.IntegerField(null=True, help_text="Berat Satuan Produk dalam gram")
+    unit_weight = models.PositiveIntegerField(null=True, help_text="Berat Satuan Produk dalam gram")
     is_available = models.BooleanField(default = True,
             help_text="Centang Jika Produk Tersedia")
     is_featured = models.BooleanField(default = False,

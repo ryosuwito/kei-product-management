@@ -7,6 +7,8 @@ from django.db import models
 from django.utils.crypto import get_random_string
 from django.conf import settings
 
+from voucher_system.models import Voucher
+
 import pyqrcode
 import os 
 
@@ -138,7 +140,11 @@ class Member(models.Model):
     is_phone_verified = models.BooleanField(default=False)
     is_email_verified = models.BooleanField(default=False)
 
-    total_spent = models.IntegerField(editable=False,blank=True, null=True)
+    total_spent = models.PositiveIntegerField(editable=False,blank=True, null=True)
+    wallet = models.PositiveIntegerField(null=True, help_text="Dompet Member", default=0)
+    used_voucher = models.ManyToManyField(Voucher, 
+            related_name="voucher_used_by_member",
+            help_text="Voucher yang dipakai member")
 
     @models.permalink
     def get_absolute_url(self):
