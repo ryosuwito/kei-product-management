@@ -184,31 +184,26 @@
     {% endcomment %}
     <nav class="hidden-xs" style="background: #fff; margin-top: 0">
       <div class="nav-container">
-        <div class="col-md-3 col-xs-12 col-sm-3">
-          <div class="mega-container visible-lg visible-md visible-sm">
-            <div class="navleft-container">
-              <div class="mega-menu-title" style="background: #cddfd1">
-                <h3><i class="fa fa-navicon"></i> All Categories</h3>
+        <div class="row">
+          <div class="col-lg-5">
+              <div class="row">
+                <div class="col-lg-4" style="padding:15px; text-align: center">
+                  <p>About Us</p>
+                </div>
+                <div class="col-lg-4" style="border-left:1px solid #aaa;
+                  border-right:1px solid #aaa;padding:15px; text-align: center">
+                  <p>Partner Area</p>
+                </div>
+                <div class="col-lg-4" style="padding:15px; text-align: center">
+                  <p>Join Business</p>
+                </div>
               </div>
-              <div class="mega-menu-category" style="display: none;">
-                <ul class="nav">
-                  <li> <a href="index.html"><i class="fa fa-home"></i> Layout</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
           </div>
-        </div>
-        <!-- features box -->
-        <div class="our-features-box hidden-xs">
-          <div class="features-block">
-            <div class="col-lg-9 col-md-9 col-xs-12 col-sm-9 offer-block"> 
-              <a href="/store" style="border-color: #333">Store</a> 
-            	<a href="#" style="border-color: #333">Blog</a> 
-              <a href="/member/profile" style="border:none">Member Area</a> 
-              {% if not request.user.is_authenticated %}
-              <a style="margin:5px; background: #299c41; border: none; color:#fff" href="{% url 'membership:login' %}" class="btn btn-primary btn-sm">MASUK / DAFTAR</a>
-              {% endif %}
+          <div class="col-lg-2">
+          </div>
+          <div class="col-lg-5">
+            <div class="row">
+            </div>
           </div>
         </div>
       </div>
