@@ -8,6 +8,7 @@ from shopping_cart.models import Cart, CartItem, WishList, WishListItem
 from shopping_cart import carts, wishlists
 from django.urls import reverse
 from membership.views import check_host
+from membership.templatetags import int_to_rupiah
 
 import datetime
 import random
@@ -184,6 +185,17 @@ def product_by_brand(request, brand_pk, **kwargs):
         product_title = 'Tidak Ada Produk'
     else:
         product_title = 'Menampilkan Semua Produk %s' % (brand.name.title())
+    return paginate_results(request, product_list,product_title)
+
+def product_by_price(request, start_price, end_price, **kwargs):
+    try:
+        product_list = Product.objects.filter(is_archived=False, price__range(start_price, end_price))
+    except:
+        product_list=''
+    if not product_list:
+        product_title = 'Tidak Ada Produk'
+    else:
+        product_title = 'Menampilkan Semua Produk dari %s - %s' % (int_to_rupiah(start_price), int_to_rupiah(end_price))
     return paginate_results(request, product_list,product_title)
 
 def paginate_results(request, product_list,product_title):
