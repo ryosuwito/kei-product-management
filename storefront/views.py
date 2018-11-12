@@ -8,7 +8,7 @@ from shopping_cart.models import Cart, CartItem, WishList, WishListItem
 from shopping_cart import carts, wishlists
 from django.urls import reverse
 from membership.views import check_host
-from membership.templatetags import int_to_rupiah
+from membership.templatetags.int_to_rupiah import int_to_rupiah
 
 import datetime
 import random
