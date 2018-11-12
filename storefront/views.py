@@ -174,6 +174,18 @@ def product_by_category(request, category_pk, **kwargs):
         product_title = 'Menampilkan Semua Produk %s' % (kategori.name.title())
     return paginate_results(request, product_list,product_title)
 
+def product_by_brand(request, brand_pk, **kwargs):
+    try:
+        brand = Brand.objects.get(pk=brand_pk)
+        product_list = brand.products_in_brand.filter(is_archived=False)
+    except:
+        product_list=''
+    if not product_list:
+        product_title = 'Tidak Ada Produk'
+    else:
+        product_title = 'Menampilkan Semua Produk %s' % (brand.name.title())
+    return paginate_results(request, product_list,product_title)
+
 def paginate_results(request, product_list,product_title):
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
