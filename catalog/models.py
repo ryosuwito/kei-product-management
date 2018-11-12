@@ -25,7 +25,7 @@ class Brand(models.Model):
        return self.name
 
     def get_url(self):
-        return "/store/kategori/%s/" % (self.pk)
+        return "/store/brand/%s/" % (self.pk)
 
 class Category(models.Model):
     name = models.CharField(db_index=True,

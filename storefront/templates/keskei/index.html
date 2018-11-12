@@ -39,51 +39,15 @@
             </div>
           </div>
           <div class="row">
+            {% for category in categories %}
             <div class="col-lg-12" style="padding:5px 10px;
             background: #999999;border-bottom:1px solid #fff;
             text-align: center; ">
-              <p style="color:white; margin:0">Promo Product</p>
+              <a href="{{ category.get_url }}">
+                <p style="color:white; margin:0">{{category.name | title}}</p>
+              </a>
             </div>
-            <div class="col-lg-12" style="padding:5px 10px;
-            background: #999999;border-bottom:1px solid #fff;
-            text-align: center; ">
-              <p style="color:white; margin:0">Kecantikan</p>
-            </div>
-            <div class="col-lg-12" style="padding:5px 10px;
-            background: #999999;border-bottom:1px solid #fff;
-            text-align: center; ">
-              <p style="color:white; margin:0">Kesehatan</p>
-            </div>
-            <div class="col-lg-12" style="padding:5px 10px;
-            background: #999999;border-bottom:1px solid #fff;
-            text-align: center; ">
-              <p style="color:white; margin:0">Fashion</p>
-            </div>
-            <div class="col-lg-12" style="padding:5px 10px;
-            background: #999999;border-bottom:1px solid #fff;
-            text-align: center; ">
-              <p style="color:white; margin:0">Lifestyle</p>
-            </div>
-            <div class="col-lg-12" style="padding:5px 10px;
-            background: #999999;border-bottom:1px solid #fff;
-            text-align: center; ">
-              <p style="color:white; margin:0">Elektronik</p>
-            </div>
-            <div class="col-lg-12" style="padding:5px 10px;
-            background: #999999;border-bottom:1px solid #fff;
-            text-align: center; ">
-              <p style="color:white; margin:0">Kendaraan</p>
-            </div>
-            <div class="col-lg-12" style="padding:5px 10px;
-            background: #999999;border-bottom:1px solid #fff;
-            text-align: center; ">
-              <p style="color:white; margin:0">Properti</p>
-            </div>
-            <div class="col-lg-12" style="padding:5px 10px;
-            background: #999999;border-bottom:1px solid #fff;
-            text-align: center; ">
-              <p style="color:white; margin:0">Software / Apps</p>
-            </div>
+            {% endfor %}
           </div>
           <div class="row"  style=" margin-top: 2px;
           background: #f7540f;">
@@ -97,36 +61,15 @@
             </div>
           </div>
           <div class="row">
+            {% for brand in brands %}
             <div class="col-lg-12" style="padding:5px 10px;
             background: #999999;border-bottom:1px solid #fff;
             text-align: center; ">
-              <p style="color:white; margin:0">Keskei</p>
+              <a href="{{ brand.get_url }}">
+                <p style="color:white; margin:0">{{brand.name | title}}</p>
+              </a>
             </div>
-            <div class="col-lg-12" style="padding:5px 10px;
-            background: #999999;border-bottom:1px solid #fff;
-            text-align: center; ">
-              <p style="color:white; margin:0">Miglioree</p>
-            </div>
-            <div class="col-lg-12" style="padding:5px 10px;
-            background: #999999;border-bottom:1px solid #fff;
-            text-align: center; ">
-              <p style="color:white; margin:0">Glutaberry</p>
-            </div>
-            <div class="col-lg-12" style="padding:5px 10px;
-            background: #999999;border-bottom:1px solid #fff;
-            text-align: center; ">
-              <p style="color:white; margin:0">Benunic</p>
-            </div>
-            <div class="col-lg-12" style="padding:5px 10px;
-            background: #999999;border-bottom:1px solid #fff;
-            text-align: center; ">
-              <p style="color:white; margin:0">Biutimaker</p>
-            </div>
-            <div class="col-lg-12" style="padding:5px 10px;
-            background: #999999;border-bottom:1px solid #fff;
-            text-align: center; ">
-              <p style="color:white; margin:0">Rocket Fashion</p>
-            </div>
+            {% endfor %}
           </div>
           <div class="row"  style=" margin-top: 2px;
           background: #f7540f;">

@@ -2,7 +2,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from catalog.models import Product, Category
+from catalog.models import Product, Category, Brand
 from membership.models import Member
 from shopping_cart.models import Cart, CartItem, WishList, WishListItem
 from shopping_cart import carts, wishlists
@@ -19,8 +19,13 @@ def home(request):
     cart_object = cart['cart_object']
     products = Product.objects.filter(is_archived=False).order_by('-pk')[:4]
     featured_products = Product.objects.filter(is_featured=True).order_by('-pk')[0]
+    categories = Category.objects.all()
+    brands = Brand.objects.all()
     return render(request, 'keskei/index.html', 
-        {'cart':cart_object, 
+        {
+        'brands':brands,
+        'cart':cart_object, 
+        'categories':categories,
         'products':products,
         'featured_products':featured_products})
     #push error
