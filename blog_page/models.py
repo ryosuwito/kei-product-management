@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.dispatch import receiver
 from django.utils.crypto import get_random_string
 
-from ckeditor.fields import RichTextUploadingField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 from membership.models import Member
 
