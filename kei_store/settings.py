@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'voucher_system',
     'django.contrib.humanize',
     'blog_page',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
