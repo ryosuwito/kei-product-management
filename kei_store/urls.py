@@ -44,4 +44,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^$', home, name="home"),
     re_path(r'^store/', include(storefront, namespace='store_backend')),
+    re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
