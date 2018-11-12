@@ -189,7 +189,8 @@ def product_by_brand(request, brand_pk, **kwargs):
 
 def product_by_price(request, start_price, end_price, **kwargs):
     try:
-        product_list = Product.objects.filter(is_archived=False, price__range=(start_price, end_price))
+        product_list = Product.objects.filter(is_archived=False, 
+                        price__range=(start_price, end_price)).order_by('price')
     except:
         product_list=''
     if not product_list:
