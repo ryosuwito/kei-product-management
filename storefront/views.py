@@ -181,7 +181,6 @@ def paginate_results(request, product_list,product_title):
     wishlist_object = wishlist['wishlist_object']
     categories = Category.objects.all()
     brands = Brand.objects.all()
-    return HttpResponse(brands)
     max_page = 4
     min_page = 0
     products = ''
