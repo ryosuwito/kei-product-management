@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'shipping_backend',
     'voucher_system',
     'django.contrib.humanize',
+    'blog_page',
 ]
 
 MIDDLEWARE = [
