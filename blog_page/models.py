@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.dispatch import receiver
 from django.utils.crypto import get_random_string
 
-from ckeditor.fields import RichTextField
+from ckeditor.fields import RichTextUploadingField
 
 from membership.models import Member
 
@@ -15,7 +15,7 @@ class Article(models.Model):
     slug = models.SlugField(max_length=200,unique=True, db_index=True, blank=True, null=True)
     title = models.CharField(max_length=200)
     summary = models.TextField(max_length=1000, default="", blank=True)
-    content = RichTextField(null=True, blank=True)
+    content = RichTextUploadingField(null=True, blank=True)
     created_date = models.DateTimeField(db_index=True, default=datetime.datetime.now)
     is_published = models.BooleanField(default=True, db_index=True)
     featured_image = models.ImageField(upload_to = 'user_uploads/featured_images/', null=True, blank=True)
@@ -45,7 +45,7 @@ class Page(models.Model):
     slug = models.SlugField(max_length=200,unique=True, db_index=True, blank=True, null=True)
     title = models.CharField(max_length=200)
     summary = models.TextField(max_length=1000, default="", blank=True)
-    content = RichTextField(null=True, blank=True)
+    content = RichTextUploadingField(null=True, blank=True)
     created_date = models.DateTimeField(db_index=True, default=datetime.datetime.now)
     is_published = models.BooleanField(default=True, db_index=True)
     featured_image = models.ImageField(upload_to = 'user_uploads/featured_images/', null=True, blank=True)
