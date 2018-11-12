@@ -23,8 +23,8 @@ def home(request):
     brands = Brand.objects.all()
     return render(request, 'keskei/index.html', 
         {
-        'brands':brands,
         'cart':cart_object, 
+        'brands':brands,
         'categories':categories,
         'products':products,
         'featured_products':featured_products})
@@ -50,6 +50,8 @@ def product_detail(request, product_pk, **kwargs):
     cart_object = cart['cart_object']
     wishlist = wishlists.get_wishlist(request)
     wishlist_object = wishlist['wishlist_object']
+    categories = Category.objects.all()
+    brands = Brand.objects.all()
     all_product = Product.objects.filter(is_archived=False).exclude(pk=product_pk)
     is_wishlist = False
     if len(all_product) >= 5:
@@ -127,6 +129,8 @@ def product_detail(request, product_pk, **kwargs):
             'cart':cart_object, 
             'wishlist':wishlist_object, 
             'form':form, 
+            'brands':brands,
+            'categories':categories,
             'is_in_wishlist': is_in_wishlist,
             'discount': discount, 
             'discounted_price': int(discounted_price)})
@@ -175,6 +179,8 @@ def paginate_results(request, product_list,product_title):
     cart_object = cart['cart_object']
     wishlist = wishlists.get_wishlist(request)
     wishlist_object = wishlist['wishlist_object']
+    categories = Category.objects.all()
+    brands = Brand.objects.all()
     max_page = 4
     min_page = 0
     products = ''
@@ -201,6 +207,8 @@ def paginate_results(request, product_list,product_title):
 
     response = render(request, 'storefront/product_all.html', 
         {'cart':cart_object,
+         'brands':brands,
+         'categories':categories,
          'wishlist':wishlist_object, 
          'products':products,
          'categories':categories,
