@@ -3,28 +3,29 @@
   {% block title %}
     <title>Store | kei-partner.com</title>
   {% endblock %}
-  {% block content %}
-    <script>
-  
-        function setHeight(img){
-          img.style.minHeight = '0';
-          if(window.innerWidth>767){
-            if(img.classList.contains("main-photo") != false){
-              img.style.maxHeight = '440px';
-            } else {
-              img.style.maxHeight = '220px';
-            }
-          }
-          if(img.classList.contains("product") != false){
-            img.style.width =  img.clientWidth+20+'px';
-          }
-          img.style.height = img.clientWidth+'px';
-          img.style.backgroundSize='auto 100%';
-          img.style.overflow='hidden';
-          img.style.objectFit='cover';
-        } 
-    </script>
+  {% block local_script %}
+  <script>
 
+      function setHeight(img){
+        img.style.minHeight = '0';
+        if(window.innerWidth>767){
+          if(img.classList.contains("main-photo") != false){
+            img.style.maxHeight = '440px';
+          } else {
+            img.style.maxHeight = '220px';
+          }
+        }
+        if(img.classList.contains("product") != false){
+          img.style.width =  img.clientWidth+20+'px';
+        }
+        img.style.height = img.clientWidth+'px';
+        img.style.backgroundSize='auto 100%';
+        img.style.overflow='hidden';
+        img.style.objectFit='cover';
+      } 
+  </script>
+  {% endblock %}
+  {% block content %}
       <div class="container container-bg" style="padding-bottom: 0"> 
         <div class="row"style="margin:0">
           <div class="col-xs-12 col-lg-12" style="min-height: 600px; padding-bottom: 55px">
@@ -96,12 +97,5 @@
           {% endif %}
         </div>
       </div>
-  </div>
-  <!-- ====================================================================================================================================== -->
- 
-  <!-- ====================================================================================================================================== -->
-          
-  </div>
-</div>
-{% include "membership/script.html" %}
-{% endblock %}
+  {% include "membership/script.html" %}
+  {% endblock %}
