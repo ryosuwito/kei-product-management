@@ -14,7 +14,7 @@ import datetime
 class Article(models.Model):
     slug = models.SlugField(max_length=200,unique=True, db_index=True, blank=True, null=True)
     title = models.CharField(max_length=200)
-    summary = models.CharField(max_length=1000, default="", blank=True)
+    summary = models.TextField(max_length=1000, default="", blank=True)
     content = RichTextField(null=True, blank=True)
     created_date = models.DateTimeField(db_index=True, default=datetime.datetime.now)
     is_published = models.BooleanField(default=True, db_index=True)
@@ -44,7 +44,7 @@ def create_article(sender, instance, created, **kwargs):
 class Page(models.Model):
     slug = models.SlugField(max_length=200,unique=True, db_index=True, blank=True, null=True)
     title = models.CharField(max_length=200)
-    summary = models.CharField(max_length=1000, default="", blank=True)
+    summary = models.TextField(max_length=1000, default="", blank=True)
     content = RichTextField(null=True, blank=True)
     created_date = models.DateTimeField(db_index=True, default=datetime.datetime.now)
     is_published = models.BooleanField(default=True, db_index=True)
