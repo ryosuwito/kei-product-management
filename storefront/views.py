@@ -200,11 +200,6 @@ def paginate_results(request, product_list,product_title):
         except:
             pass
 
-    try:
-        categories = Category.objects.filter(is_archived=False)
-    except:
-        categories = ''
-
     response = render(request, 'storefront/product_all.html', 
         {'cart':cart_object,
          'brands':brands,
