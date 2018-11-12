@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'blog_page',
     'ckeditor',
-    'ckeditor_uploader'
+    'ckeditor_uploader',
+    'settings'
 ]
 
 MIDDLEWARE = [
