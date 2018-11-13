@@ -19,7 +19,7 @@ def home(request):
     header_links = HeaderLink.objects.all()
     hlinks = {}
     for link in header_links :
-        hlinks{'%s'%link.pos} = {'addr':link.addr, 'name':link.name}
+        hlinks['%s'%link.pos] = {'addr':link.addr, 'name':link.name}
     flinks = FooterLink.objects.all()
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
@@ -89,7 +89,9 @@ def product_detail(request, product_pk, **kwargs):
         elif method == 'cart':
             form = ProductCartForm(request.POST)
             if form.is_valid():
-                data = form.cleaned_data
+                data = form.clea            'hlinks':hlinks,
+            'flinks':flinks,
+            'product':product, ned_data
                 quantity = data.get('quantity')
                 cart_item = False
                 try :
@@ -222,7 +224,7 @@ def paginate_results(request, product_list,product_title):
     header_links = HeaderLink.objects.all()
     hlinks = {}
     for link in header_links :
-        hlinks{'%s'%link.pos} = {'addr':link.addr, 'name':link.name}
+        hlinks['%s'%link.pos] = {'addr':link.addr, 'name':link.name}
     flinks = FooterLink.objects.all()
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
