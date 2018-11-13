@@ -10,6 +10,8 @@ from django.urls import reverse
 from membership.views import check_host
 from membership.templatetags.int_to_rupiah import int_to_rupiah
 from settings.models import HeaderLink, HomeLink, FooterLink
+from blog_page.models import Article
+
 import datetime
 import random
 
@@ -17,6 +19,9 @@ from .forms import ProductCartForm
 
 def home(request):
     header_links = HeaderLink.objects.all()
+    articles = Article.objects.all().order_by('created_date')
+    if len(articles) > 5:
+        articles = articles[:5]
     hlinks = {}
     for link in header_links :
         if not link.page:
@@ -38,6 +43,7 @@ def home(request):
     brands = Brand.objects.all()
     return render(request, 'keskei/index.html', 
         {
+        'articles':articles,
         'hlinks':hlinks,
         'flinks':flinks,
         'cart':cart_object, 
