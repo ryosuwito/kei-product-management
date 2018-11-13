@@ -12,7 +12,12 @@ class ShippingOriginForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(ShippingOriginForm, self).__init__(*args, **kwargs)
 
+        self.fields['name'].widget.attrs['style'] = 'width:100%' 
         self.fields['provinsi'].widget.attrs['onClick'] = 'getKota(this.id)'
+        self.fields['provinsi'].widget.attrs['style'] = 'width:100%' 
+        self.fields['kota'].widget.attrs['style'] = 'width:100%' 
+        self.fields['kecamatan'].widget.attrs['style'] = 'width:100%' 
+        self.fields['kelurahan'].widget.attrs['style'] = 'width:100%'
         self.fields['alamat'].widget = forms.Textarea() 
         self.fields['alamat'].widget.attrs['style'] = 'width:100%' 
         self.fields['alamat'].widget.attrs['rows'] = '3' 
