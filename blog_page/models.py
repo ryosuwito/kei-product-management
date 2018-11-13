@@ -27,7 +27,7 @@ class Article(models.Model):
     def get_image_url(self):
         return "%s" % ("/media/%s"%self.featured_image)
 
-    def get_article_url(self):
+    def get_url(self):
         return "%s" % (reverse('blog_detail', kwargs={'kategori':self.category.all()[0].slug, 'slug':self.slug}))
 
 
@@ -57,7 +57,7 @@ class Page(models.Model):
     def get_image_url(self):
         return "%s" % ("/media/%s"%self.featured_image)
 
-    def get_article_url(self):
+    def get_url(self):
         return "%s" % (reverse('blog_detail', kwargs={'kategori':self.category.all()[0].slug, 'slug':self.slug}))
 
 

@@ -195,14 +195,26 @@
           <div class="col-lg-5">
             <div class="row">
               <div class="col-lg-4" style="padding:8px 15px; text-align: center">
+                {% if hlinks.1.page %}
+                <p onclick="window.open('{{hlinks.1.page.get_url}}')" style="color:#147D08;margin:0">{{hlinks.1.page.title | title}}</p>
+                {% else %}
                 <p onclick="window.open('{{hlinks.1.addr}}')" style="color:#147D08;margin:0">{{hlinks.1.name | title}}</p>
+                {% endif %}
               </div>
               <div class="col-lg-4" style="border-left:1px solid #aaa;
                 border-right:1px solid #aaa;padding:8px 15px; text-align: center">
+                {% if hlinks.2.page %}
+                <p onclick="window.open('{{hlinks.2.page.get_url}}')" style="color:#147D08;margin:0">{{hlinks.2.page.title | title}}</p>
+                {% else %}
                 <p onclick="window.open('{{hlinks.2.addr}}')" style="color:#147D08;margin:0">{{hlinks.2.name | title}}</p>
+                {% endif %}
               </div>
               <div class="col-lg-4" style="padding:8px 15px; text-align: center">
+                {% if hlinks.3.page %}
+                <p onclick="window.open('{{hlinks.3.page.get_url}}')" style="color:#147D08;margin:0">{{hlinks.3.page.title | title}}</p>
+                {% else %}
                 <p onclick="window.open('{{hlinks.3.addr}}')" style="color:#147D08;margin:0">{{hlinks.3.name | title}}</p>
+                {% endif %}
               </div>
             </div>
           </div>
@@ -211,11 +223,19 @@
           <div class="col-lg-5">
             <div class="row">
               <div class="col-lg-4" style="padding:8px 15px; text-align: center">
-                <p onclick="window.open('{{hlinks.4.addr}}')" style="color:#147D08;margin:0">{{hlinks.4.name | title}}</p>
+                  {% if hlinks.4.page %}
+                  <p onclick="window.open('{{hlinks.4.page.get_url}}')" style="color:#147D08;margin:0">{{hlinks.4.page.title | title}}</p>
+                  {% else %}
+                  <p onclick="window.open('{{hlinks.4.addr}}')" style="color:#147D08;margin:0">{{hlinks.4.name | title}}</p>
+                  {% endif %}
               </div>
               <div class="col-lg-4" style="border-left:1px solid #aaa;
                 padding:8px 15px; text-align: center">
-                <p onclick="window.open('{{hlinks.5.addr}}')" style="color:#147D08;margin:0">{{hlinks.5.name | title}}</p>
+                  {% if hlinks.5.page %}
+                  <p onclick="window.open('{{hlinks.5.page.get_url}}')" style="color:#147D08;margin:0">{{hlinks.5.page.title | title}}</p>
+                  {% else %}
+                  <p onclick="window.open('{{hlinks.5.addr}}')" style="color:#147D08;margin:0">{{hlinks.5.name | title}}</p>
+                  {% endif %}
               </div>
               <div class="col-lg-4" style="padding:4px 0px; text-align: center">
                 <div style="background: #ddd; padding: 5px; border-radius: 10px">
@@ -269,7 +289,11 @@
                   <ul class="links">
                     {% for link in flinks %}
                         {% if link.is_left %}
-                        <li><a style="color:#fff" href="{{link.addr}}" title="How to buy">{{link.name | title}}</a></li>
+                          {% if link.page %}
+                            <li><a style="color:#fff" href="{{link.page.get_url}}" title="How to buy">{{link.page.title | title}}</a></li>
+                          {% else %}
+                            <li><a style="color:#fff" href="{{link.addr}}" title="How to buy">{{link.name | title}}</a></li>
+                          {% endif %}
                         {% endif %}
                     {% endfor %}
                   </ul>
@@ -280,7 +304,11 @@
                   <ul class="links">
                     {% for link in flinks %}
                         {% if not link.is_left %}
-                        <li><a style="color:#fff" href="{{link.addr}}" title="How to buy">{{link.name | title}}</a></li>
+                          {% if link.page %}
+                            <li><a style="color:#fff" href="{{link.page.get_url}}" title="How to buy">{{link.page.title | title}}</a></li>
+                          {% else %}
+                            <li><a style="color:#fff" href="{{link.addr}}" title="How to buy">{{link.name | title}}</a></li>
+                          {% endif %}
                         {% endif %}
                     {% endfor %}
                   </ul>
