@@ -159,13 +159,13 @@ class MemberRegisterForm(forms.ModelForm):
         phone_number = self.cleaned_data["phone_number"].lower()
        
         try:
-            User._default_manager.get(member__phone_number=phone_number)
+            Member._default_manager.get(phone_number=phone_number)
             #if the user exists, then let's raise an error message
 
             raise forms.ValidationError( 
               self.error_messages['duplicate_phone_number'],     #set the error message key
             )
-        except User.DoesNotExist:
+        except Member.DoesNotExist:
             return phone_number # great, this user does not exist so we can continue the registration process
 
     class Meta:
