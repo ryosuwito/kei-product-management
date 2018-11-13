@@ -224,6 +224,11 @@ class Member(models.Model):
         self.total_spent = total_spent
         return  total_spent
 
+    def generate_new_vericode(self):
+        self.email_verification_code = get_number()
+        self.save()
+        return self.email_verification_code
+
     def get_vericode():
         return {'email_code':self.email_verification_code, 'phone_code':self.phone_verification_code}
 

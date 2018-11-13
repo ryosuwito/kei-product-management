@@ -383,10 +383,10 @@ def register_page(request, *args, **kwargs):
         else:
             form = MemberRegisterForm()
         if referal_code:
-            form.fields['sponsor_code'].default = referal_code
-            form.fields['sponsor_code'].initial = referal_code
-            form.fields['sponsor_code'].disabled = True
-            form.fields['sponsor_code'].widget.attrs.update({
+            form.fields['sponsor_code'].default = referalstr:vericode>_code
+            form.fields['sponsor_code'].initial = referalstr:vericode>_code
+            form.fields['sponsor_code'].disabled = Truestr:vericode>
+            form.fields['sponsor_code'].widget.attrs.updastr:vericode>te({
             'class': 'input-text',
             'style': 'width:100%'
             })
@@ -422,10 +422,10 @@ def profile_page(request, uname='none'):
     wishlist = wishlists.get_wishlist(request)['wishlist_object']
     referal_code = False
     default_host = settings.DEFAULT_HOST 
-    default_register_page = request.scheme+"://"+ default_host + \
-                                reverse('membership:profile', 
-                                    current_app=request.resolver_match.namespace)
-
+str:vericode>_host + \
+str:vericode>le', 
+str:vericode>esolver_match.namespace)
+str:vericode>
     if request.get_host() != settings.DEFAULT_HOST:
         referal_code = check_host(request, pass_variable=True)
         if not referal_code:
@@ -647,6 +647,25 @@ def verify(request, **kwargs):
             return HttpResponseRedirect(reverse('membership:phone_verify_success'))
 
     return render(request,'membership/verify.html')
+
+@login_required(login_url='/member/login')
+def verify_resend(request):
+    user = request.user
+    vericode = user.member.generate_new_vericode()
+    send_mail('Verifikasi email anda.', 'Hi, %s !. Selamat bergabung di Kei-Partner'%(user.username),
+                "Kei Partner Admin <admin@kei-partner.com>", [user.email],
+                html_message="<html>\
+                <h2>Hi, %s !. Selamat Bergabung di Kei-Partner.com</h2>\
+                <p>Silakan klik link dibawah ini untuk memverifikasi email anda.</p>\
+                <p><a href='http://kei-partner.com/member/verify/%s/'>VERIFIKASI</a></p>\
+                <p>Atau masukan kode dibawah ini : <br/>\
+                   Kode Verifikasi = %s <br>\
+                   Ke alamat berikut ini : <br>\
+                   <a href='kei-partner.com/member/verify/'>https://kei-partner.com/member/verify/</a>\
+                </p>\
+                </html>"%(user.username, user.member.email_verification_code,user.member.email_verification_code))
+
+    return render(request,'membership/verify_sent.html')
 
 def verified_es(request):
     return HttpResponse('Email Verification success')

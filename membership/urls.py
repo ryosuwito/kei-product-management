@@ -17,6 +17,7 @@ urlpatterns = [
     path('verification/es/', views.verified_es, name='email_verify_success'),
     path('verification/ps/', views.verified_ps, name='phone_verify_success'),
     path('verification/ff/', views.verified_ff, name='verification_fail'),
+    path('verify/resend/', views.verify_resend, name='verify_email_resend'),
     path('verify/<str:vericode>/', views.verify, name='verify_email'),
     path('phone-verify/<str:phonecode>/', views.verify, name='verify_phone'),
     re_path(r'verify/$', views.verify, name='verify'),
