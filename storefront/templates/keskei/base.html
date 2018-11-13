@@ -90,13 +90,6 @@
                             height:auto;
                             ">
                   <span>Masuk</span></a>
-                {% else %}
-                <a style="color:#fff" href="{% url 'membership:logout' %}">
-                  <img src="/media/ic-logw.png" style="
-                            width: 13px;
-                            height:auto;
-                            ">
-                  <span>Keluar</span></a>
                 {% endif %}
                 </div>
               <div class="col-lg-2" style="
@@ -110,6 +103,13 @@
                           height:auto;
                           ">
                 <span>Daftar</span></a>
+                {% else %}
+                <a style="color:#fff" href="{% url 'membership:logout' %}">
+                  <img src="/media/ic-logw.png" style="
+                            width: 13px;
+                            height:auto;
+                            ">
+                  <span>Keluar</span></a>
                 {% endif %}
               </div>
               <div class="col-lg-5" style="
