@@ -225,7 +225,7 @@ class Member(models.Model):
         return  total_spent
 
     def generate_new_vericode(self):
-        self.email_verification_code = self.get_number(50)
+        self.email_verification_code = Member.get_number(50)
         self.save()
         return self.email_verification_code
 
