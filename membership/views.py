@@ -621,11 +621,12 @@ def verify(request, **kwargs):
 
         if vericode:
             member.is_email_verified = True
+            member.save()
+            return HttpResponseRedirect(reverse('membership:email_verify_success'))
         elif phonecode:
             member.is_phone_verified = True
-
-        member.save()
-        return HttpResponseRedirect(reverse('membership:phone_verify_success'))
+            member.save()
+            return HttpResponseRedirect(reverse('membership:phone_verify_success'))
 
     return HttpResponse('Please verify')
 
