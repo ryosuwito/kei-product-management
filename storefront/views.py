@@ -26,9 +26,8 @@ def home(request):
             }
         else:
             hlinks['%s'%link.pos] = {
-                'addr':link.addr, 
-                'name':link.name,
-                'page':{'url':link.page.get_url(), 'title':link.page.title}
+                'addr':link.page.get_url(), 
+                'name':link.page.title
             }
     flinks = FooterLink.objects.all()
     cart = carts.get_cart(request)
@@ -59,9 +58,8 @@ def product_detail(request, product_pk, **kwargs):
             }
         else:
             hlinks['%s'%link.pos] = {
-                'addr':link.addr, 
-                'name':link.name,
-                'page':{'url':link.page.get_url(), 'title':link.page.title}
+                'addr':link.page.get_url(), 
+                'name':link.page.title
             }
     flinks = FooterLink.objects.all()
     referal_code = redirect_referal_code(request, kwargs=kwargs)
@@ -249,9 +247,8 @@ def paginate_results(request, product_list,product_title):
             }
         else:
             hlinks['%s'%link.pos] = {
-                'addr':link.addr, 
-                'name':link.name,
-                'page':{'url':link.page.get_url(), 'title':link.page.title}
+                'addr':link.page.get_url(), 
+                'name':link.page.title
             }
     flinks = FooterLink.objects.all()
     cart = carts.get_cart(request)
