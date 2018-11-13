@@ -82,6 +82,7 @@ def login_page(request):
             if not user:
                 form_messages='username atau password salah'
             else :
+                return HttpResponse(user)
                 anon_cart = carts.get_cart(request)['cart_object']
                 anon_wishlist = wishlists.get_wishlist(request)['wishlist_object']
                 login(request, user)
