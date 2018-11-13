@@ -12,10 +12,26 @@ from .forms import MemberLoginForm, MemberRegisterForm, GuestRegisterForm, Membe
 from shopping_cart import carts, wishlists
 from reward_system.models import Reward
 
+from settings.models import HeaderLink, FooterLink
+
 import random
 # Create your views here.
 
 def login_page(request):   
+    header_links = HeaderLink.objects.all()
+    hlinks = {}
+    for link in header_links :
+        if not link.page:
+            hlinks['%s'%link.pos] = {
+                'addr':link.addr, 
+                'name':link.name
+            }
+        else:
+            hlinks['%s'%link.pos] = {
+                'addr':link.page.get_url(), 
+                'name':link.page.title
+            }
+    flinks = FooterLink.objects.all()
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
     wishlist = wishlists.get_wishlist(request)
@@ -72,10 +88,26 @@ def login_page(request):
         'cart': cart_object,
         'next': next,
         'form': form, 
+        'hlinks':hlinks,
+        'flinks':flinks, 
         'form_messages': form_messages,
         'welcome_message': welcome_message})
 
 def pre_register_page(request, *args, **kwargs):
+    header_links = HeaderLink.objects.all()
+    hlinks = {}
+    for link in header_links :
+        if not link.page:
+            hlinks['%s'%link.pos] = {
+                'addr':link.addr, 
+                'name':link.name
+            }
+        else:
+            hlinks['%s'%link.pos] = {
+                'addr':link.page.get_url(), 
+                'name':link.page.title
+            }
+    flinks = FooterLink.objects.all()
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
     wishlist = wishlists.get_wishlist(request)
@@ -108,11 +140,27 @@ def pre_register_page(request, *args, **kwargs):
     next = request.GET.get('next') if request.GET.get('next') else False
     return render(request, 'membership/pre_register.html', 
         {'link':link, 
+        'hlinks':hlinks,
+        'flinks':flinks, 
         'wishlist': wishlist_object,
         'cart': cart_object,
         'next':next})
 
 def register_page(request, *args, **kwargs): 
+    header_links = HeaderLink.objects.all()
+    hlinks = {}
+    for link in header_links :
+        if not link.page:
+            hlinks['%s'%link.pos] = {
+                'addr':link.addr, 
+                'name':link.name
+            }
+        else:
+            hlinks['%s'%link.pos] = {
+                'addr':link.page.get_url(), 
+                'name':link.page.title
+            }
+    flinks = FooterLink.objects.all()
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
     wishlist = wishlists.get_wishlist(request)
@@ -310,6 +358,8 @@ def register_page(request, *args, **kwargs):
             })
     return render(request, 'membership/register_%s.html'%(namespace),
         {'form': form, 
+         'hlinks':hlinks,
+         'flinks':flinks, 
          'wishlist': wishlist_object,
          'cart': cart_object,
          'threshold': threshold, 
@@ -317,6 +367,20 @@ def register_page(request, *args, **kwargs):
 
 @login_required(login_url='/member/login')
 def profile_page(request, uname='none'):
+    header_links = HeaderLink.objects.all()
+    hlinks = {}
+    for link in header_links :
+        if not link.page:
+            hlinks['%s'%link.pos] = {
+                'addr':link.addr, 
+                'name':link.name
+            }
+        else:
+            hlinks['%s'%link.pos] = {
+                'addr':link.page.get_url(), 
+                'name':link.page.title
+            }
+    flinks = FooterLink.objects.all()
     target = 0
     current_target = 0
     member_target = 0
@@ -392,6 +456,8 @@ def profile_page(request, uname='none'):
         'current_selling_target': current_selling_target,
         'member_selling_target': member_selling_target,
         'cart':cart, 
+        'hlinks':hlinks,
+        'flinks':flinks, 
         'default_host':default_host,
         'wishlist':wishlist,
         'link_edit': link_edit, 
@@ -399,6 +465,20 @@ def profile_page(request, uname='none'):
 
 @login_required(login_url='/member/login')
 def edit_profile_page(request):
+    header_links = HeaderLink.objects.all()
+    hlinks = {}
+    for link in header_links :
+        if not link.page:
+            hlinks['%s'%link.pos] = {
+                'addr':link.addr, 
+                'name':link.name
+            }
+        else:
+            hlinks['%s'%link.pos] = {
+                'addr':link.page.get_url(), 
+                'name':link.page.title
+            }
+    flinks = FooterLink.objects.all()
     referal_code = False
     if request.get_host() != settings.DEFAULT_HOST:
         referal_code = check_host(request, pass_variable=True)
@@ -499,7 +579,9 @@ def edit_profile_page(request):
                 })
 
     return render(request, 'membership/edit_profile_%s.html'%(namespace),
-        {'form': form})
+        {'form': form,
+        'hlinks':hlinks,
+        'flinks':flinks, })
 
 def log_check(user):
     return user.is_authenticated

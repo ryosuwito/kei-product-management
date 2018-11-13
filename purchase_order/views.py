@@ -17,10 +17,25 @@ from database_wilayah.models import Provinsi, Kota, Kecamatan, Kelurahan
 from reward_system.my_point import count_point
 from reward_system.my_purchasing import check_purchasing_bonus
 from membership.forms import CustomerAddForm
+from settings.models import HeaderLink, FooterLink
 import datetime
 
 @login_required
 def index(request):
+    header_links = HeaderLink.objects.all()
+    hlinks = {}
+    for link in header_links :
+        if not link.page:
+            hlinks['%s'%link.pos] = {
+                'addr':link.addr, 
+                'name':link.name
+            }
+        else:
+            hlinks['%s'%link.pos] = {
+                'addr':link.page.get_url(), 
+                'name':link.page.title
+            }
+    flinks = FooterLink.objects.all()
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
     services = ''
@@ -147,6 +162,8 @@ def index(request):
         'cart':cart_object,
         'products':products,
         'discount':discount,
+        'hlinks':hlinks,
+        'flinks':flinks, 
         'discounted_price':discounted_price,
         'couriers':couriers,
         'shipping_cost':shipping_cost,
@@ -237,6 +254,20 @@ def pay(request):
 
 @login_required
 def history(request):
+    header_links = HeaderLink.objects.all()
+    hlinks = {}
+    for link in header_links :
+        if not link.page:
+            hlinks['%s'%link.pos] = {
+                'addr':link.addr, 
+                'name':link.name
+            }
+        else:
+            hlinks['%s'%link.pos] = {
+                'addr':link.page.get_url(), 
+                'name':link.page.title
+            }
+    flinks = FooterLink.objects.all()
     orders = PurchaseOrder.objects.filter(user=request.user).order_by('-created_date')
     """
     if not orders:
@@ -264,12 +295,28 @@ def history(request):
         {'wishlist': wishlist_object,
         'cart':cart_object,
         'token':token,
+        'hlinks':hlinks,
+        'flinks':flinks, 
         'products':products,
         'max_page':max_page,
         'min_page':min_page})
 
 @login_required
 def detail(request, order_number):
+    header_links = HeaderLink.objects.all()
+    hlinks = {}
+    for link in header_links :
+        if not link.page:
+            hlinks['%s'%link.pos] = {
+                'addr':link.addr, 
+                'name':link.name
+            }
+        else:
+            hlinks['%s'%link.pos] = {
+                'addr':link.page.get_url(), 
+                'name':link.page.title
+            }
+    flinks = FooterLink.objects.all()
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
     wishlist = wishlists.get_wishlist(request)
@@ -282,6 +329,8 @@ def detail(request, order_number):
         {'wishlist': wishlist_object,
         'products': products,
         'cart':cart_object,
+        'hlinks':hlinks,
+        'flinks':flinks, 
         'token':token,
         'order':order})
 
