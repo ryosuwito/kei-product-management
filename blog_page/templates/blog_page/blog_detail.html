@@ -52,7 +52,8 @@
     <h2>Artikel Menarik Lainnya</h2>
     <div class="row">
     {% for article in other_article %}
-        <div onclick="window.open('{{article.get_url}}', _parent)" class="col-xs-4" style="padding:0;cursor:pointer">
+        <div onclick="window.open('{{article.get_url}}', _parent)" class="col-xs-4" 
+        style="cursor:pointer">
             <div style="padding:10px; border:1px solid #ddd">
                 <h4 style="font-weight:bold; color:#147D08">{{ article.title | title }}</h4>
                 <p>{{ article.summary | truncatechars:160 | linebreaksbr }}</p>
