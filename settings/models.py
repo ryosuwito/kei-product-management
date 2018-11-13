@@ -4,7 +4,7 @@ from blog_page.models import Page
 class FooterLink(models.Model):
     page = models.ForeignKey(Page, on_delete=models.SET_NULL, null=True)
     is_left = models.BooleanField(default=True)
-    addr = models.CharField(max_length=400, default='/')
+    addr = models.CharField(max_length=400, null=True)
     name = models.CharField(max_length=200, null=True)
     def __str__(self):
         return self.name.title()
@@ -12,7 +12,7 @@ class FooterLink(models.Model):
 class HeaderLink(models.Model):
     page = models.ForeignKey(Page, on_delete=models.SET_NULL, null=True)
     pos = models.PositiveIntegerField(null=True, unique=True)
-    addr = models.CharField(max_length=400, default='/')
+    addr = models.CharField(max_length=400, null=True)
     name = models.CharField(max_length=200, null=True)
     def __str__(self):
         return self.name.title()
