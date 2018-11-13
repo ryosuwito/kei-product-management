@@ -196,8 +196,8 @@ CKEDITOR_CONFIGS = {
 }
 
 ANYMAIL = {
-    "MAILJET_API_KEY": "1f4092555ff56337333ddef440447511",
-    "MAILJET_SECRET_KEY": "31f27322626579edc3fe0030c2979af4",
+    "MAILJET_API_KEY": KEY.MAILJET_API_KEY,
+    "MAILJET_SECRET_KEY": KEY.MAILJET_SECRET_KEY,
 }
 EMAIL_BACKEND = "anymail.backends.mailjet.EmailBackend"  # or sendgrid.EmailBackend, or...
 DEFAULT_FROM_EMAIL = "admin@kei-partner.com"  # if you don't already have this in settings

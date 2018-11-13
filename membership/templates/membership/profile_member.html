@@ -11,6 +11,11 @@
   </style>
   <div class="col-xs-12" style="padding: 0; background: #fff; height:auto; min-height: 600px;">
       <div class="row" style="margin: 0;">
+        <div class="col-xs-12 col-sm-12">
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        </div>
       <div class="hidden-xs col-sm-10" style="padding: 0 15px">
         <h2>Profil dan Data Akun
         {% if user == request.user %}
