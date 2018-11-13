@@ -329,11 +329,11 @@ def register_page(request, *args, **kwargs):
             send_mail('Verifikasi email anda.', 'Selamat bergabung di Kei-Partner',
                 "Kei Partner Admin <admin@kei-partner.com>", [user.email],
                 html_message="<html>\
-                <h2>Selamat Bergabung di Kei-partner.com</h2>\
+                <h2>Selamat Bergabung di Kei-Partner.com</h2>\
                 <p>Silakan klik link dibawah ini untuk memverifikasi email anda.</p>\
-                <p><a href='kei-partner.com/member/verif/%s/'>VERIFIKASI</a></p>\
+                <p><a href='http://kei-partner.com/member/verif/%s/'>VERIFIKASI</a></p>\
                 <p>Atau masukan kode dibawah ini : <br/>\
-                   Kode Verifikasi - %s <br>\
+                   Kode Verifikasi = %s <br>\
                    Ke alamat berikut ini : <br>\
                    <a href='kei-partner.com/member/verif/'>https://kei-partner.com/member/verif/</a>\
                 </p>\

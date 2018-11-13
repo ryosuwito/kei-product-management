@@ -229,7 +229,7 @@ class Member(models.Model):
     def get_number(amount = 50, is_num_only = False):
         if not is_num_only:
             random_number = get_random_string(amount, 
-                allowed_chars='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%*()')
+                allowed_chars='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_')
         else:
             random_number = get_random_string(amount, 
                 allowed_chars='0123456789')
