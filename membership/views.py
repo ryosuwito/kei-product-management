@@ -383,10 +383,10 @@ def register_page(request, *args, **kwargs):
         else:
             form = MemberRegisterForm()
         if referal_code:
-            form.fields['sponsor_code'].default = referalstr:vericode>_code
-            form.fields['sponsor_code'].initial = referalstr:vericode>_code
-            form.fields['sponsor_code'].disabled = Truestr:vericode>
-            form.fields['sponsor_code'].widget.attrs.updastr:vericode>te({
+            form.fields['sponsor_code'].default = referal_code
+            form.fields['sponsor_code'].initial = referal_code
+            form.fields['sponsor_code'].disabled = True
+            form.fields['sponsor_code'].widget.attrs.update({
             'class': 'input-text',
             'style': 'width:100%'
             })
@@ -422,10 +422,11 @@ def profile_page(request, uname='none'):
     wishlist = wishlists.get_wishlist(request)['wishlist_object']
     referal_code = False
     default_host = settings.DEFAULT_HOST 
-str:vericode>_host + \
-str:vericode>le', 
-str:vericode>esolver_match.namespace)
-str:vericode>
+
+    default_register_page = request.scheme+"://"+ default_host + \
+                                reverse('membership:profile', 
+                                    current_app=request.resolver_match.namespace)
+
     if request.get_host() != settings.DEFAULT_HOST:
         referal_code = check_host(request, pass_variable=True)
         if not referal_code:
