@@ -18,7 +18,7 @@ def article(request, article_slug):
     article =  get_object_or_404(Article, slug=article_slug)
     return render_article(request, article)
 
-def render_article(request, article)
+def render_article(request, article):
     header_links = HeaderLink.objects.all()
     hlinks = {}
     for link in header_links :
