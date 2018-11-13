@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 from catalog.models import Product
+from settings.models import HeaderLink, FooterLink
 
 from .models import Page, Article
 
