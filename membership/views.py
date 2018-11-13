@@ -62,6 +62,18 @@ def login_page(request):
             password = data.get('password')
             user = authenticate(username=username,
                 password=password)
+            if not user :
+                user = authenticate(email=username,
+                    password=password)
+            if not user :
+                try:
+                    member = Member.objects.get(phone_number=username)
+                except:
+                    member = ''
+                if member:
+                    user = authenticate(email=member.user.username,
+                        password=password)
+
             if user is not None:
                 anon_cart = carts.get_cart(request)['cart_object']
                 anon_wishlist = wishlists.get_wishlist(request)['wishlist_object']
