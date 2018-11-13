@@ -14,5 +14,6 @@ class ShippingOriginForm(forms.Form):
 
         self.fields['provinsi'].widget.attrs['onClick'] = 'getKota(this.id)'
         self.fields['alamat'].widget = forms.Textarea() 
+        self.fields['alamat'].widget.attrs['style'] = 'width:100%' 
         self.fields['alamat'].widget.attrs['rows'] = '3' 
         self.fields['alamat'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
