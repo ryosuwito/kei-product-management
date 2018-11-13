@@ -79,7 +79,7 @@ def login_page(request):
                     user = authenticate(username=member.user.username,
                         password=password)
 
-            if user is not None:
+            if user:
                 anon_cart = carts.get_cart(request)['cart_object']
                 anon_wishlist = wishlists.get_wishlist(request)['wishlist_object']
                 login(request, user)
