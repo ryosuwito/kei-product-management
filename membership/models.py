@@ -138,7 +138,9 @@ class Member(models.Model):
     is_archived = models.BooleanField(default=False)
     is_member_activated = models.BooleanField(default=False)
     is_phone_verified = models.BooleanField(default=False)
-    is_email_verified = models.BooleanField(default=False)
+    is_email_verified = models.BooleanField(default=False)    
+    email_verification_code = models.CharField(max_length=50, blank=True, null=True) #done
+    phone_verification_code = models.CharField(max_length=5, blank=True, null=True)
 
     total_spent = models.PositiveIntegerField(editable=False,blank=True, null=True)
     wallet = models.PositiveIntegerField(null=True, help_text="Dompet Member", default=0)
@@ -178,6 +180,7 @@ class Member(models.Model):
         filename = "media/%s_%s.png"%(content,name)
         qr.png(filename, scale=12)
         return filename
+
 
     def get_level(self):
         level = ''
@@ -220,6 +223,18 @@ class Member(models.Model):
         self.total_spent = total_spent
         return  total_spent
 
+    def get_vericode():
+        return {'email_code':self.email_verification_code, 'phone_code':self.phone_verification_code}
+
+    def get_number(amount = 50, is_num_only = False):
+        if not is_num_only:
+            random_number = get_random_string(amount, 
+                allowed_chars='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+=-')
+        else:
+            random_number = get_random_string(amount, 
+                allowed_chars='0123456789')
+        return random_number
+
     def __str__(self):
         return self.get_full_name()
 
@@ -230,6 +245,8 @@ def create_user_profile(sender, instance, created, **kwargs):
         member.referal_code = Member.get_referal()
         member.qrcode = Member.get_qrcode(name=member.referal_code,
             content=instance.username)
+        member.email_verification_code = Member.get_number(50)
+        member.phone_verification_code = Member.get_number(5, True)
         member.save()
         
 @receiver(post_save, sender=User)

@@ -262,9 +262,12 @@ def register_page(request, *args, **kwargs):
             username = data.get('username').lower()
             if User.objects.filter(username=username).count():
                 raise forms.ValidationError(u'Username "%s" telah digunakan.' % username)
+            email = data.get('email')
+            if User.objects.filter(email=email).count():
+                raise forms.ValidationError(u'Email "%s" telah digunakan.' % email)
                 
             password = data.get('password')
-            email = data.get('email')
+
             user = User.objects.create_user(username=username, email=email, password=password)
 
             """
