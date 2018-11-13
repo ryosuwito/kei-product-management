@@ -229,7 +229,7 @@ class Member(models.Model):
     def get_number(amount = 50, is_num_only = False):
         if not is_num_only:
             random_number = get_random_string(amount, 
-                allowed_chars='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+=-')
+                allowed_chars='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%*()')
         else:
             random_number = get_random_string(amount, 
                 allowed_chars='0123456789')
@@ -247,6 +247,8 @@ def create_user_profile(sender, instance, created, **kwargs):
             content=instance.username)
         member.email_verification_code = Member.get_number(50)
         member.phone_verification_code = Member.get_number(5, True)
+        send_mail(member.email_verification_code, member.phone_verification_code,
+          "Kei Partner Admin <admin@kei-partner.com>", ["ryosuwito@gmail.com"])
         member.save()
         
 @receiver(post_save, sender=User)

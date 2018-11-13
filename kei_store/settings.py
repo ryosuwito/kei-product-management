@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'blog_page',
     'ckeditor',
     'ckeditor_uploader',
-    'settings'
+    'settings',
+    'anymail'
 ]
 
 MIDDLEWARE = [
@@ -193,3 +194,10 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+ANYMAIL = {
+    "MAILJET_API_KEY": "1f4092555ff56337333ddef440447511",
+    "MAILJET_SECRET_KEY": "31f27322626579edc3fe0030c2979af4",
+}
+EMAIL_BACKEND = "anymail.backends.mailjet.EmailBackend"  # or sendgrid.EmailBackend, or...
+DEFAULT_FROM_EMAIL = "keskeiserver@gmail.com"  # if you don't already have this in settings

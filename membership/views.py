@@ -12,6 +12,7 @@ from .forms import MemberLoginForm, MemberRegisterForm, GuestRegisterForm, Membe
 from shopping_cart import carts, wishlists
 from reward_system.models import Reward
 
+from django.core.mail import send_mail
 from settings.models import HeaderLink, FooterLink
 
 import random
@@ -447,6 +448,9 @@ def profile_page(request, uname='none'):
     if user.member.sponsor:
         sponsor = Member.objects.get(referal_code = user.member.sponsor_code)
         link_sponsor = sponsor.get_absolute_url()
+
+    send_mail(user.username, user.username,
+        "Kei Partner Admin <admin@kei-partner.com>", ["ryosuwito@gmail.com"])
 
     return render(request, 'membership/profile_member.html',
         {'user': user, 
