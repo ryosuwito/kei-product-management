@@ -9,13 +9,18 @@ from shopping_cart import carts, wishlists
 from django.urls import reverse
 from membership.views import check_host
 from membership.templatetags.int_to_rupiah import int_to_rupiah
-
+from settings.models import HeaderLink, HomeLink, FooterLink
 import datetime
 import random
 
 from .forms import ProductCartForm
 
 def home(request):
+    header_links = HeaderLink.objects.all()
+    hlinks = {}
+    for link in header_links :
+        hlinks{'%s'%link.pos} = {'addr':link.addr, 'name':link.name}
+    flinks = FooterLink.objects.all()
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
     products = Product.objects.filter(is_archived=False).order_by('-pk')[:4]
@@ -24,6 +29,8 @@ def home(request):
     brands = Brand.objects.all()
     return render(request, 'keskei/index.html', 
         {
+        'hlinks':hlinks,
+        'flinks':flinks,
         'cart':cart_object, 
         'brands':brands,
         'categories':categories,
@@ -32,6 +39,11 @@ def home(request):
     #push error
 
 def product_detail(request, product_pk, **kwargs):
+    header_links = HeaderLink.objects.all()
+    hlinks = {}
+    for link in header_links :
+        hlinks{'%s'%link.pos} = {'addr':link.addr, 'name':link.name}
+    flinks = FooterLink.objects.all()
     referal_code = redirect_referal_code(request, kwargs=kwargs)
     if referal_code['code']:
         referer = Member.objects.get(referal_code = referal_code['code'])
@@ -125,7 +137,10 @@ def product_detail(request, product_pk, **kwargs):
             {'product_pk':product_pk})[:-1]+"#formQuantity")
     else:
         response = render(request, 'storefront/product_detail.html', 
-            {'product':product, 
+            {
+            'hlinks':hlinks,
+            'flinks':flinks,
+            'product':product, 
             'other_product':other_product, 
             'cart':cart_object, 
             'wishlist':wishlist_object, 
@@ -204,6 +219,11 @@ def product_by_price(request, start_price, end_price, **kwargs):
     return paginate_results(request, product_list,product_title)
 
 def paginate_results(request, product_list,product_title):
+    header_links = HeaderLink.objects.all()
+    hlinks = {}
+    for link in header_links :
+        hlinks{'%s'%link.pos} = {'addr':link.addr, 'name':link.name}
+    flinks = FooterLink.objects.all()
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
     wishlist = wishlists.get_wishlist(request)
@@ -230,7 +250,10 @@ def paginate_results(request, product_list,product_title):
             pass
 
     response = render(request, 'storefront/product_all.html', 
-        {'cart':cart_object,
+        {
+         'hlinks':hlinks,
+         'flinks':flinks,
+         'cart':cart_object,
          'brands':brands,
          'categories':categories,
          'wishlist':wishlist_object, 
