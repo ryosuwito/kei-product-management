@@ -1,7 +1,7 @@
 {% extends "keskei/base.html" %}
 {% load int_to_rupiah %}
   {% block title %}
-    <title>{% article.title | title %}</title>
+    <title>{{ article.title | title }}</title>
   {% endblock %}
   {% block local_script %}
   <script>
@@ -29,16 +29,17 @@
     {% include "keskei/sidebar.html" %}
   {% endblock %}
   {% block content %}
-        
-  {% if other_product %}
+
   <article>
     <div class="col-xs-12 col-sm-12">
         <img src="{{article.get_image_url}}">
-        <h1>{% article.title | title %}</h1>
-        <p>{% article.summary | linebreaksbr %}</p>
-        <p>{% article.content | linebreaksbr %}</p>
+        <h1>{{ article.title | title }}</h1>
+        <p>{{ article.summary | linebreaksbr }}</p>
+        <p>{{ article.content | linebreaksbr }}</p>
     </div>
   </article>
+          
+  {% if other_product %}
   <!-- Related Slider -->
   <div class="related-pro col-xs-12 col-sm-12">
       <div class="slider-items-products">
