@@ -43,7 +43,7 @@ class MemberRegisterForm(forms.ModelForm):
     error_messages = {
         'duplicate_username': 'Pengguna dengan username tersebut sudah ada',
         'duplicate_email': 'Pengguna dengan email tersebut sudah ada',
-        'duplicate_phone_number': 'Pengguna dengan nomor telepon tersebut sudah ada'
+        'duplicate_phone_number': 'Pengguna dengan nomor telepon tersebut sudah ada',
     }
     
     provinsi = forms.ModelChoiceField(Provinsi.objects.all(), initial='')
@@ -127,7 +127,7 @@ class MemberRegisterForm(forms.ModelForm):
         self.fields['bank_book_photo'].widget.attrs['class'] = 'hidden'
 
         self.fields['ktp_photo'].widget.attrs['onChange'] = 'Handlechange(event, this.id)'
-        self.fields['ktp_photo'].widget.attrs['class'] =email 'hidden'
+        self.fields['ktp_photo'].widget.attrs['class'] = 'hidden'
 
     def clean_username(self):
         username = self.cleaned_data["username"].lower()
