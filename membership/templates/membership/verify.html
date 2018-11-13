@@ -12,7 +12,7 @@
               <h2 class="title">Verifikasikan Akun Anda</h2>
               <p>Untuk melanjutkan pembelian barang, harap verifikasikan alamat email Anda.
                   Cek kotak masuk email Anda, klik tautan pada email tersebut.
-                  Atau masukan kode verifikasi email ke kolom dibawah ini.
+                  Atau masukan kode verifikasi ke kolom dibawah.
                   <br>
                   <br>
                   Tidak ada email verifikasi di kotak masuk Anda? 
@@ -21,9 +21,9 @@
               </p>
               <form  method="POST">
                 {% csrf_token %}
-                  <div style="text-align: left">
+                  <div style="text-align: left; margin-bottom:15px">
                     <p>Kode Verifikasi</p>
-                    <input type="text" style="width:100%; background:#fff; padding:10px" placeholder="50 digit kode verifikasi">
+                    <input name="vericode" type="text" style="width:100%; background:#fff; padding:10px" placeholder="50 digit kode verifikasi">
                   </div>
                   <button class="btn btn-primary" style="width:100%" type="submit">Verifikasi</button>
                 </div>
