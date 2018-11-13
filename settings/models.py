@@ -8,7 +8,7 @@ class FooterLink(models.Model):
         return self.name.title()
 
 class HeaderLink(models.Model):
-    pos = models.PositiveIntegerField(editable=False, null=True, unique=True)
+    pos = models.PositiveIntegerField(null=True, unique=True)
     addr = models.CharField(max_length=400, default='/')
     name = models.CharField(max_length=200, null=True)
     def __str__(self):
