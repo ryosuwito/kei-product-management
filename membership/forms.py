@@ -159,7 +159,7 @@ class MemberRegisterForm(forms.ModelForm):
         phone_number = self.cleaned_data["phone_number"].lower()
        
         try:
-            User._default_manager.get(phone_number=phone_number)
+            User._default_manager.get(member__phone_number=phone_number)
             #if the user exists, then let's raise an error message
 
             raise forms.ValidationError( 
