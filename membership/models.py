@@ -247,8 +247,6 @@ def create_user_profile(sender, instance, created, **kwargs):
             content=instance.username)
         member.email_verification_code = Member.get_number(50)
         member.phone_verification_code = Member.get_number(5, True)
-        send_mail(member.email_verification_code, member.phone_verification_code,
-          "Kei Partner Admin <admin@kei-partner.com>", ["ryosuwito@gmail.com"])
         member.save()
         
 @receiver(post_save, sender=User)
