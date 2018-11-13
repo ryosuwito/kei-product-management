@@ -41,8 +41,8 @@ class MemberRegisterForm(forms.ModelForm):
     USERNAME_MAX = 20
     USERNAME_MIN = 6
     error_messages = {
-        'duplicate_username': 'Pengguna dengan username tersebut sudah ada'
-        'duplicate_email': 'Pengguna dengan email tersebut sudah ada'
+        'duplicate_username': 'Pengguna dengan username tersebut sudah ada',
+        'duplicate_email': 'Pengguna dengan email tersebut sudah ada',
         'duplicate_phone_number': 'Pengguna dengan nomor telepon tersebut sudah ada'
     }
     
