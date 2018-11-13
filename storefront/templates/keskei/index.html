@@ -176,11 +176,11 @@
           </p>
         </div>
         <div style="width:100%; padding:0 15px; min-height: 150px; max-height: 150px; overflow-y: auto">
-            <ol>
+            <ul>
               {% for article in articles %}
                   <li><a href="{{article.get_url}}">{{article.title | title}}</a></li>
               {% endfor %}
-            </ol>
+            </ul>
         </div>
       </div>
     </div>
