@@ -35,11 +35,11 @@
       </div></div>
       
 <script src="/static/javascript/jquery-3.2.1.min.js"></script> 
-      <script>
-        $('#veriform').submit(function(e) {
-          e.preventDefault();    
-          alert($('#vericode').val());
-        
-        });
-      </script>
+<script>
+  $('#veriform').submit(function(e) {
+    e.preventDefault();    
+    url = 'kei-partner.com/member/verify/'+$('#vericode').val()+'/';
+    window.open(url,'_parent')
+  });
+</script>
 {% endblock %}
