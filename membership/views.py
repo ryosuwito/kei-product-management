@@ -63,8 +63,13 @@ def login_page(request):
             user = authenticate(username=username,
                 password=password)
             if not user :
-                user = authenticate(email=username,
-                    password=password)
+                try:
+                    user = User.objects.get(email=username)
+                except:
+                    user = ''
+                if user:
+                    user = authenticate(username=user.username,
+                        password=password)
             if not user :
                 try:
                     member = Member.objects.get(phone_number=username)
