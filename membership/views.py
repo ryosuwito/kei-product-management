@@ -314,7 +314,7 @@ def register_page(request, *args, **kwargs):
                 user.member.ktp_provinsi = provinsi_home
                 user.member.ktp_kota = kota_home
                 user.member.ktp_kecamatan = kecamatan_home
-                user.member.ktp_kelurahan = kelurahan
+                user.member.ktp_kelurahan = kelurahan_home
                 user.member.ktp_address = data.get('home_address')
     
             if data.get('home_address'):                 
