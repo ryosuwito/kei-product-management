@@ -605,29 +605,29 @@ def verify(request, **kwargs):
         vericode = kwargs['vericode']
         member = Member.objects.get(email_verification_code=vericode)
     except:
-        return HttpResponseRedirect(reverse('member:email_verification_fail'))
+        return HttpResponseRedirect(reverse('membership:email_verification_fail'))
     try:
         phonecode = kwargs['phonecode']
         member = Member.objects.get(phone_verification_code=vericode)
     except:
-        return HttpResponseRedirect(reverse('member:email_verification_fail'))
+        return HttpResponseRedirect(reverse('membership:email_verification_fail'))
 
     if member.user != request.user and request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('member:email_verification_fail'))
+        return HttpResponseRedirect(reverse('membership:email_verification_fail'))
 
     if member.is_email_verified and vericode:
-        return HttpResponseRedirect(reverse('member:profile'))
+        return HttpResponseRedirect(reverse('membership:profile'))
     if member.is_phone_verified and phonecode:
-        return HttpResponseRedirect(reverse('member:profile'))
+        return HttpResponseRedirect(reverse('membership:profile'))
 
     if vericode:
         member.is_email_verified = True
         member.save()
-        return HttpResponseRedirect(reverse('member:email_verify_success'))
+        return HttpResponseRedirect(reverse('membership:email_verify_success'))
     elif phonecode:
         member.is_phone_verified = True
         member.save()
-        return HttpResponseRedirect(reverse('member:phone_verify_success'))
+        return HttpResponseRedirect(reverse('membership:phone_verify_success'))
 
     return HttpResponse('Please verify')
 
