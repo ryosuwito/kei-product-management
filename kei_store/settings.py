@@ -200,4 +200,4 @@ ANYMAIL = {
     "MAILJET_SECRET_KEY": "31f27322626579edc3fe0030c2979af4",
 }
 EMAIL_BACKEND = "anymail.backends.mailjet.EmailBackend"  # or sendgrid.EmailBackend, or...
-DEFAULT_FROM_EMAIL = "keskeiserver@gmail.com"  # if you don't already have this in settings
+DEFAULT_FROM_EMAIL = "admin@kei-partner.com"  # if you don't already have this in settings
