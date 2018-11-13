@@ -32,10 +32,14 @@
 
   <article>
     <div class="col-xs-12 col-sm-12">
+        {% if article.featured_image %}
         <img src="{{article.get_image_url}}">
+        {% endif %}
         <h1>{{ article.title | title }}</h1>
+        {% autoescape off %}
         <p>{{ article.summary | linebreaksbr }}</p>
         <p>{{ article.content | linebreaksbr }}</p>
+        {% endautoescape %}
     </div>
   </article>
           
