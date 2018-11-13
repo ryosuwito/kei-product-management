@@ -33,7 +33,10 @@
   <article>
     <div class="col-xs-12 col-sm-12">
         {% if article.featured_image %}
-        <img src="{{article.get_image_url}}">
+        <div style="background-image:url('{{article.get_image_url}}');
+            width:100%; min-height:320px; background-position: center; 
+            background-repeat: no-repeat;
+            background-size: cover">
         {% endif %}
         <h1>{{ article.title | title }}</h1>
         {% autoescape off %}
