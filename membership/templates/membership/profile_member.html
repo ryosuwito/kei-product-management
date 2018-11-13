@@ -16,14 +16,14 @@
             <div class="alert alert-danger">
                 <p><strong>Email Anda belum diverifikasi. Cek kotak masuk email Anda</strong></p>
                 <p>Akun yang belum terverifikasi tidak dapat menyelesaikan pembelian.</p>
-                <button onclick="window.open('/member/verify')" class="btn btn-primary">Verifikasi</button>
+                <button onclick="window.open('/member/verify')" class="btn btn-xs btn-danger">Verifikasi</button>
             </div>
           {% endif %}
           {% if not user.member.is_phone_verified %}
             <div class="alert alert-danger">
                 <p><strong>Nomor telepon Anda belum diverifikasi. </strong></p>
                 <p>Verifikasi segera nomor telepon Anda untuk demi keamanan akun Anda.</p>
-                <button onclick="window.open('/member/phone-verify')" class="btn btn-primary">Verifikasi</button>
+                <button onclick="window.open('/member/phone-verify')" class="btn btn-xs btn-danger">Verifikasi</button>
             </div>
           {% endif %}
         </div>
