@@ -83,22 +83,35 @@
                     padding: 0;
                     padding-top: 15px;
                 ">
+                {% if not request.user.is_authenticated %}
                 <a style="color:#fff" href="{% url 'membership:login' %}">
                   <img src="/media/ic-logw.png" style="
                             width: 13px;
                             height:auto;
                             ">
-                  <span>Masuk</span></a></div>
+                  <span>Masuk</span></a>
+                {% else %}
+                <a style="color:#fff" href="{% url 'membership:logout' %}">
+                  <img src="/media/ic-logw.png" style="
+                            width: 13px;
+                            height:auto;
+                            ">
+                  <span>Keluar</span></a>
+                {% endif %}
+                </div>
               <div class="col-lg-2" style="
                       padding: 0;
                       padding-top: 15px;
                   ">
+                {% if not request.user.is_authenticated %}
                 <a style="color:#fff" href="{% url 'membership:pre_register' %}">
                 <img src="/media/ic-userw.png" style="
                           width: 15px;
                           height:auto;
                           ">
-                <span>Daftar</span></a></div>
+                <span>Daftar</span></a>
+                {% endif %}
+              </div>
               <div class="col-lg-5" style="
                       padding: 0;
                       padding-top: 15px;
