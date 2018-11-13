@@ -21,4 +21,4 @@ def article(request, article_slug):
     else:
         other_product = random.sample(list(all_product), len(all_product))
 
-    return render(request, 'blog_page/blog_detail.html', {"article":article. 'other_product':other_product})
+    return render(request, 'blog_page/blog_detail.html', {"article":article, 'other_product':other_product})
