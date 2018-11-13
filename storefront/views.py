@@ -89,9 +89,7 @@ def product_detail(request, product_pk, **kwargs):
         elif method == 'cart':
             form = ProductCartForm(request.POST)
             if form.is_valid():
-                data = form.clea            'hlinks':hlinks,
-            'flinks':flinks,
-            'product':product, ned_data
+                data = form.cleaned_data
                 quantity = data.get('quantity')
                 cart_item = False
                 try :
