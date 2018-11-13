@@ -132,7 +132,7 @@ class Member(models.Model):
     twitter_address = models.CharField(max_length=250, blank=True)
     website_address = models.CharField(max_length=250, blank=True)
     whatsapp_number = models.CharField(validators=[phone_regex], max_length=17, blank=True, null=True)
-    qrcode = models.CharField(max_length=20, blank=True)  
+    qrcode = models.CharField(max_length=60, blank=True)  
 
     smart_motto = models.CharField(max_length=250, blank=True)
     is_archived = models.BooleanField(default=False)
@@ -145,6 +145,7 @@ class Member(models.Model):
     total_spent = models.PositiveIntegerField(editable=False,blank=True, null=True)
     wallet = models.PositiveIntegerField(null=True, help_text="Dompet Member", default=0)
     used_voucher = models.ManyToManyField(Voucher, 
+            blank=True,
             related_name="voucher_used_by_member",
             help_text="Voucher yang dipakai member")
 
