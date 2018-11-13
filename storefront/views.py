@@ -19,7 +19,7 @@ def home(request):
     header_links = HeaderLink.objects.all()
     hlinks = {}
     for link in header_links :
-        hlinks['%s'%link.pos] = {'addr':link.addr, 'name':link.name}
+        hlinks['%s'%link.pos] = {'addr':link.addr, 'name':link.name, 'page':link.page}
     flinks = FooterLink.objects.all()
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
@@ -42,7 +42,7 @@ def product_detail(request, product_pk, **kwargs):
     header_links = HeaderLink.objects.all()
     hlinks = {}
     for link in header_links :
-        hlinks['%s'%link.pos] = {'addr':link.addr, 'name':link.name}
+        hlinks['%s'%link.pos] = {'addr':link.addr, 'name':link.name, 'page':link.page}
     flinks = FooterLink.objects.all()
     referal_code = redirect_referal_code(request, kwargs=kwargs)
     if referal_code['code']:
@@ -222,7 +222,7 @@ def paginate_results(request, product_list,product_title):
     header_links = HeaderLink.objects.all()
     hlinks = {}
     for link in header_links :
-        hlinks['%s'%link.pos] = {'addr':link.addr, 'name':link.name}
+        hlinks['%s'%link.pos] = {'addr':link.addr, 'name':link.name, 'page':link.page}
     flinks = FooterLink.objects.all()
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
