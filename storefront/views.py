@@ -25,7 +25,6 @@ def home(request):
                 'name':link.name
             }
         else:
-            return HttpResponse(link.page.get_url())
             hlinks['%s'%link.pos] = {
                 'addr':link.page.get_url(), 
                 'name':link.page.title
