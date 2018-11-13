@@ -28,7 +28,8 @@ class Article(models.Model):
         return "%s" % ("/media/%s"%self.featured_image)
 
     def get_url(self):
-        return "%s" % (reverse('blog_detail', kwargs={'kategori':self.category.all()[0].slug, 'slug':self.slug}))
+        return "%s" % ("/blog/%s"%self.slug)
+        #return "%s" % (reverse('blog_detail', kwargs={'slug':self.slug}))
 
 
 @receiver(post_save, sender=Article)
@@ -58,7 +59,8 @@ class Page(models.Model):
         return "%s" % ("/media/%s"%self.featured_image)
 
     def get_url(self):
-        return "%s" % (reverse('blog_detail', kwargs={'kategori':self.category.all()[0].slug, 'slug':self.slug}))
+        return "%s" % ("/page/%s"%self.slug)
+        #return "%s" % (reverse('page_detail', kwargs={'slug':self.slug}))
 
 
 @receiver(post_save, sender=Page)
