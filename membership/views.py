@@ -613,7 +613,7 @@ def verify(request, **kwargs):
 
     if member :
         if member.user != request.user and request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('membership:email_verification_fail'))
+            return HttpResponseRedirect(reverse('membership:verification_fail'))
         if member.is_email_verified and vericode:
             return HttpResponseRedirect(reverse('membership:profile'))
         if member.is_phone_verified and phonecode:
