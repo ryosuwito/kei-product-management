@@ -329,7 +329,7 @@ def register_page(request, *args, **kwargs):
             send_mail('Verifikasi email anda.', 'Hi, %s !. Selamat bergabung di Kei-Partner'%(user.username),
                 "Kei Partner Admin <admin@kei-partner.com>", [user.email],
                 html_message="<html>\
-                <h2>Selamat Bergabung di Kei-Partner.com</h2>\
+                <h2>Hi, %s !. Selamat Bergabung di Kei-Partner.com</h2>\
                 <p>Silakan klik link dibawah ini untuk memverifikasi email anda.</p>\
                 <p><a href='http://kei-partner.com/member/verif/%s/'>VERIFIKASI</a></p>\
                 <p>Atau masukan kode dibawah ini : <br/>\
@@ -337,7 +337,7 @@ def register_page(request, *args, **kwargs):
                    Ke alamat berikut ini : <br>\
                    <a href='kei-partner.com/member/verif/'>https://kei-partner.com/member/verif/</a>\
                 </p>\
-                </html>"%(user.member.email_verification_code,user.member.email_verification_code))
+                </html>"%(user.username, user.member.email_verification_code,user.member.email_verification_code))
             reward = Reward(member=user.member)
             if user is not None:
                 anon_cart = carts.get_cart(request)['cart_object']

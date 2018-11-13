@@ -201,3 +201,4 @@ ANYMAIL = {
 }
 EMAIL_BACKEND = "anymail.backends.mailjet.EmailBackend"  # or sendgrid.EmailBackend, or...
 DEFAULT_FROM_EMAIL = "admin@kei-partner.com"  # if you don't already have this in settings
+SMS_TOKEN = '6d228591b4e444f8bec21c2ed539b17c'
