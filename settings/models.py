@@ -1,21 +1,18 @@
 from django.db import models
 
-class Link(models.Model):
+class FooterLink(models.Model):
+    is_left = models.BooleanField(default=True)
     addr = models.CharField(max_length=400, default='/')
-    name = models.CharField(max_length=200)
-
+    name = models.CharField(max_length=200, null=True)
     def __str__(self):
         return self.name.title()
 
-class FooterLink(models.Model):
-    link = models.ManyToManyField(Link, 
-            related_name="link_in_footer",
-            help_text="Link pada footer")
-
 class HeaderLink(models.Model):
-    link = models.ManyToManyField(Link, 
-            related_name="link_in_header",
-            help_text="Link pada header")
+    pos = models.PositiveIntegerField(editable=False, null=True, unique=True)
+    addr = models.CharField(max_length=400, default='/')
+    name = models.CharField(max_length=200, null=True)
+    def __str__(self):
+        return self.name.title()
 
 class HomeLink(models.Model):
     addr_1 = models.CharField(max_length=400, default='/')

@@ -195,14 +195,14 @@
           <div class="col-lg-5">
             <div class="row">
               <div class="col-lg-4" style="padding:8px 15px; text-align: center">
-                <p style="color:#147D08;margin:0">About Us</p>
+                <p onclick="window.open('{{hlinks.1.addr}}')" style="color:#147D08;margin:0">{{hlinks.1.name | title}}</p>
               </div>
               <div class="col-lg-4" style="border-left:1px solid #aaa;
                 border-right:1px solid #aaa;padding:8px 15px; text-align: center">
-                <p style="color:#147D08;margin:0">Partner Area</p>
+                <p onclick="window.open('{{hlinks.2.addr}}')" style="color:#147D08;margin:0">{{hlinks.2.name | title}}</p>
               </div>
               <div class="col-lg-4" style="padding:8px 15px; text-align: center">
-                <p style="color:#147D08;margin:0">Join Business</p>
+                <p onclick="window.open('{{hlinks.3.addr}}')" style="color:#147D08;margin:0">{{hlinks.3.name | title}}</p>
               </div>
             </div>
           </div>
@@ -211,11 +211,11 @@
           <div class="col-lg-5">
             <div class="row">
               <div class="col-lg-4" style="padding:8px 15px; text-align: center">
-                <p style="color:#147D08;margin:0">Join Vendor</p>
+                <p onclick="window.open('{{hlinks.4.addr}}')" style="color:#147D08;margin:0">{{hlinks.4.name | title}}</p>
               </div>
               <div class="col-lg-4" style="border-left:1px solid #aaa;
                 padding:8px 15px; text-align: center">
-                <p style="color:#147D08;margin:0">Layanan Pelanggan</p>
+                <p onclick="window.open('{{hlinks.5.addr}}')" style="color:#147D08;margin:0">{{hlinks.5.name | title}}</p>
               </div>
               <div class="col-lg-4" style="padding:4px 0px; text-align: center">
                 <div style="background: #ddd; padding: 5px; border-radius: 10px">
@@ -267,22 +267,22 @@
           <div class="col-lg-2">
               <div class="contacts-info">
                   <ul class="links">
-                    <li><a style="color:#fff" href="blog.html" title="How to buy">Tentang Kami</a></li>
-                    <li><a style="color:#fff" href="faq.html" title="FAQs">Karir (Menjadi Seller)</a></li>
-                    <li><a style="color:#fff" href="#" title="Payment">Blog</a></li>
-                    <li><a style="color:#fff" href="#" title="Shipment">Media Kit</a></li>
-                    <li><a style="color:#fff" href="#" title="Where is my order?">Kegiatan Kami</a></li>
+                    {% for link in flinks %}
+                        {% if link.is_left %}
+                        <li><a style="color:#fff" href="{{link.addr}}" title="How to buy">{{link.name | title}}</a></li>
+                        {% endif %}
+                    {% endfor %}
                   </ul>
               </div>
           </div>
           <div class="col-lg-2">
               <div class="contacts-info">
                   <ul class="links">
-                    <li><a style="color:#fff" href="blog.html" title="How to buy">Tentang Kami</a></li>
-                    <li><a style="color:#fff" href="faq.html" title="FAQs">Karir (Menjadi Seller)</a></li>
-                    <li><a style="color:#fff" href="#" title="Payment">Blog</a></li>
-                    <li><a style="color:#fff" href="#" title="Shipment">Media Kit</a></li>
-                    <li><a style="color:#fff" href="#" title="Where is my order?">Kegiatan Kami</a></li>
+                    {% for link in flinks %}
+                        {% if not link.is_left %}
+                        <li><a style="color:#fff" href="{{link.addr}}" title="How to buy">{{link.name | title}}</a></li>
+                        {% endif %}
+                    {% endfor %}
                   </ul>
               </div>
           </div>
