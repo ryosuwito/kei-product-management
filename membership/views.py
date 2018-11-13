@@ -331,11 +331,11 @@ def register_page(request, *args, **kwargs):
                 html_message="<html>\
                 <h2>Hi, %s !. Selamat Bergabung di Kei-Partner.com</h2>\
                 <p>Silakan klik link dibawah ini untuk memverifikasi email anda.</p>\
-                <p><a href='http://kei-partner.com/member/verif/%s/'>VERIFIKASI</a></p>\
+                <p><a href='http://kei-partner.com/member/verify/%s/'>VERIFIKASI</a></p>\
                 <p>Atau masukan kode dibawah ini : <br/>\
                    Kode Verifikasi = %s <br>\
                    Ke alamat berikut ini : <br>\
-                   <a href='kei-partner.com/member/verif/'>https://kei-partner.com/member/verif/</a>\
+                   <a href='kei-partner.com/member/verify/'>https://kei-partner.com/member/verify/</a>\
                 </p>\
                 </html>"%(user.username, user.member.email_verification_code,user.member.email_verification_code))
             reward = Reward(member=user.member)
