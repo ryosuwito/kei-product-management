@@ -35,7 +35,7 @@ def render_article(request, article):
             }
     flinks = FooterLink.objects.all()
     all_product = Product.objects.filter(is_archived=False)
-    all_article = Article.objects.filter(is_published=True).exclude(slug=article_slug)
+    all_article = Article.objects.filter(is_published=True).exclude(slug=article.slug)
     if len(all_product) >= 5:
         other_product = random.sample(list(all_product), 4)
     else:
