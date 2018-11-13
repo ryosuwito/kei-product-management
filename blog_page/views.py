@@ -4,7 +4,7 @@ from django.shortcuts import render
 from .models import Page, Article
 
 def blog_index(request):
-    return Article.objects.all().count()
+    return HttpResponse(Article.objects.all().count())
 
 def page(request, page_slug):
     return HttpResponse(page_slug)
