@@ -1,7 +1,11 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
+from catalog.models import Product
+
 from .models import Page, Article
+
+import random
 
 def blog_index(request):
     return HttpResponse(Article.objects.all().count())
@@ -11,4 +15,10 @@ def page(request, page_slug):
 
 def article(request, article_slug):
     article =  get_object_or_404(Article, slug=article_slug)
-    return render(request, 'blog_page/blog_detail.html', {"article":article})
+    all_product = Product.objects.filter(is_archived=False)
+    if len(all_product) >= 5:
+        other_product = random.sample(list(all_product), 4)
+    else:
+        other_product = random.sample(list(all_product), len(all_product))
+
+    return render(request, 'blog_page/blog_detail.html', {"article":article. 'other_product':other_product})
