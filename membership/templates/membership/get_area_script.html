@@ -74,7 +74,7 @@ function getKelurahan(id){
     });
     $.ajax({url: '/wilayah/kelurahan/'+ selected_kecamatan +'/', success: function(result){
     var options = '';
-    options += "<option value='0'>--pilih kota--</option>";
+    options += "<option value='0'>--pilih kelurahan--</option>";
     for(i=0; i<result['results'].length; i++){
         options += "<option value='"+result['results'][i]['value']+"'>"+result['results'][i]['nama']+"</option>";
         console.log(result['results'][i]['nama']);
