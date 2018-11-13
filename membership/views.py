@@ -646,7 +646,7 @@ def verify(request, **kwargs):
             member.save()
             return HttpResponseRedirect(reverse('membership:phone_verify_success'))
 
-    return HttpResponse('Please verify')
+    return render(request,'membership/verify.html')
 
 def verified_es(request):
     return HttpResponse('Email Verification success')

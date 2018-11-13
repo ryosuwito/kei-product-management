@@ -22,6 +22,8 @@ import datetime
 
 @login_required
 def index(request):
+    if not request.user.member.is_email_verified:
+        return HttpResponseRedirect(reverse('membership:verify'))
     header_links = HeaderLink.objects.all()
     hlinks = {}
     for link in header_links :
@@ -175,6 +177,8 @@ def index(request):
 
 @login_required
 def checkout(request):
+    if not request.user.member.is_email_verified:
+        return HttpResponseRedirect(reverse('membership:verify'))
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
     wishlist = wishlists.get_wishlist(request)
@@ -231,6 +235,8 @@ def checkout(request):
 
 @login_required
 def pay(request):
+    if not request.user.member.is_email_verified:
+        return HttpResponseRedirect(reverse('membership:verify'))
     cart = carts.get_cart(request)
     cart_object = cart['cart_object']
     if not cart_object.get_total_items_in_cart():
@@ -254,6 +260,8 @@ def pay(request):
 
 @login_required
 def history(request):
+    if not request.user.member.is_email_verified:
+        return HttpResponseRedirect(reverse('membership:verify'))
     header_links = HeaderLink.objects.all()
     hlinks = {}
     for link in header_links :
@@ -303,6 +311,8 @@ def history(request):
 
 @login_required
 def detail(request, order_number):
+    if not request.user.member.is_email_verified:
+        return HttpResponseRedirect(reverse('membership:verify'))
     header_links = HeaderLink.objects.all()
     hlinks = {}
     for link in header_links :
