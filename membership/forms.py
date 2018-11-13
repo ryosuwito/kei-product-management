@@ -42,6 +42,8 @@ class MemberRegisterForm(forms.ModelForm):
     USERNAME_MIN = 6
     error_messages = {
         'duplicate_username': 'Pengguna dengan username tersebut sudah ada'
+        'duplicate_email': 'Pengguna dengan email tersebut sudah ada'
+        'duplicate_phone_number': 'Pengguna dengan nomor telepon tersebut sudah ada'
     }
     
     provinsi = forms.ModelChoiceField(Provinsi.objects.all(), initial='')
@@ -125,7 +127,7 @@ class MemberRegisterForm(forms.ModelForm):
         self.fields['bank_book_photo'].widget.attrs['class'] = 'hidden'
 
         self.fields['ktp_photo'].widget.attrs['onChange'] = 'Handlechange(event, this.id)'
-        self.fields['ktp_photo'].widget.attrs['class'] = 'hidden'
+        self.fields['ktp_photo'].widget.attrs['class'] =email 'hidden'
 
     def clean_username(self):
         username = self.cleaned_data["username"].lower()
@@ -139,6 +141,32 @@ class MemberRegisterForm(forms.ModelForm):
             )
         except User.DoesNotExist:
             return username # great, this user does not exist so we can continue the registration process
+
+    def clean_email(self):
+        email = self.cleaned_data["email"].lower()
+       
+        try:
+            User._default_manager.get(email=email)
+            #if the user exists, then let's raise an error message
+
+            raise forms.ValidationError( 
+              self.error_messages['duplicate_email'],     #set the error message key
+            )
+        except User.DoesNotExist:
+            return email # great, this user does not exist so we can continue the registration process
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data["phone_number"].lower()
+       
+        try:
+            User._default_manager.get(phone_number=phone_number)
+            #if the user exists, then let's raise an error message
+
+            raise forms.ValidationError( 
+              self.error_messages['duplicate_phone_number'],     #set the error message key
+            )
+        except User.DoesNotExist:
+            return phone_number # great, this user does not exist so we can continue the registration process
 
     class Meta:
         USERNAME_MAX = 20
