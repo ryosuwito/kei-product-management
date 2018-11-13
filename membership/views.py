@@ -79,7 +79,9 @@ def login_page(request):
                     user = authenticate(username=member.user.username,
                         password=password)
 
-            if user:
+            if not user:
+                form_messages='username atau password salah'
+            else :
                 anon_cart = carts.get_cart(request)['cart_object']
                 anon_wishlist = wishlists.get_wishlist(request)['wishlist_object']
                 login(request, user)
@@ -93,8 +95,7 @@ def login_page(request):
                 except :
                     pass
                 return HttpResponseRedirect(reverse('membership:profile'))
-            else:
-                form_messages='username atau password salah'
+
     elif request.method == 'GET':
         if request.user.is_authenticated:
             return HttpResponseRedirect(reverse('membership:profile'))
