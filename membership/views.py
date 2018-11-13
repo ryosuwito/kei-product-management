@@ -76,7 +76,7 @@ def login_page(request):
                 except:
                     member = ''
                 if member:
-                    user = authenticate(email=member.user.username,
+                    user = authenticate(username=member.user.username,
                         password=password)
 
             if user is not None:
