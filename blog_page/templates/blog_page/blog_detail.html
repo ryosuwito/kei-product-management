@@ -41,8 +41,8 @@
         {% endif %}
         <h1>{{ article.title | title }}</h1>
         {% autoescape off %}
-        <p>{{ article.summary | linebreaksbr }}</p>
-        <p>{{ article.content | linebreaksbr }}</p>
+        <p>{{ article.summary }}</p>
+        <p>{{ article.content }}</p>
         {% endautoescape %}
     </div>
   </article>
