@@ -1,11 +1,15 @@
 from django.db import models
 from catalog.models import Product
+from membership.models import Member, Customer
 from django.contrib.auth.models import User
 import datetime
 
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="users_cart", null=True)
-    shipping_cost = models.IntegerField(null=True, blank=True)
+    shipping_address = models.CharField(max_length=500, blank=True)
+    shipping_cost = models.PositiveIntegerField(null=True, blank=True)
+    shipping_service =  models.CharField(max_length = 200,null=True)
+    shipping_sub_service =  models.CharField(max_length = 200,null=True)
     #user = models.ForeignKey(User, related_name="users_cart", on_delete=models.SET_NULL, null=True)
     #created_date = models.DateTimeField(default=datetime.datetime.now)
     #last_update = models.DateTimeField(db_index=True,default=datetime.datetime.now)
@@ -13,6 +17,11 @@ class Cart(models.Model):
     #is_checked_out = models.BooleanField(db_index=True,default=False)
     #is_paid = models.BooleanField(db_index=True,default=False)
     
+
+    is_set_as_dropship = models.BooleanField(default=False)
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
+
+
     class Meta:
         verbose_name_plural = "Carts"
 
@@ -56,10 +65,10 @@ class Cart(models.Model):
         return product_details
 
 class CartItem(models.Model) :
-    quantity = models.IntegerField(null=True, blank=True)
+    quantity = models.PositiveIntegerField(null=True, blank=True)
     product = models.ForeignKey(Product, related_name="product_in_cart", on_delete=models.SET_NULL, null=True)
     cart = models.ForeignKey(Cart, related_name="item_in_cart", on_delete=models.SET_NULL, null=True)
-
+    product_referal = models.ForeignKey(Member, on_delete=models.SET_NULL, db_index=True,  related_name="product_cart_referal", null=True, blank=True) 
     class Meta:
         verbose_name_plural = "Cart items"
 

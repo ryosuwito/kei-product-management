@@ -39,8 +39,8 @@ def transfer_wishlist(request, anon_wishlist):
         else:
             for item in temp_wishlist.get_items_in_wishlist():
                 try:
-                    wishlist_item = WishListItem.objects.filter(wishlist=user_wishlist, 
-                            product=item.product)[0]    
+                    wishlist_item = WishListItem.objects.get(wishlist=user_wishlist, 
+                            product=item.product)  
                 except:
                     wishlist__item = WishListItem.objects.create(wishlist=user_wishlist, 
                         product=item.product)

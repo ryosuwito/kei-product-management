@@ -40,22 +40,19 @@ button.link {
 }
 .container-bg{
   width: 100%;
-  padding: 20px 0;
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-position-y: 100%;
-  background-color:#f2f2f2;
+  padding: 0;
+  background-color:#fff;
 }
 .container-footer{
   min-height: 100px;
-  background-color: #4f7854;
+  background-color: rgba(30,178,134,0.64);
   width: 100%;
   padding: 40px 15px 0px 15px;
 }
 .container-header{
   min-height: 0;
   height: auto;
-  background-color: #e4f4f9;
+  background-color: #ffffff;
   width: 100%;
   padding: 5px 15px 5px 15px;
 }
@@ -400,9 +397,20 @@ a:hover{
   z-index:1;
 }
 .photo-article{
+  cursor: pointer;
   min-height:0px;
   max-height:350px;
   height:auto
+}
+.avatar{
+  -webkit-filter: brightness(92%) contrast(102%) saturate(1.315);
+  filter: brightness(92%) contrast(102%) saturate(1.315);
+  padding:0;
+  min-height:0px;
+  margin:0px 0;
+  width:60px;
+  height:60px;
+  border-radius:30px
 }
 .avatar{
   -webkit-filter: brightness(92%) contrast(102%) saturate(1.315);
@@ -538,9 +546,17 @@ a:hover{
   box-shadow:0 0 1px 1px rgba(0, 0, 0, 0.241);
 }
 .effect5{
-  box-shadow:0 3px 4px 0 rgba(0,0,0,0.14), 0 3px 3px -2px rgba(0,0,0,0.12), 0 1px 8px 0 rgba(0,0,0,0.2);
-  z-index:3;
-  border:1px solid rgba(85,85,85, 0.241);
+  min-height:240px;
+  max-height: 240px;
+  box-shadow:0 0px 4px 0 rgba(0,0,0,0.14);
+}
+.effect7{
+  background-color: #ffffff;
+  box-shadow:0 0 4px rgba(85,85,85, 0.241);
+}
+.effect7:hover{
+  background-color: #ffffff;
+  box-shadow:0 0 12px rgba(85,85,85, 0.241);
 }
 .effect6{
   background-color:rgba(255,255,255,1);
@@ -717,7 +733,7 @@ a:hover{
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
   color: #fff;
-  background-color: #446748;
+  background-color: rgb(75, 139, 120);
 }
 
 
@@ -729,14 +745,14 @@ a:hover{
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   color:#fff;
-  background-color: #446748;
+  background-color: rgb(75, 139, 120)
 }
 
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color:#fff;
-  background-color: #446748;
+  background-color: rgb(75, 139, 120);
   background-size:cover
 }
 .sponsor-box{
@@ -880,7 +896,8 @@ a:hover{
     height: 250px
   }
   .effect5{
-    box-shadow: none;
+    max-height: 270px;
+    min-height:270px;
   }
   .effect6{
     border: none;
@@ -957,7 +974,7 @@ a:hover{
     width:100%;
     position:relative;
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
-    background-color: #4f7854;
+    background-color: rgb(75, 139, 120);
     padding-bottom:0;
     padding-top:0;
     padding-right:1px;
@@ -971,7 +988,7 @@ a:hover{
   .navbar-default .navbar-nav > .open > a:hover,
   .navbar-default .navbar-nav > .open > a:focus {
     color: #fff;
-    background-color:  #446748;
+    background-color:  rgb(36, 84, 70);
   }
 
 
@@ -982,17 +999,17 @@ a:hover{
   .navbar-default .navbar-nav > li > a:hover,
   .navbar-default .navbar-nav > li > a:focus {
     color:#fff;
-    background-color:  rgb(68, 103, 72);
+    background-color:  rgb(36, 84, 70);
   }
 
   .navbar-default .navbar-nav > .active > a,
   .navbar-default .navbar-nav > .active > a:focus {
     color:#ccc;
-    background-color: rgb(68, 103, 72);
+    background-color: rgb(36, 84, 70);
   }
   .navbar-default .navbar-nav > .active > a:hover{
     color:#fff;
-    background-color: rgb(68, 103, 72);
+    background-color: rgb(36, 84, 70);
   }
   .navbar-nav > li > .dropdown-menu {
     margin-top: 0;
@@ -1002,19 +1019,19 @@ a:hover{
   }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
     color:#fff;
-    background-color: rgb(52, 128, 62);
+    background-color: rgb(36, 84, 70);
     padding: 10px 0;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
     color: #fff;
-    background-color: rgb(57, 103, 63);
+    background-color: rgb(36, 84, 70);
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #333;
-    background-color: rgba(105,105,105,0.48);
+    background-color: rgb(36, 84, 70);
   }
 }
 @media (max-width: 767px) {
@@ -1023,7 +1040,7 @@ a:hover{
     padding-bottom:0;
     padding-top:0;
     padding-right:1px;
-    background-color: #4f7854;
+    background-color: rgb(75, 139, 120);
   }
   .navbar-nav > li > .dropdown-menu {
     margin-top: 0;
@@ -1587,4 +1604,54 @@ ul.dropdown-cart li .item-right button{
 .navbar-toggle.active .icon-bar:nth-of-type(3) {
   top: -6px;
   transform: rotate(-45deg);
+}
+
+.modal-backdrop{
+  background: none;
+}
+
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+  visibility: hidden; /* Hidden by default. Visible on click */
+  min-width: 250px; /* Set a default minimum width */
+  margin-left: -125px; /* Divide value of min-width by 2 */
+  background-color: #333; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 10000; /* Add a z-index if needed */
+  left: 50%; /* Center the snackbar */
+  top: 10%; /* 30px from the top */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
+ However, delay the fade out process for 2.5 seconds */
+ -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+ animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {top: 0; opacity: 0;} 
+  to {top: 10%; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {top: 0; opacity: 0;}
+  to {top: 10%; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {top: 10%; opacity: 1;} 
+  to {top: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {top: 10%; opacity: 1;}
+  to {top: 0; opacity: 0;}
 }

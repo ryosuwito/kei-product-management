@@ -10,7 +10,8 @@ def get_cart(request):
         try:
             cart_object = request.user.users_cart
         except:
-            cart_object = Cart.objects.create(user=request.user)
+            cart_object = Cart.objects.get_or_create(user=request.user)[0]
+            cart_id = cart_object.id
             
     else:
         try:
@@ -28,7 +29,7 @@ def transfer_cart(request, anon_cart):
     try:
         user_cart = request.user.users_cart
     except:
-        pass
+        user_cart = Cart.objects.create(user=request.user)
 
     if anon_cart.get_total_products():
         temp_cart = Cart.objects.get(id=anon_cart.id)
@@ -39,8 +40,8 @@ def transfer_cart(request, anon_cart):
         else:
             for item in temp_cart.get_items_in_cart():
                 try:
-                    cart_item = CartItem.objects.filter(cart=user_cart, 
-                            product=item.product)[0]    
+                    cart_item = CartItem.objects.get(cart=user_cart, 
+                            product=item.product)   
                     cart_item.quantity += item.quantity
                 except:
                     cart_item = CartItem.objects.create(cart=user_cart, 

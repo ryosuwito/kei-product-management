@@ -1,11 +1,12 @@
 {
-    "python.pythonPath": "/home/kemong/Webproject/kei-django/venv/bin/python3.5",
+    "python.pythonPath": "/usr/local/bin/python3",
     "python.autoComplete.extraPaths": [
-        "/home/kemong/Webproject/kei-django/kei_store/",
-        "/home/kemong/Webproject/kei-django/venv/lib/python3.5/",
-        "/home/kemong/Webproject/kei-django/venv/lib/python3.5/site-packages/"
+        "/home/ryo/Webproject/WebBuilder/ZeonWebBuilder/zeon-cms/",
+        "/home/ryo/Webproject/WebBuilder/venv/lib/python3.6/",
+        "/home/ryo/Webproject/WebBuilder/venv/lib/python3.6/site-packages/"
      ],
      "python.linting.pylintArgs": [
         "--load-plugins=pylint_django"
-   ],
+],
+"python.linting.pylintEnabled": false,
 }

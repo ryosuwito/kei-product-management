@@ -10,10 +10,33 @@ from database_wilayah.models import Provinsi, Kota, Kecamatan, Kelurahan
 from .models import Member
 from .forms import MemberLoginForm, MemberRegisterForm, GuestRegisterForm, MemberEditProfileForm
 from shopping_cart import carts, wishlists
+from reward_system.models import Reward
+
+from django.core.mail import send_mail
+from settings.models import HeaderLink, FooterLink
+
 import random
 # Create your views here.
 
 def login_page(request):   
+    header_links = HeaderLink.objects.all()
+    hlinks = {}
+    for link in header_links :
+        if not link.page:
+            hlinks['%s'%link.pos] = {
+                'addr':link.addr, 
+                'name':link.name
+            }
+        else:
+            hlinks['%s'%link.pos] = {
+                'addr':link.page.get_url(), 
+                'name':link.page.title
+            }
+    flinks = FooterLink.objects.all()
+    cart = carts.get_cart(request)
+    cart_object = cart['cart_object']
+    wishlist = wishlists.get_wishlist(request)
+    wishlist_object = wishlist['wishlist_object']
     welcome_message = ""
     try :
         if 'cart' in request.META['HTTP_REFERER']:
@@ -39,7 +62,26 @@ def login_page(request):
             password = data.get('password')
             user = authenticate(username=username,
                 password=password)
-            if user is not None:
+            if not user :
+                try:
+                    user = User.objects.get(email=username)
+                except:
+                    user = ''
+                if user:
+                    user = authenticate(username=user.username,
+                        password=password)
+            if not user :
+                try:
+                    member = Member.objects.get(phone_number=username)
+                except:
+                    member = ''
+                if member:
+                    user = authenticate(username=member.user.username,
+                        password=password)
+
+            if not user:
+                form_messages='username atau password salah'
+            else :
                 anon_cart = carts.get_cart(request)['cart_object']
                 anon_wishlist = wishlists.get_wishlist(request)['wishlist_object']
                 login(request, user)
@@ -48,39 +90,100 @@ def login_page(request):
                 cart = transfer_cart['cart_object']
                 wishlist = transfer_wishlist['wishlist_object']
                 try :
-                    if request.GET['next']:
-                        return HttpResponseRedirect(reverse('storefront:index'))
-                        #return HttpResponseRedirect(request.GET['next'])
+                    if request.GET.get('next'):
+                        return HttpResponseRedirect(request.GET.get('next'))
                 except :
-                    return HttpResponseRedirect(reverse('membership:profile'))
-            else:
-                form_messages='username atau password salah'
+                    pass
+                return HttpResponseRedirect(reverse('membership:profile'))
+
     elif request.method == 'GET':
         if request.user.is_authenticated:
             return HttpResponseRedirect(reverse('membership:profile'))
         form = MemberLoginForm()
+
+    next = request.GET.get('next') if request.GET.get('next') else False
     return render(request, 'membership/login.html',
-        {'form': form, 
+        {'wishlist': wishlist_object,
+        'cart': cart_object,
+        'next': next,
+        'form': form, 
+        'hlinks':hlinks,
+        'flinks':flinks, 
         'form_messages': form_messages,
         'welcome_message': welcome_message})
 
-def pre_register_page(request):
+def pre_register_page(request, *args, **kwargs):
+    header_links = HeaderLink.objects.all()
+    hlinks = {}
+    for link in header_links :
+        if not link.page:
+            hlinks['%s'%link.pos] = {
+                'addr':link.addr, 
+                'name':link.name
+            }
+        else:
+            hlinks['%s'%link.pos] = {
+                'addr':link.page.get_url(), 
+                'name':link.page.title
+            }
+    flinks = FooterLink.objects.all()
+    cart = carts.get_cart(request)
+    cart_object = cart['cart_object']
+    wishlist = wishlists.get_wishlist(request)
+    wishlist_object = wishlist['wishlist_object']
     referal_code = False
+    link = {
+        'member': reverse('membership:register', current_app='member_backend'),
+        'guest': reverse('membership:register', current_app='guest_backend'),
+    }
     if request.get_host() != settings.DEFAULT_HOST:
         referal_code = check_host(request, pass_variable=True)
         if not referal_code:
             return  HttpResponseRedirect(request.scheme+"://"+settings.DEFAULT_HOST + 
                         reverse('membership:pre_register', 
                             current_app=request.resolver_match.namespace))
+    else:
+        try:
+            referal_code = kwargs['referal_code'].lower()    
+            if referal_code:
+                link = {
+                    'member': reverse('membership:register', current_app='member_backend', kwargs={'referal_code':referal_code.lower()}),
+                    'guest': reverse('membership:register', current_app='guest_backend', kwargs={'referal_code':referal_code.lower()}),
+                }
+        except:
+            pass
+
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('membership:profile'))
-    link = {
-        'member': reverse('membership:register', current_app='member_backend'),
-        'guest': reverse('membership:register', current_app='guest_backend'),
-    }
-    return render(request, 'membership/pre_register.html', {'link':link})
 
-def register_page(request): 
+    next = request.GET.get('next') if request.GET.get('next') else False
+    return render(request, 'membership/pre_register.html', 
+        {'link':link, 
+        'hlinks':hlinks,
+        'flinks':flinks, 
+        'wishlist': wishlist_object,
+        'cart': cart_object,
+        'next':next})
+
+def register_page(request, *args, **kwargs): 
+    header_links = HeaderLink.objects.all()
+    hlinks = {}
+    for link in header_links :
+        if not link.page:
+            hlinks['%s'%link.pos] = {
+                'addr':link.addr, 
+                'name':link.name
+            }
+        else:
+            hlinks['%s'%link.pos] = {
+                'addr':link.page.get_url(), 
+                'name':link.page.title
+            }
+    flinks = FooterLink.objects.all()
+    cart = carts.get_cart(request)
+    cart_object = cart['cart_object']
+    wishlist = wishlists.get_wishlist(request)
+    wishlist_object = wishlist['wishlist_object']
     threshold = ''
     referal_code = False
     link_cancel = reverse('membership:pre_register', 
@@ -92,6 +195,11 @@ def register_page(request):
             return  HttpResponseRedirect(request.scheme+"://"+settings.DEFAULT_HOST + 
                         reverse('membership:register', 
                             current_app=request.resolver_match.namespace))
+    else:
+        try:
+            referal_code = kwargs['referal_code'].upper()
+        except:
+            pass
 
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('membership:profile'))
@@ -171,8 +279,9 @@ def register_page(request):
             */ Buat akun user baru dengan data yang diberikan pengguna
             """
             username = data.get('username').lower()
-            password = data.get('password')
             email = data.get('email')
+            password = data.get('password')
+
             user = User.objects.create_user(username=username, email=email, password=password)
 
             """
@@ -219,6 +328,12 @@ def register_page(request):
                 user.member.ktp_kecamatan = kecamatan
                 user.member.ktp_kelurahan = kelurahan
                 user.member.ktp_address = data.get('ktp_address')
+            else :
+                user.member.ktp_provinsi = provinsi_home
+                user.member.ktp_kota = kota_home
+                user.member.ktp_kecamatan = kecamatan_home
+                user.member.ktp_kelurahan = kelurahan_home
+                user.member.ktp_address = data.get('home_address')
     
             if data.get('home_address'):                 
                 user.member.home_provinsi = provinsi_home
@@ -227,17 +342,42 @@ def register_page(request):
                 user.member.home_kelurahan = kelurahan_home
                 user.member.home_address = data.get('home_address')
             else :      
-                user.member.copy_address();
+                user.member.copy_address()
                 
             user.save()
+            send_mail('Verifikasi email anda.', 'Hi, %s !. Selamat bergabung di Kei-Partner'%(user.username),
+                "Kei Partner Admin <admin@kei-partner.com>", [user.email],
+                html_message="<html>\
+                <h2>Hi, %s !. Selamat Bergabung di Kei-Partner.com</h2>\
+                <p>Silakan klik link dibawah ini untuk memverifikasi email anda.</p>\
+                <p><a href='http://kei-partner.com/member/verify/%s/'>VERIFIKASI</a></p>\
+                <p>Atau masukan kode dibawah ini : <br/>\
+                   Kode Verifikasi = %s <br>\
+                   Ke alamat berikut ini : <br>\
+                   <a href='kei-partner.com/member/verify/'>https://kei-partner.com/member/verify/</a>\
+                </p>\
+                </html>"%(user.username, user.member.email_verification_code,user.member.email_verification_code))
+            reward = Reward(member=user.member)
             if user is not None:
+                anon_cart = carts.get_cart(request)['cart_object']
+                anon_wishlist = wishlists.get_wishlist(request)['wishlist_object']
                 logout(request)
                 login(request, user)
+                transfer_cart = carts.transfer_cart(request, anon_cart)
+                transfer_wishlist= wishlists.transfer_wishlist(request, anon_wishlist)
+                cart = transfer_cart['cart_object']
+                wishlist = transfer_wishlist['wishlist_object']
+
+                reward = Reward(member=user.member)
+                reward.save()
+                next = request.GET.get('next') if request.GET.get('next') else False
+                if next :
+                    return HttpResponseRedirect(next)
                 return HttpResponseRedirect(reverse('membership:profile', 
                     current_app=request.resolver_match.namespace))
             else:
                 return HttpResponse("Create User Fail")
-
+                
     elif request.method == 'GET': 
         if namespace == 'guest':
             form = GuestRegisterForm()
@@ -248,22 +388,51 @@ def register_page(request):
             form.fields['sponsor_code'].initial = referal_code
             form.fields['sponsor_code'].disabled = True
             form.fields['sponsor_code'].widget.attrs.update({
-            'class': 'sponsor-disabled'
+            'class': 'input-text',
+            'style': 'width:100%'
             })
     return render(request, 'membership/register_%s.html'%(namespace),
-        {'form': form, 'threshold': threshold, 'link_cancel':link_cancel})
+        {'form': form, 
+         'hlinks':hlinks,
+         'flinks':flinks, 
+         'wishlist': wishlist_object,
+         'cart': cart_object,
+         'threshold': threshold, 
+         'link_cancel':link_cancel})
 
 @login_required(login_url='/member/login')
 def profile_page(request, uname='none'):
+    header_links = HeaderLink.objects.all()
+    hlinks = {}
+    for link in header_links :
+        if not link.page:
+            hlinks['%s'%link.pos] = {
+                'addr':link.addr, 
+                'name':link.name
+            }
+        else:
+            hlinks['%s'%link.pos] = {
+                'addr':link.page.get_url(), 
+                'name':link.page.title
+            }
+    flinks = FooterLink.objects.all()
+    target = 0
+    current_target = 0
+    member_target = 0
     cart = carts.get_cart(request)['cart_object']
     wishlist = wishlists.get_wishlist(request)['wishlist_object']
     referal_code = False
+    default_host = settings.DEFAULT_HOST 
+
+    default_register_page = request.scheme+"://"+ default_host + \
+                                reverse('membership:profile', 
+                                    current_app=request.resolver_match.namespace)
+
     if request.get_host() != settings.DEFAULT_HOST:
         referal_code = check_host(request, pass_variable=True)
         if not referal_code:
-            return  HttpResponseRedirect(request.scheme+"://"+settings.DEFAULT_HOST + 
-                        reverse('membership:profile', 
-                            current_app=request.resolver_match.namespace)) 
+            return  HttpResponseRedirect(default_register_page) 
+                        
     namespace = request.resolver_match.namespace
     member_type = namespace.split('_')[0]
     link_edit = ''
@@ -291,20 +460,59 @@ def profile_page(request, uname='none'):
             return HttpResponseRedirect("%s%s"%(reverse('membership:profile', 
                 current_app='guest_backend'),uname))
 
+    if user.member.get_member_type_display() != 'Guest':
+        current_target = user.member.reward.get_current_purchasing()
+        current_selling_target = user.member.reward.get_current_selling()
+        member_target = user.member.get_level()['TARGET']
+        member_selling_target = user.member.get_level()['TARGET']
+        target = round(current_target/member_target*100, 2)
+        selling_target = round(current_selling_target/member_selling_target*100, 2)
+        user.member.reward.get_purchasing_bonus(request)
+        user.member.reward.get_selling_bonus(request)
+    else:
+        target = 0
+        current_target = 0
+        member_target = 0
+        selling_target = 0
+        current_selling_target = 0
+        member_selling_target = 0
     link_sponsor = ''
     if user.member.sponsor:
         sponsor = Member.objects.get(referal_code = user.member.sponsor_code)
         link_sponsor = sponsor.get_absolute_url()
 
-    return render(request, 'membership/profile_%s.html'%(member_type),
+    return render(request, 'membership/profile_member.html',
         {'user': user, 
+        'target': target,
+        'current_target': current_target,
+        'member_target': member_target,
+        'selling_target': selling_target,
+        'current_selling_target': current_selling_target,
+        'member_selling_target': member_selling_target,
         'cart':cart, 
+        'hlinks':hlinks,
+        'flinks':flinks, 
+        'default_host':default_host,
         'wishlist':wishlist,
         'link_edit': link_edit, 
         'link_sponsor': link_sponsor})
 
 @login_required(login_url='/member/login')
 def edit_profile_page(request):
+    header_links = HeaderLink.objects.all()
+    hlinks = {}
+    for link in header_links :
+        if not link.page:
+            hlinks['%s'%link.pos] = {
+                'addr':link.addr, 
+                'name':link.name
+            }
+        else:
+            hlinks['%s'%link.pos] = {
+                'addr':link.page.get_url(), 
+                'name':link.page.title
+            }
+    flinks = FooterLink.objects.all()
     referal_code = False
     if request.get_host() != settings.DEFAULT_HOST:
         referal_code = check_host(request, pass_variable=True)
@@ -356,8 +564,6 @@ def edit_profile_page(request):
                 user.member.facebook_address = data.get('facebook_address')
             if data.get('twitter_address') :
                 user.member.twitter_address = data.get('twitter_address')
-            if data.get('line_address') :
-                user.member.line_address = data.get('line_address')
             if data.get('website_address') :
                 user.member.website_address = data.get('website_address')
             if data.get('whatsapp_number') :
@@ -389,10 +595,6 @@ def edit_profile_page(request):
                 form.fields['facebook_address'].widget.attrs.update({
                 'placeholder': request.user.member.facebook_address
                 })
-            if request.user.member.line_address:
-                form.fields['line_address'].widget.attrs.update({
-                'placeholder': request.user.member.line_address
-                })
             if request.user.member.twitter_address:
                 form.fields['twitter_address'].widget.attrs.update({
                 'placeholder': request.user.member.twitter_address
@@ -411,7 +613,70 @@ def edit_profile_page(request):
                 })
 
     return render(request, 'membership/edit_profile_%s.html'%(namespace),
-        {'form': form})
+        {'form': form,
+        'hlinks':hlinks,
+        'flinks':flinks, })
+
+def verify(request, **kwargs):
+    phonecode = ''
+    vericode = ''
+    user = ''
+    try:
+        vericode = kwargs['vericode']
+        member = Member.objects.get(email_verification_code=vericode)
+    except:
+        try:
+            phonecode = kwargs['phonecode']
+            member = Member.objects.get(phone_verification_code=vericode)
+        except:
+            member = ''
+
+    if member :
+        if member.user != request.user and request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('membership:verification_fail'))
+        if member.is_email_verified and vericode:
+            return HttpResponseRedirect(reverse('membership:profile'))
+        if member.is_phone_verified and phonecode:
+            return HttpResponseRedirect(reverse('membership:profile'))
+
+        if vericode:
+            member.is_email_verified = True
+            member.save()
+            return HttpResponseRedirect(reverse('membership:email_verify_success'))
+        elif phonecode:
+            member.is_phone_verified = True
+            member.save()
+            return HttpResponseRedirect(reverse('membership:phone_verify_success'))
+
+    return render(request,'membership/verify.html')
+
+@login_required(login_url='/member/login')
+def verify_resend(request):
+    user = request.user
+    vericode = user.member.generate_new_vericode()
+    send_mail('Verifikasi email anda.', 'Hi, %s !. Selamat bergabung di Kei-Partner'%(user.username),
+                "Kei Partner Admin <admin@kei-partner.com>", [user.email],
+                html_message="<html>\
+                <h2>Hi, %s !. Selamat Bergabung di Kei-Partner.com</h2>\
+                <p>Silakan klik link dibawah ini untuk memverifikasi email anda.</p>\
+                <p><a href='http://kei-partner.com/member/verify/%s/'>VERIFIKASI</a></p>\
+                <p>Atau masukan kode dibawah ini : <br/>\
+                   Kode Verifikasi = %s <br>\
+                   Ke alamat berikut ini : <br>\
+                   <a href='kei-partner.com/member/verify/'>https://kei-partner.com/member/verify/</a>\
+                </p>\
+                </html>"%(user.username, user.member.email_verification_code,user.member.email_verification_code))
+
+    return render(request,'membership/verify_sent.html')
+
+def verified_es(request):
+    return HttpResponse('Email Verification success')
+
+def verified_ps(request):
+    return HttpResponse('Phone Verification success')
+
+def verified_ff(request):
+    return HttpResponse('Verification failed')
 
 def log_check(user):
     return user.is_authenticated

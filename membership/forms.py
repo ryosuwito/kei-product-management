@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from database_wilayah.models import Provinsi
-from .models import Member
+from .models import Member, Customer
 
 class MemberLoginForm(forms.Form):
     username = forms.CharField(label='Username/ Phone/ Email :', max_length=150)
@@ -10,11 +10,40 @@ class MemberLoginForm(forms.Form):
     }
     password = forms.CharField(label='Password :', widget=forms.PasswordInput(attrs=attrs))
 
+    def __init__(self, *args, **kwargs):
+        super(MemberLoginForm, self).__init__(*args, **kwargs)
+        self.fields['password'].widget.attrs['class'] = 'input-text'
+        self.fields['password'].widget.attrs['style'] = 'width:100%'
+        self.fields['username'].widget.attrs['class'] = 'input-text'
+        self.fields['username'].widget.attrs['style'] = 'width:100%'
+
+class CustomerAddForm(forms.Form):
+    USERNAME_MAX = 20
+    USERNAME_MIN = 6
+    provinsi_home = forms.ModelChoiceField(Provinsi.objects.all(), initial='')
+    home_address = forms.CharField(max_length=250, required=True)
+    name = forms.CharField(required=True, min_length=USERNAME_MIN, max_length=USERNAME_MAX)
+
+    def __init__(self, *args, **kwargs):
+        super(CustomerAddForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs['placeholder'] = 'Nama Penerima'
+        self.fields['name'].widget.attrs['class'] = 'input-text'
+        self.fields['name'].widget.attrs['style'] = 'width:100%'
+        self.fields['provinsi_home'].widget.attrs['onchange'] = 'getKota(this.id)'
+        self.fields['provinsi_home'].widget.attrs['style'] = 'width:100%'
+
+        self.fields['home_address'].widget = forms.Textarea() 
+        self.fields['home_address'].widget.attrs['rows'] = '3' 
+        self.fields['home_address'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
+        self.fields['home_address'].widget.attrs['style'] = 'width:100%'
+
 class MemberRegisterForm(forms.ModelForm):
     USERNAME_MAX = 20
     USERNAME_MIN = 6
     error_messages = {
-        'duplicate_username': 'Pengguna dengan username tersebut sudah ada'
+        'duplicate_username': 'Pengguna dengan username tersebut sudah ada',
+        'duplicate_email': 'Pengguna dengan email tersebut sudah ada',
+        'duplicate_phone_number': 'Pengguna dengan nomor telepon tersebut sudah ada',
     }
     
     provinsi = forms.ModelChoiceField(Provinsi.objects.all(), initial='')
@@ -35,33 +64,64 @@ class MemberRegisterForm(forms.ModelForm):
 
         # sets the placeholder key/value in the attrs for a widget
         # when the form is instantiated (so the widget already exists)
+
         self.fields['username'].widget.attrs['placeholder'] = 'Masukan Username'
+        self.fields['username'].widget.attrs['class'] = 'input-text'
+        self.fields['username'].widget.attrs['style'] = 'width:100%'
+
+        self.fields['member_type'].widget.attrs['class'] = 'input-text'
+        self.fields['member_type'].widget.attrs['style'] = 'width:100%'
+
+        self.fields['first_name'].widget.attrs['placeholder'] = 'Masukan Nama Lengkap'
+        self.fields['first_name'].widget.attrs['class'] = 'input-text'
+        self.fields['first_name'].widget.attrs['style'] = 'width:100%'
+
         self.fields['password'].widget = forms.PasswordInput()
         self.fields['password'].widget.attrs['placeholder'] = '*********'
+        self.fields['password'].widget.attrs['class'] = 'input-text'
+        self.fields['password'].widget.attrs['style'] = 'width:100%'
+
         self.fields['email'].widget = forms.EmailInput()
         self.fields['email'].widget.attrs['placeholder'] = 'Masukan Email Aktif'
+        self.fields['email'].widget.attrs['class'] = 'input-text'
+        self.fields['email'].widget.attrs['style'] = 'width:100%'
+
         self.fields['sponsor_code'].required = False
+        self.fields['sponsor_code'].widget.attrs['class'] = 'input-text'
+        self.fields['sponsor_code'].widget.attrs['style'] = 'width:100%'
         
         self.fields['provinsi'].widget.attrs['onClick'] = 'getKota(this.id)'
         self.fields['provinsi_home'].widget.attrs['onClick'] = 'getKota(this.id)'
+        self.fields['provinsi'].widget.attrs['style'] = 'width:100%'
+        self.fields['provinsi_home'].widget.attrs['style'] = 'width:100%'
 
         self.fields['phone_number'].widget = forms.NumberInput()
         self.fields['phone_number'].widget.attrs['placeholder'] = 'Contoh : +628129999999 / 0812999999'
+        self.fields['phone_number'].widget.attrs['class'] = 'input-text'
+        self.fields['phone_number'].widget.attrs['style'] = 'width:100%'
 
         self.fields['ktp_number'].widget.attrs['placeholder'] = 'Contoh : 3671081xxxxxxxxxx'
         self.fields['ktp_number'].widget = forms.NumberInput()
-                
+        self.fields['ktp_number'].widget.attrs['class'] = 'input-text'
+        self.fields['ktp_number'].widget.attrs['style'] = 'width:100%'
+        
         self.fields['bank_name'].widget.attrs['placeholder'] = 'Contoh : BRI/ BCA/ BNI'
+        self.fields['bank_name'].widget.attrs['class'] = 'input-text'
+        self.fields['bank_name'].widget.attrs['style'] = 'width:100%'
         self.fields['bank_account_number'].widget.attrs['placeholder'] = 'Contoh : 7211XXCCCCCCDDF'
         self.fields['bank_account_number'].widget = forms.NumberInput()
+        self.fields['bank_account_number'].widget.attrs['class'] = 'input-text'
+        self.fields['bank_account_number'].widget.attrs['style'] = 'width:100%'
 
         self.fields['ktp_address'].widget = forms.Textarea() 
         self.fields['ktp_address'].widget.attrs['rows'] = '3'
         self.fields['ktp_address'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
+        self.fields['ktp_address'].widget.attrs['style'] = 'width:100%'
 
         self.fields['home_address'].widget = forms.Textarea() 
         self.fields['home_address'].widget.attrs['rows'] = '3' 
         self.fields['home_address'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
+        self.fields['home_address'].widget.attrs['style'] = 'width:100%'
 
         self.fields['bank_book_photo'].widget.attrs['onChange'] = 'Handlechange(event, this.id)'
         self.fields['bank_book_photo'].widget.attrs['class'] = 'hidden'
@@ -81,6 +141,32 @@ class MemberRegisterForm(forms.ModelForm):
             )
         except User.DoesNotExist:
             return username # great, this user does not exist so we can continue the registration process
+
+    def clean_email(self):
+        email = self.cleaned_data["email"].lower()
+       
+        try:
+            User._default_manager.get(email=email)
+            #if the user exists, then let's raise an error message
+
+            raise forms.ValidationError( 
+              self.error_messages['duplicate_email'],     #set the error message key
+            )
+        except User.DoesNotExist:
+            return email # great, this user does not exist so we can continue the registration process
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data["phone_number"].lower()
+       
+        try:
+            Member._default_manager.get(phone_number=phone_number)
+            #if the user exists, then let's raise an error message
+
+            raise forms.ValidationError( 
+              self.error_messages['duplicate_phone_number'],     #set the error message key
+            )
+        except Member.DoesNotExist:
+            return phone_number # great, this user does not exist so we can continue the registration process
 
     class Meta:
         USERNAME_MAX = 20
@@ -110,8 +196,7 @@ class GuestRegisterForm(MemberRegisterForm):
 class MemberEditProfileForm(forms.ModelForm):   
     instagram_address = forms.CharField(max_length=250, required=False)  
     facebook_address = forms.CharField(max_length=250, required=False)   
-    twitter_address = forms.CharField(max_length=250, required=False)     
-    line_address = forms.CharField(max_length=250, required=False)  
+    twitter_address = forms.CharField(max_length=250, required=False)   
     website_address = forms.CharField(max_length=250, required=False)
     smart_motto = forms.CharField(max_length=250, required=False)
     whatsapp_number = forms.CharField(required=False)
@@ -126,11 +211,24 @@ class MemberEditProfileForm(forms.ModelForm):
         super(MemberEditProfileForm, self).__init__(*args, **kwargs)
         
         self.fields['instagram_address'].widget.attrs['placeholder'] = 'contoh : @instagram123'
+        self.fields['instagram_address'].widget.attrs['class'] = 'input-text'
+        self.fields['instagram_address'].widget.attrs['style'] = 'width:100%'
+        
         self.fields['facebook_address'].widget.attrs['placeholder'] = 'contoh : https://www.facebook.com/fb123'
+        self.fields['facebook_address'].widget.attrs['class'] = 'input-text'
+        self.fields['facebook_address'].widget.attrs['style'] = 'width:100%'
+
         self.fields['twitter_address'].widget.attrs['placeholder'] = 'contoh : @twitter123'
-        self.fields['line_address'].widget.attrs['placeholder'] = 'contoh : @line123'
+        self.fields['twitter_address'].widget.attrs['class'] = 'input-text'
+        self.fields['twitter_address'].widget.attrs['style'] = 'width:100%'
+
         self.fields['website_address'].widget.attrs['placeholder'] = 'contoh : https://www.blog.com/'
+        self.fields['website_address'].widget.attrs['class'] = 'input-text'
+        self.fields['website_address'].widget.attrs['style'] = 'width:100%'
+
         self.fields['whatsapp_number'].widget = forms.NumberInput()
+        self.fields['whatsapp_number'].widget.attrs['class'] = 'input-text'
+        self.fields['whatsapp_number'].widget.attrs['style'] = 'width:100%'
 
         self.fields['bank_book_photo'].widget.attrs['onChange'] = 'Handlechange(event, this.id)'
         self.fields['bank_book_photo'].widget.attrs['class'] = 'hidden'
@@ -143,20 +241,23 @@ class MemberEditProfileForm(forms.ModelForm):
         self.fields['ktp_photo'].widget.attrs['class'] = 'hidden'
       
         self.fields['provinsi'].widget.attrs['onClick'] = 'getKota()'
+        self.fields['provinsi'].widget.attrs['style'] = 'width:100%'
         
         self.fields['home_address'].widget = forms.Textarea() 
         self.fields['home_address'].widget.attrs['rows'] = '3' 
         self.fields['home_address'].widget.attrs['placeholder'] = 'Contoh: Jl. Angkasa 1 Blok AF6 NO 18'
+        self.fields['home_address'].widget.attrs['style'] = 'width:100%'
 
         self.fields['smart_motto'].widget = forms.Textarea() 
         self.fields['smart_motto'].widget.attrs['rows'] = '3' 
         self.fields['smart_motto'].widget.attrs['placeholder'] = 'Contoh: Waktu adalah uang'
+        self.fields['smart_motto'].widget.attrs['style'] = 'width:100%'
 
     class Meta:
         USERNAME_MAX = 30
         USERNAME_MIN = 4
         model = Member
-        fields = ('instagram_address', 'facebook_address','twitter_address', 'line_address',\
+        fields = ('instagram_address', 'facebook_address','twitter_address',\
                   'website_address', 'whatsapp_number', 'bank_book_photo', 'ktp_photo',\
                   'smart_motto', 'profile_photo')
         error_messages = {

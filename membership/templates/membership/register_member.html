@@ -1,15 +1,13 @@
-{% extends "membership/base.html" %}
+{% extends "keskei/base-full.html" %}
 {% load int_to_rupiah %}
 {% block title %}
     <title>Daftar | kei-partner.com</title>
 {% endblock %}
 {% block content %}
     <div class="container container-form container-bg">
-      <h3 class="title" style="margin:15px">Selamat Datang di Kei-Partner.<br>
-        Silahkan isi form berikut ini untuk membuat akun.</h3>
     <div class="hidden-xs col-sm-1 col-lg-2"></div>
     <div class="col-xs-12 col-sm-10 col-lg-8" style="padding: 0">
-      <div class="col-xs-12 card-bottom card-bottom-form">
+      <div class="col-xs-12 card-bottom" style="background:#fff">
         <form enctype="multipart/form-data" method="POST">
             {% csrf_token %}
             {% if form.errors %}
@@ -28,15 +26,15 @@
             {% endif %}
             <div>
             </div>
-          <fieldset id="membership-set" style="width: 100%;">
-              <legend>Data Membership :</legend>
-              <div class="col-xs-12" style="padding:0 15px 3px 15px;display:block;text-align:left">
+          <fieldset id="membership-set" style="width: 100%; margin: 20px 0">
+              <legend style="margin-bottom:0">Data Membership :</legend>
+              <div class="col-xs-12" style="padding:0;display:block;text-align:left">
                 
               <div id="member-type-set" class="col-xs-12" style="padding:3px 15px 20px 15px;display:block;text-align:left">
                 <p style="font-size:8pt;margin-bottom:3px">Pilih Jenis Member :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                 {{ form.member_type }}
               
-                <table style="font-size: 10pt" id="member_type_info">
+                <table style="font-size: 10pt; margin-top: 7px" id="member_type_info">
                   <tbody>
                       {% for th, val in threshold.items %}
                         {% if th == 'DROPSHIPPER' %}
@@ -45,7 +43,7 @@
                           <tr id ="{{ th | lower }}_info" class="hidden"
                         {% endif %}
                             style="background-color: #ff5">
-                          <td style="padding: 0 5px">Minimal pembelian <strong>Rp. {{ val.THRESHOLD | int_to_rupiah }},- </strong></td>
+                          <td style="padding: 0 5px">Minimal pembelian <strong>{{ val.THRESHOLD | int_to_rupiah }} </strong></td>
                           <td style="padding: 0 5px">Benefit: Diskon <strong>{{ val.BENEFIT }}%</strong></td>
                       </tr>
                       {% endfor %}
@@ -59,7 +57,7 @@
               </div>
           </fieldset>
 
-          <fieldset id="account-set" style="width: 100%;">
+          <fieldset id="account-set" style="width: 100%; margin: 20px 0">
               <legend>Data Akun :</legend>
 
               <div class="row" style="margin: 0">
@@ -95,14 +93,14 @@
                 </div>
                 <div class="col-xs-12 col-sm-6">
                   <div><p style="font-size:8pt;margin-bottom:3px;text-align:left">Masukan ulang kata sandi<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
-                    <input   style="width:100%" type="password" placeholder="Ulangi Kata Sandi" name="psw2"></div>
+                    <input class="input-text" style="width:100%" type="password" placeholder="Ulangi Kata Sandi" name="psw2"></div>
                 </div>
               </div>
 
   
           </fieldset>
 
-          <fieldset id="personal-set" style="width: 100%;">
+          <fieldset id="personal-set" style="width: 100%; margin: 20px 0">
               <legend>Data Pribadi :</legend>
               <div class="row" style="margin: 0">
                 <div class="col-xs-12 col-sm-12">
@@ -124,7 +122,7 @@
           </fieldset>
 
 
-          <fieldset id="address-set" style="width: 100%;">
+          <fieldset id="address-set" style="width: 100%; margin: 20px 0">
               <legend>Data Alamat :</legend>
 
               <div class="row" style="margin: 0;">
@@ -136,7 +134,7 @@
                   <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left;z-index:3000">
                     <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kota/ Kabupaten :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                     
-                    <select name="kota" style="background-color:#f1f1f1;" onClick=getKecamatan(this.id) id="id_kota">
+                    <select name="kota" style="width:100%;background-color:#f1f1f1;" onClick=getKecamatan(this.id) id="id_kota">
                       <option value="..."> </option>
                     </select>
                   </div>
@@ -146,7 +144,7 @@
                   <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left;z-index:3000">
                     <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kecamatan/ Subdistrik :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                     
-                    <select name="kecamatan"  style="background-color:#f1f1f1"  onClick=getKelurahan(this.id)  id="id_kecamatan">
+                    <select name="kecamatan"  style="width:100%;background-color:#f1f1f1"  onClick=getKelurahan(this.id)  id="id_kecamatan">
                       <option value="..."> </option>         
                     </select>
                   </div>
@@ -154,7 +152,7 @@
                   <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left;z-index:3000">
                     <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kelurahan/ Desa :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                     
-                    <select  name="kelurahan" style="background-color:#f1f1f1" id="id_kelurahan">
+                    <select  name="kelurahan" style="width:100%;background-color:#f1f1f1" id="id_kelurahan">
                       <option value="..."> </option>                  
                     </select>
                   </div>
@@ -179,7 +177,7 @@
                   <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left;z-index:3000">
                     <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kota/ Kabupaten :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                     
-                    <select name="kota_home" style="background-color:#f1f1f1;" onClick=getKecamatan(this.id) id="id_kota_home">
+                    <select name="kota_home" style="width:100%;background-color:#f1f1f1;" onClick=getKecamatan(this.id) id="id_kota_home">
                       <option value="..."> </option>
                     </select>
                   </div>
@@ -187,7 +185,7 @@
                   <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left;z-index:3000">
                     <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kecamatan/ Subdistrik :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                     
-                    <select name="kecamatan_home"  style="background-color:#f1f1f1"  onClick=getKelurahan(this.id)  id="id_kecamatan_home">
+                    <select name="kecamatan_home"  style="width:100%;background-color:#f1f1f1"  onClick=getKelurahan(this.id)  id="id_kecamatan_home">
                       <option value="..."> </option>         
                     </select>
                   </div>
@@ -195,7 +193,7 @@
                   <div class="col-xs-12 col-sm-6" style="padding:0 15px;display:block;text-align:left;z-index:3000">
                     <p style="font-size:8pt;margin-bottom:3px;text-align:left">Kelurahan/ Desa :<i class="hot"style="font-size:150%;font-weight:normal;margin:0"> *</i></p>
                     
-                    <select  name="kelurahan_home" style="background-color:#f1f1f1" id="id_kelurahan_home">
+                    <select  name="kelurahan_home" style="width:100%;background-color:#f1f1f1" id="id_kelurahan_home">
                       <option value="..."> </option>                  
                     </select>
                   </div>
@@ -208,25 +206,32 @@
               </div>
           </fieldset>
 
-          <fieldset  id="verification-set" style="width: 100%;">
+          <fieldset  id="verification-set" style="width: 100%; margin: 20px 0">
               <legend>Data Verifikasi :</legend>
-
               <div class="row" style="margin: 0;">
-                  <div class="col-xs-12"style="margin:0"> 
+                  <div class="col-xs-8"style="text-align: center">  
+                    <p style="font-size:8pt;margin-bottom:3px;text-align:left">Foto KTP<i style="font-size:80%"> *(.JPG/.JPEG/.PNG/.GIF)</i></p>
+                    {{ form.ktp_photo }}
+                    <input class="input-text" style="width:100%" type="text" id="ktp_filename" readonly="true" placeholder="Klik Tombol + untuk Mengunggah Foto"/>
+                  </div>
+                  <div class="col-xs-4"style="text-align: center"> 
+                    <img src="" id="dummy_ktp_photo" style="width: 200px; height: auto;">
+                    <div style="width:100%; padding:30px; border: 2px dashed #4b8b78; cursor:pointer" id="btn_ktp" onclick="HandleBrowseClick(this.id);"/>
+                      <h2>&plus;</h2>
+                    </div>
+                  </div>
+              </div>
+              <div class="row" style="margin: 0;">
+                  <div class="col-xs-8"style="text-align: center">  
+                    <p style="font-size:8pt;margin-bottom:3px;text-align:left">Foto Buku Tabungan<i style="font-size:80%"> *(.JPG/.JPEG/.PNG/.GIF)</i></p>
+                    {{ form.bank_book_photo }}
+                    <input class="input-text" style="width:100%" type="text" id="bank_book_filename" readonly="true" placeholder="Klik Tombol + untuk Mengunggah Foto"/>
+                  </div>
+                  <div class="col-xs-4"style="text-align: center"> 
                       <img src="" id="dummy_bank_book_photo" style="width: 200px; height: auto;">
-                      <img src="" id="dummy_ktp_photo" style="width: 200px; height: auto;">
-                  </div>
-                  <div class="col-xs-12"style="margin:0">  
-                      <h2 class="unggah" style="top:42%;right:-0.64%;" id="btn_ktp" onclick="HandleBrowseClick(this.id);"/>&plus;</h2>
-                      <p style="font-size:8pt;margin-bottom:3px;text-align:left">Foto KTP<i style="font-size:80%"> *(.JPG/.JPEG/.PNG/.GIF)</i></p>
-                      {{ form.ktp_photo }}
-                      <input type="text" id="ktp_filename" readonly="true"placeholder="Klik Tombol + untuk Mengunggah Foto"/>
-                  </div>
-                  <div class="col-xs-12"style="margin:0">  
-                      <h2 class="unggah" style="top:42%;right:-0.64%;" id="btn_bank" onclick="HandleBrowseClick(this.id);"/>&plus;</h2>
-                      <p style="font-size:8pt;margin-bottom:3px;text-align:left">Foto Buku Tabungan<i style="font-size:80%"> *(.JPG/.JPEG/.PNG/.GIF)</i></p>
-                      {{ form.bank_book_photo }}
-                      <input type="text" id="bank_book_filename" readonly="true"placeholder="Klik Tombol + untuk Mengunggah Foto"/>
+                    <div style="width:100%; padding:30px; border: 2px dashed #4b8b78; cursor:pointer" id="btn_bank" onclick="HandleBrowseClick(this.id);"/>
+                      <h2>&plus;</h2>
+                    </div>
                   </div>
               </div>
           </fieldset>
@@ -235,9 +240,6 @@
                <button class="btn btn-primary" style="width:auto; min-width: 120px; margin: 0 15px" type="submit">Kirim</button></div>
          </form></div></div>
     <div class="hidden-xs col-sm-1 col-lg-2"></div></div>
-
-{% include "membership/footer.html" %}
-{% include "membership/script.html" %}
 {% include "membership/member_type_script.html" %}
 {% include "membership/get_area_script.html" %}
 {% endblock %}
